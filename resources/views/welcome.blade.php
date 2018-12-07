@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    GRUPO 11
+                    LATAM
                 </div>
 
                 <div class="links">
