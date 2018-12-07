@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    GRUPO 11
                 </div>
 
                 <div class="links">
