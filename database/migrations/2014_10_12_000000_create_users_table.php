@@ -19,11 +19,11 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->int('miles');
+            $table->integer('miles');
             $table->string('rut');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('role_id')->references('id')->on('roles');
+            //$table->foreign('role_id')->references('id')->on('roles');
         });
     }
 
