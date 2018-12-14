@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
     /**
      * Reverse the migrations.
      *
-     * @return void
+     * @return vpopmail_del_domain(domain)
      */
     public function down()
     {
