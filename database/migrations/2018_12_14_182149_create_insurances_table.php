@@ -20,8 +20,8 @@ class CreateInsurancesTable extends Migration
             $table->string('city');
             $table->integer('age');
 
-            $table->unsignedInteger('insurence_reseve_id');
-            $table->foreign('insurence_reseve_id')->references('id')->on('insurence_reseves');
+            $table->unsignedInteger('insurance_reserve_id');
+            $table->foreign('insurance_reserve_id')->references('id')->on('insurance_reserves');
 
             $table->timestamps();
         });
