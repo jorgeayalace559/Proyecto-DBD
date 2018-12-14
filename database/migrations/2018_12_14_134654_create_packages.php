@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRole extends Migration
+class CreatePackages extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateRole extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
-            $table->string('description');
+            $table->int('cost');
+            $table->timestamps('date');
+            $table->timestamps('begin_date');
+            $table->timestamps('end_date');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('packages');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRole extends Migration
+class CreateRooms extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateRole extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('rooms', function (Blueprint $table) {
             $table->increments('id');
+            $table->int('number');
+            $table->int('capacity');
             $table->string('type');
-            $table->string('description');
+            $table->foreign('hotel_id')->references('id')->on('hotels');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('rooms');
     }
 }
