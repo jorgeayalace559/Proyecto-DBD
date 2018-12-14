@@ -15,10 +15,10 @@ class CreatePackages extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
-            $table->int('cost');
-            $table->timestamps('date');
-            $table->timestamps('begin_date');
-            $table->timestamps('end_date');
+            $table->integer('cost');
+            $table->timestamp('date');
+            $table->timestamp('begin_date');
+            $table->timestamp('end_date');
             $table->timestamps();
         });
     }

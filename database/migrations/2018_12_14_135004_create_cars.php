@@ -15,7 +15,7 @@ class CreateCars extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->increments('id');
-            $table->int('capacity');
+            $table->integer('capacity');
             $table->string('patent');
             $table->string('city');
             $table->string('model');

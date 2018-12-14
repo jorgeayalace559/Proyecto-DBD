@@ -15,13 +15,13 @@ class CreateRoomReserves extends Migration
     {
         Schema::create('room_reserves', function (Blueprint $table) {
             $table->increments('id');
-            $table->int('cost');
-            $table->timestamps('date');
-            $table->timestamps('begin_date');
-            $table->timestamps('end_date');
-            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
-            $table->foreign('package_id')->references('id')->on('packages');
-            $table->foreign('room_id')->references('id')->on('rooms');
+            $table->integer('cost');
+            $table->timestamp('date');
+            $table->timestamp('begin_date');
+            $table->timestamp('end_date');
+            //$table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
+            //$table->foreign('package_id')->references('id')->on('packages');
+            //$table->foreign('room_id')->references('id')->on('rooms');
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRole extends Migration
+class CreatePurchaseOrders extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateRole extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('purchase_orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
-            $table->string('description');
-            $table->timestamps();
+            $table->integer('cost');
+            $table->timestamp('date');
+            //$table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('purchase_orders');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInsuranceReserve extends Migration
+class CreateInsuranceReserves extends Migration
 {
     /**
      * Run the migrations.
@@ -15,12 +15,12 @@ class CreateInsuranceReserve extends Migration
     {
         Schema::create('insurance_reserves', function (Blueprint $table) {
             $table->increments('id');
-            $table->int('cost');
-            $table->timestamps('date');
-            $table->timestamps('begin_date');
-            $table->timestamps('end_date');
-            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
-            $table->foreign('insurance_id')->references('id')->on('insurances');
+            $table->integer('cost');
+            $table->timestamp('date');
+            $table->timestamp('begin_date');
+            $table->timestamp('end_date');
+            //$table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
+            //$table->foreign('insurance_id')->references('id')->on('insurances');
         });
     }
 
