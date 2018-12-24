@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class LuggagesSeeder extends Seeder
+class Package_ReservationsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

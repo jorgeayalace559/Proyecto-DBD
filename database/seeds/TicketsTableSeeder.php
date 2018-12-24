@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class StatesSeeder extends Seeder
+class TicketsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

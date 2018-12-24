@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class Purchase_OrdersSeeder extends Seeder
+class Insurance_ReservationsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
