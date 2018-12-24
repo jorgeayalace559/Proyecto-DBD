@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePurchaseOrdersTable extends Migration
+class CreateTicketReservationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePurchaseOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase__orders', function (Blueprint $table) {
+        Schema::create('ticket_reservations', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreatePurchaseOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase__orders');
+        Schema::dropIfExists('ticket__reservations');
     }
 }

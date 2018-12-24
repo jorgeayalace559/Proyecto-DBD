@@ -13,7 +13,7 @@ class CreatePackageReservationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('package__reservations', function (Blueprint $table) {
+        Schema::create('package_reservations', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });

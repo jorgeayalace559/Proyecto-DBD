@@ -13,7 +13,7 @@ class CreateCarReservationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('car__reservations', function (Blueprint $table) {
+        Schema::create('car_reservations', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
