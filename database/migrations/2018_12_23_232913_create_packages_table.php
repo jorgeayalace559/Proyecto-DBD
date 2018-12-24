@@ -15,6 +15,17 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('quantity');
+            $table->string('name');
+            $table->integer('cost');
+            $table->integer('nights');
+
+            $table->unsignedInteger('origin_id');
+            $table->foreign('origin_id')->references('id')->on('cities');
+            $table->unsignedInteger('destination_id');
+            $table->foreign('destination_id')->references('id')->on('cities');
+
             $table->timestamps();
         });
     }
