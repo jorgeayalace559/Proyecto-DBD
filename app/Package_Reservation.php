@@ -15,11 +15,11 @@ class Package_Reservation extends Model
     	'package_id'
     ];
 
-    public function packages(){
-
+    public function package(){
+        return $this->belongsTo('App\Package');
     }
 
-    public function purchase_orders(){
-    	
+    public function purchase_order(){
+    	return $this->belongsTo('App\Purchase_Order');
     }
 }

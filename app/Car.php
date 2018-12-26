@@ -13,7 +13,7 @@ class Car extends Model
     	'ticket_reservation_id'
     ];
 
-    public function car_reservations(){
-    	
+    public function car_reservation(){
+    	return $this->belongsTo('App\Car_Reservation');
     }
 }

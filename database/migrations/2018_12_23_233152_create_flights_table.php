@@ -20,8 +20,8 @@ class CreateFlightsTable extends Migration
             $table->timestamp('begin_date');
             $table->timestamp('end_date');
 
-            $table->unsignedInteger('state_id');
-            $table->foreign('state_id')->references('id')->on('states');
+            //$table->unsignedInteger('state_id');
+            //$table->foreign('state_id')->references('id')->on('states');
 
             $table->unsignedInteger('origin_id');
             $table->foreign('origin_id')->references('id')->on('cities');

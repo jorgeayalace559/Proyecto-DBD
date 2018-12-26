@@ -15,11 +15,16 @@ class Car_Reservation extends Model
     	'package_id'
     ];
 
-    public function purchase_orders(){
-
+    public function cars(){
+        return $this->hasMany('App\Car');
     }
 
-    public function packages(){
-    	
+    public function purchase_order(){
+        return $this->belongsTo('App\Purchase_Order');
     }
+
+    public function package(){
+    	return $this->belongsTo('App\Package');
+    }
+
 }

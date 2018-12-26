@@ -14,11 +14,11 @@ class Room extends Model
     	'hotel_id'
     ];
 
-    public function hotels(){
-
+    public function hotel(){
+        return $this->belongsTo('App\Hotel');
     }
 
-    public function room_reservations(){
-    	
+    public function room_reservation(){
+    	return $this->belongsTo('App\Room_Reservation');
     }
 }

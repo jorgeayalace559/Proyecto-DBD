@@ -14,11 +14,11 @@ class Insurance_Reservation extends Model
     	'purchase_order_id'
     ];
 
-    public function purchase_orders(){
-
+    public function purchase_order(){
+        return $this->belongsTo('App\Purchase_Order');
     }
 
     public function insurances(){
-    	
+    	return $this->hasMany('App\Insurances');
     }
 }

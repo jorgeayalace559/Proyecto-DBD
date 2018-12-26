@@ -13,7 +13,7 @@ class Luggage extends Model
     	'passenger_id'
     ];
 
-    public function passengers(){
-
+    public function passenger(){
+    	return $this->belongsTo('App\Passenger');
     }
 }

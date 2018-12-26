@@ -16,18 +16,18 @@ class Package extends Model
     ];
 
     public function car_reservations(){
-
+        return $this->hasMany('App\Car_Reservation');
     }
 
     public function package_reservations(){
-
+        return $this->hasMany('App\Package_Reservation');
     }
 
     public function ticket_reservations(){
-
+        return $this->hasMany('App\Ticket_Reservation');
     }
 
     public function room_reservations(){
-    	
+    	return $this->hasMany('App\Room_Reservation');
     }
 }

@@ -13,10 +13,10 @@ class Passenger extends Model
     ];
 
     public function luggages(){
-
+        return $this->hasMany('App\Luggage');
     }
 
-    public function tickets(){
-    	
+    public function ticket(){
+    	return $this->belongsTo('App\Ticket');
     }
 }

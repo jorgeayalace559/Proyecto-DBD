@@ -13,11 +13,11 @@ class Seat extends Model
     	'ticket_id'
     ];
 
-    public function tickets(){
-    	
+    public function ticket(){
+    	return $this->belongsTo('App\Ticket');
     }
 
-    public function airplane(){
+    public function airplanes(){
     	return $this->hasMany('App\Airplane');
     }
 }
