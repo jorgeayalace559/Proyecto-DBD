@@ -22,6 +22,8 @@ class CreateSeatsTable extends Migration
 
             $table->unsignedInteger('ticket_id');
             $table->foreign('ticket_id')->references('id')->on('tickets');
+            $table->unsignedInteger('airplane_id');
+            $table->foreign('airplane_id')->references('id')->on('airplanes');
 
             $table->timestamps();
         });

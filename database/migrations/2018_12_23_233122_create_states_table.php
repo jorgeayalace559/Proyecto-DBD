@@ -16,11 +16,10 @@ class CreateStatesTable extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('origin');
-            $table->string('destination');
-            $table->timestamp('begin_date');
-            $table->timestamp('end_date');
             $table->string('condition');
+
+            $table->unsignedInteger('flight_id');
+            $table->foreign('flight_id')->references('id')->on('flights');
 
             $table->timestamps();
         });

@@ -16,13 +16,18 @@ class CreateFlightsTable extends Migration
         Schema::create('flights', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('origin');
-            $table->string('destination');
+            $table->integer('platform');
             $table->timestamp('begin_date');
             $table->timestamp('end_date');
 
             $table->unsignedInteger('state_id');
             $table->foreign('state_id')->references('id')->on('states');
+
+            $table->unsignedInteger('origin_id');
+            $table->foreign('origin_id')->references('id')->on('cities');
+
+            $table->unsignedInteger('destination_id');
+            $table->foreign('destination_id')->references('id')->on('cities');
 
             $table->timestamps();
         });

@@ -11,7 +11,11 @@ class Airplane extends Model
     	'flight_id'
     ];
 
-    public function flights(){
-    	
+    public function flight(){
+    	return $this->belongsTo('App\Flight');
+    }
+
+    public function seats(){
+    	return $this->hasMany('App\Seat');
     }
 }

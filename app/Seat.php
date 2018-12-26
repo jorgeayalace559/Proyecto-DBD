@@ -16,4 +16,8 @@ class Seat extends Model
     public function tickets(){
     	
     }
+
+    public function airplane(){
+    	return $this->hasMany('App\Airplane');
+    }
 }

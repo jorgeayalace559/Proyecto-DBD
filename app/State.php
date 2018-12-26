@@ -7,14 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class State extends Model
 {
     protected $fillable = [
-    	'origin',
-    	'destination',
-    	'begin_date',
-    	'end_date',
-    	'condition'
+    	'condition',
+        'flight_id'
     ];
 
-    public function flights(){
-    	
+    public function flight(){
+    	return $this->belongsTo('App\Flight');
     }
 }
