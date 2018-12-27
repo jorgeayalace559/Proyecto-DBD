@@ -20,6 +20,6 @@ class Package_Reservation extends Model
     }
 
     public function purchase_order(){
-    	return $this->belongsTo('App\Purchase_Order');
+    	return $this->belongsTo('App\PurchaseOrder');
     }
 }
