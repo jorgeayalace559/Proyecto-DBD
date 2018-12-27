@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class Insurance_ReservationsTableSeeder extends Seeder
+class InsuranceReservationsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,7 @@ class Insurance_ReservationsTableSeeder extends Seeder
     public function run()
     {
         
-        factory(App\Insurance_Reservation::class, 5)->create()->make();
+        factory(App\InsuranceReservation::class, 5)->create()->make();
     
     }
 }

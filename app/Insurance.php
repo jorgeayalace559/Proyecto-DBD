@@ -14,6 +14,6 @@ class Insurance extends Model
     ];
 
     public function insurance_reservation(){
-    	return $this->belongsTo('App\Insurance_Reservation');
+    	return $this->belongsTo('App\InsuranceReservation');
     }
 }
