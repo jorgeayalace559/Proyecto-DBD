@@ -9,11 +9,11 @@ $factory->define(App\InsuranceReservation::class, function (Faker $faker) {
     
     return [
         
-        'cost' => rand(0,100),
-        'date' => $faker->dateTime(),
+        'cost' => rand(10000,15000),
+        'date' => today(),
         'begin_date' => $startingDate,
         'end_date' => $endingDate,
-        'purchase_order_id' => rand(0,5)
+        'purchase_order_id' => rand(1,5)
 
     ];
 });

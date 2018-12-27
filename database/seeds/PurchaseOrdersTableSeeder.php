@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class Purchase_OrdersTableSeeder extends Seeder
+class PurchaseOrdersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,8 @@ class Purchase_OrdersTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        
+        factory(App\PurchaseOrder::class, 5)->create()->make();
+
     }
 }

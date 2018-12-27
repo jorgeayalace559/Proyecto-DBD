@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class InsurancesTableSeeder extends Seeder
+class UserTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,8 +11,6 @@ class InsurancesTableSeeder extends Seeder
      */
     public function run()
     {
-        
-        factory(App\Insurance::class, 5)->create()->make();
-
+        factory(App\User::class, 5)->create()->make();
     }
 }
