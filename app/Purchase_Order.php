@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PurchaseOrder extends Model
+class Purchase_Order extends Model
 {
     protected $fillable = [
     	'cost',
@@ -21,7 +21,7 @@ class PurchaseOrder extends Model
     }
 
     public function room_reservations(){
-        return $this->hasMany('App\Room_Reservation');
+        return $this->hasMany('App\RoomReservation');
     }
 
     public function ticket_reservations(){

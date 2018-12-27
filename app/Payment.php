@@ -15,6 +15,6 @@ class Payment extends Model
     ];
 
     public function purchase_orders(){
-    	return $this->hasMany('App\Purchase_Order');
+    	return $this->hasMany('App\PurchaseOrder');
     }
 }

@@ -17,7 +17,7 @@ class Seat extends Model
     	return $this->belongsTo('App\Ticket');
     }
 
-    public function airplanes(){
-    	return $this->hasMany('App\Airplane');
+    public function airplane(){
+    	return $this->belongsTo('App\Airplane');
     }
 }
