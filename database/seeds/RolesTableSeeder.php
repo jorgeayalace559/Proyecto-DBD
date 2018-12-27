@@ -12,7 +12,26 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         
-        factory(App\Role::class, 5)->create()->make();
+        //Roles
+        DB::table('roles')->insert(
+            [
+                'type' => 'Gerente',
+                'description' => 'Jefe del aeropuerto'
+            ]
+        );
+        DB::table('roles')->insert(
+            [
+                'type' => 'Administrador',
+                'description' => 'Jefe/s encargado/s del personal del aeropuerto'
+            ]
+        );
+        DB::table('roles')->insert(
+            [
+                'type' => 'Trabajador',
+                'description' => 'Trabajador/es del aeropuerto'
+            ]
+        );
+        
 
     }
 }

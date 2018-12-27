@@ -23,7 +23,9 @@ class CreateUsersTable extends Migration
             $table->string('rut');
             $table->rememberToken();
             $table->timestamps();
-            //$table->foreign('role_id')->references('id')->on('roles');
+
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

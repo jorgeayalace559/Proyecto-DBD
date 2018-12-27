@@ -22,13 +22,12 @@ $factory->define(App\Insurance::class, function (Faker $faker) {
     if($aux == 3){
         $insurance = implode("|",array_column($roleType, 'Seguro3'));
     }
-   
+
     return [
         
         'edad' => rand(1,100) ,
     	'type' => $insurance,
-    	'city' => $faker->city,
-    	'name' => $faker->name
+    	'city' => $faker->city
 
     ];
 });

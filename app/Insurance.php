@@ -9,8 +9,7 @@ class Insurance extends Model
     protected $fillable = [
     	'edad',
     	'type',
-    	'city',
-    	'name'
+    	'city'
     ];
 
     public function insurance_reservation(){

@@ -7,7 +7,7 @@ use App\Ticket;
 
 $factory->define(App\Car::class, function (Faker $faker) {
     return [
-        'capacity'				=> $faker-> randomDigit,
+        'capacity'				=> rand(5,8),
         'city_id'				=> App\Citie::all()->random()->id,
         'patent'				=> $faker-> bothify($string = '##????'),
     ];
