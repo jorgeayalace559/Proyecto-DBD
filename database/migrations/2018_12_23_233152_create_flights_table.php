@@ -40,6 +40,11 @@ class CreateFlightsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('f_lights');
+        Schema::table('flights', function(Blueprint $table){
+            $table->dropForeign('flights_origin_id_foreign');
+            $table->dropColumn('origin_id');
+            $table->dropForeign('flights_destination_id_foreign');
+            $table->dropColumn('destination_id');
+        });
     }
 }

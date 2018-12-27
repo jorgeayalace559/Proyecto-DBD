@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInsuranceReservesTable extends Migration
+class CreateInsuranceReservationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateInsuranceReservesTable extends Migration
      */
     public function up()
     {
-        Schema::create('insurance_reservation', function (Blueprint $table) {
+        Schema::create('insurance_reservations', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('cost');
@@ -35,6 +35,6 @@ class CreateInsuranceReservesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('insurance__reserves');
+        Schema::dropIfExists('insurance_reservations');
     }
 }

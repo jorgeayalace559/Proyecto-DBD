@@ -37,6 +37,11 @@ class CreateRoomReservationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('room__reservations');
+         Schema::table('room_reservations', function(Blueprint $table){
+            $table->dropForeign('room_reservations_package_id_foreign');
+            $table->dropColumn('package_id');
+            $table->dropForeign('room_reservations_purchase_order_id_foreign');
+            $table->dropColumn('purchase_order_id');
+        });
     }
 }

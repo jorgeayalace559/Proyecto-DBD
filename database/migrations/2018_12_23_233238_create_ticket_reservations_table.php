@@ -36,5 +36,11 @@ class CreateTicketReservationsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('ticket__reservations');
+        Schema::table('ticket_reservations', function(Blueprint $table){
+            $table->dropForeign('ticket_reservations_package_id_foreign');
+            $table->dropColumn('package_id');
+            $table->dropForeign('ticket_reservations_purchase_order_id_foreign');
+            $table->dropColumn('purchase_order_id');
+        });
     }
 }

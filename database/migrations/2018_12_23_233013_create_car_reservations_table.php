@@ -37,6 +37,11 @@ class CreateCarReservationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('car__reservations');
+        Schema::table('car_reservations', function(Blueprint $table){
+            $table->dropForeign('car_reservations_package_id_foreign');
+            $table->dropColumn('package_id');
+            $table->dropForeign('car_reservations_purchase_order_id_foreign');
+            $table->dropColumn('purchase_order_id');
+        });
     }
 }
