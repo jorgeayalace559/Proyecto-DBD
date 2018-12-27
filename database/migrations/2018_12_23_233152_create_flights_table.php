@@ -17,11 +17,8 @@ class CreateFlightsTable extends Migration
             $table->increments('id');
 
             $table->integer('platform');
-            $table->timestamp('begin_date');
-            $table->timestamp('end_date');
-
-            //$table->unsignedInteger('state_id');
-            //$table->foreign('state_id')->references('id')->on('states');
+            $table->timestamp('begin_date')->nullable();
+            $table->timestamp('end_date')->nullable();
 
             $table->unsignedInteger('origin_id');
             $table->foreign('origin_id')->references('id')->on('cities');

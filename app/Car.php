@@ -8,12 +8,15 @@ class Car extends Model
 {
     protected $fillable = [
     	'capacity',
-    	'city',
+    	'city_id',
     	'patent',
-    	'ticket_reservation_id'
     ];
 
     public function car_reservation(){
     	return $this->belongsTo('App\Car_Reservation');
+    }
+
+    public function citie(){
+    	return $this->belongsTo('App\Citie');
     }
 }

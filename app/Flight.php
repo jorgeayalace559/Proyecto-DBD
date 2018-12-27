@@ -11,7 +11,7 @@ class Flight extends Model
     	'begin_date',
     	'end_date',
     	'origin_id',
-    	'state_id'
+        'platform',
     ];
 
     public function states(){

@@ -3,14 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Ticket;
 
 class Ticket extends Model
 {
     protected $fillable = [
     	'cost',
     	'quantity_passengers',
-    	'ticket_reservation_id',
-    	'flight_id'
+    	'flight_id',
     ];
 
     public function passengers(){

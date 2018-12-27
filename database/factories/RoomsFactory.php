@@ -33,7 +33,7 @@ $factory->define(App\Room::class, function (Faker $faker) {
         'capacity' => rand(1,4),
         'cost' => $cost,
         'type' => $type,
-        'hotel_id' => rand(1,5)
+        'hotel_id' => App\Hotel::all()->random()->id,
 
     ];
 });

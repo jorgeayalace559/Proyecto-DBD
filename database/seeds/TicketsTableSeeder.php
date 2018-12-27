@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Ticket;
 
 class TicketsTableSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class TicketsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(Ticket::class,80)->create()->id;
     }
 }
