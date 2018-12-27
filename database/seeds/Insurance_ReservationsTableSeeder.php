@@ -11,6 +11,8 @@ class Insurance_ReservationsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        
+        factory(App\Insurance_Reservation::class, 5)->create()->make();
+    
     }
 }
