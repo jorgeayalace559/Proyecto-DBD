@@ -43,9 +43,10 @@ class HotelController extends Controller
         return $hotels;
     }
 
-    public function show(Hotel $hotels)
+    public function show($id)
     {
-    	return $hotels;
+    	$hotels = Hotel::findOrFail($id);
+        return $hotels;
     }
 
     public function edit(Hotel $Hotel)

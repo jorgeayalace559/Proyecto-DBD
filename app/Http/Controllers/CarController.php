@@ -41,8 +41,9 @@ class CarController extends Controller
         return $cars;
     }
 
-    public function show(Car $cars)
+    public function show($id)
     {
+        $cars = Car::findOrFail($id);
     	return $cars;
     }
 

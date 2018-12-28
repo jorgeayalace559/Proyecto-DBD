@@ -43,9 +43,10 @@ class InsuranceController extends Controller
         return $insurances;
     }
 
-    public function show(Insurance $insurances)
+    public function show($id)
     {
-    	return $insurances;
+    	$insurances = Insurance::findOrFail($id);
+        return $insurances;
     }
 
     public function edit(Insurance $Insurance)

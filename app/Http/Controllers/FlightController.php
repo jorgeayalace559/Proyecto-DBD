@@ -46,9 +46,10 @@ class FlightController extends Controller
         return $flights;
     }
 
-    public function show(Flight $flights)
+    public function show($id)
     {
-    	return $flights;
+    	$flights = Flight::findOrFail($id);
+        return $flights;
     }
 
     public function edit(Flight $Flight)

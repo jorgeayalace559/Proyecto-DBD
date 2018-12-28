@@ -41,9 +41,10 @@ class CitieController extends Controller
         return $cities;
     }
 
-    public function show(Citie $cities)
+    public function show( $id)
     {
-    	return $cities;
+    	$cities = Citie::findOrFail($id);
+        return $cities;
     }
 
     public function edit(Citie $cities)

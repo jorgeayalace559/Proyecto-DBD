@@ -49,9 +49,10 @@ class CarReservationController extends Controller
         return $carreservations;
     }
 
-    public function show(CarReservation $carreservations)
+    public function show($id)
     {
-    	return $carreservations;
+        $carreservations = CarReservation::findOrFail($id);
+        return $carreservations;
     }
 
     public function edit(CarReservation $carreservations)
