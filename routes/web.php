@@ -33,7 +33,7 @@ Route::resource('passengers','PassengerController');
 Route::resource('payments','PaymentController');
 Route::resource('purchase_orders','PurchaseOrderController');
 Route::resource('roles','RoleController');
-Route::resource('room_reservations','RoomReservationsController');
+Route::resource('room_reservations','RoomReservationController');
 Route::resource('seats','SeatController');
 Route::resource('states','StateController');
 Route::resource('tickets','TicketController');
