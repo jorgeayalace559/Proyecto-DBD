@@ -15,7 +15,7 @@ class PassengerLuggageTrigger extends Migration
     {
         
         DB::statement('
-
+        
         CREATE OR REPLACE FUNCTION setLuggageToPassenger()
         RETURNS trigger AS
         $BODY$
