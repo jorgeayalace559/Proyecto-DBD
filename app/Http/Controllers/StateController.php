@@ -41,8 +41,9 @@ class StateController extends Controller
         return $states;
     }
 
-    public function show(State $states)
+    public function show($id)
     {
+    	$states = State::findOrFail($id);
     	return $states;
     }
 

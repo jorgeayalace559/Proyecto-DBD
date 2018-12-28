@@ -49,8 +49,9 @@ class PackageReservationController extends Controller
         return $packagereservations;
     }
 
-    public function show(PackageReservation $packagereservations)
+    public function show($id)
     {
+    	$packagereservations = PackageReservation::findOrFail($id);
     	return $packagereservations;
     }
 

@@ -45,8 +45,9 @@ class LuggageController extends Controller
         return $luggages;
     }
 
-    public function show(Luggage $luggages)
+    public function show($id)
     {
+    	$luggages = Luggage::findOrFail($id);
     	return $luggages;
     }
 

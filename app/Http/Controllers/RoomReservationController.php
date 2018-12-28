@@ -49,8 +49,9 @@ class RoomReservationController extends Controller
         return $roomreservations;
     }
 
-    public function show(RoomReservation $roomreservations)
+    public function show($id)
     {
+    	$roomreservations = RoomReservation::findOrFail($id);
     	return $roomreservations;
     }
 

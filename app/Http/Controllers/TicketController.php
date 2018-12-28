@@ -43,8 +43,9 @@ class TicketController extends Controller
         return $tickets;
     }
 
-    public function show(Ticket $tickets)
+    public function show($id)
     {
+    	$tickets = Ticket::findOrFail($id);
     	return $tickets;
     }
 

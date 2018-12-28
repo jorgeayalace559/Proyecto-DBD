@@ -43,8 +43,9 @@ class PassengerController extends Controller
         return $passengers;
     }
 
-    public function show(Passenger $passengers)
+    public function show($id)
     {
+    	$passengers = Passenger::findOrFail($id);
     	return $passengers;
     }
 

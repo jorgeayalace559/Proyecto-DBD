@@ -74,6 +74,24 @@ $factory->define(App\Passenger::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(App\Seat::class, function (Faker $faker) {
+    return [
+        'number'             => rand(1,100),
+        'type'               => $faker->text(15),
+        'remaining'          => rand(2,50),
+        'ticket_id'          => App\Ticket::all()->random()->id,
+        'airplane_id'        => App\Airplane::all()->random()->id,
+    ];
+});
+
+$factory->define(App\Airplane::class, function (Faker $faker) {
+    return [
+        'name'             => $faker->name,
+        'capacity'         => rand(1,100),
+        'flight_id'        => App\Flight::all()->random()->id,
+    ];
+});
+
 $factory->define(App\CarReservation::class, function (Faker $faker) {
     return [
         'begin_date'                    => date("Y-m-d H:i:s"),

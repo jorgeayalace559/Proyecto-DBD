@@ -47,8 +47,9 @@ class PaymentController extends Controller
         return $payments;
     }
 
-    public function show(Payment $payments)
+    public function show($id)
     {
+    	$payments = Payment::findOrFail($id);
     	return $payments;
     }
 

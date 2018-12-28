@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Airplane;	
 use Illuminate\Http\Request;
+use App\Airplane;	
 use Session;
 
 class AirplaneController extends Controller
@@ -16,56 +16,61 @@ class AirplaneController extends Controller
     	];
     }
 
-    public function index()
+   public function index()
     {
-    	$airplanes = Airplane::paginate(5);
-    	return view('airplanes.index',compact('airplanes'));
+    	$airplanes = Airplane::all();
+    	return $airplanes;
     }
 
     public function create(Request $request)
     {
-    	return view('airplanes.create');
+    	//
     }
 
     public function store(Request $request)
     {
-    	$request->validate([
-    		'capacity' => 'required',
-    		'flight_id' => 'required'
-    	]);
-
-    	Airplane::create($request->all());
-
-    	Session::flash('message','Se agrego correctamente');
-    	return redirect()->route('airplanes.index');
+    	$validator = Validator::make($request->all(),$this->rules());
+        if($validator->fails()){
+            return $validator->messages(); 
+        }
+        
+        $airplanes = new \App\Airplane;
+        $airplanes->capacity = $request->get('capacity');
+        $airplanes->flight_id = $request->get('flight_id');
+        $airplanes->save();
+        return $airplanes;
     }
 
-    public function show(Airplane $airplane){
-    	$airplane = Airplane::find($airplane);
-    	return $airplane;
-    }
-
-    public function edit(Airplane $airplane)
+    public function show(Airplane $airplanes)
     {
-    	return view('airplanes.edit',compact('airplane'));
+    	return $airplanes;
     }
 
-    public function update(Request $request, Airplane $airplane)
+    public function edit(Airplane $airplanes)
     {
-    	$request->validate([
-    		'capacity' => 'required',
-    		'flight_id' => 'required'
-    	]);
-
-    	$airplane->update($request->all());
-    	Session::flash('message','Se actualizo correctamente');
-    	return redirect()->route('airplanes.index');
+    	//
     }
 
-    public function destroy(Airplane $airplane)
+    public function update(Request $request, Airplane $airplanes)
     {
-    	$airplane->delete();
-    	Session::flash('message','Se elimino correctamente');
-    	return redirect()->route('airplanes.index');
+    	$validator = Validator::make($request->all(),$this->rules());
+        if($validator->fails()){
+            return json_encode(['outcome' => 'error']); 
+        }
+        $airplanes = new \App\Airplane;
+        $airplanes->nombre = $request->get('nombre');
+        $airplanes->airport_name = $request->get('airport_name');
+        $airplanes->save();
+        return $airplanes;
+    }
+
+    public function destroy(Airplane $airplanes)
+    {
+    	if($airplanes->es_valido){
+            $airplanes->es_valido = false;
+            $airplanes->save();
+            return json_encode(['outcome' => 'Eliminado']);
+        }
+        return json_encode(['outcome' => 'Hubo un error']);
     }
 }

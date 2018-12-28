@@ -41,8 +41,9 @@ class RoleController extends Controller
         return $roles;
     }
 
-    public function show(Role $roles)
+    public function show($id)
     {
+    	$roles = Role::findOrFail($id);
     	return $roles;
     }
 

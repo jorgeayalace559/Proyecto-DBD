@@ -45,8 +45,9 @@ class SeatController extends Controller
         return $seats;
     }
 
-    public function show(Seat $seats)
+    public function show($id)
     {
+    	$seats = Seat::findOrFail($id);
     	return $seats;
     }
 

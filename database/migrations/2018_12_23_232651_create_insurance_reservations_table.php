@@ -14,7 +14,7 @@ class CreateInsuranceReservationsTable extends Migration
     public function up()
     {
         Schema::create('insurance_reservations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unique();
 
             $table->integer('cost');
             $table->timestamp('begin_date');

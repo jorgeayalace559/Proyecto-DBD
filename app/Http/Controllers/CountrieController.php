@@ -39,9 +39,10 @@ class CountrieController extends Controller
         return $countries;
     }
 
-    public function show(Car $countries)
+    public function show($id)
     {
-    	return $countries;
+    	$countries = Countrie::findOrFail($id);
+        return $countries;
     }
 
     public function edit(Car $car)
