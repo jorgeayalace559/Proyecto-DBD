@@ -31,6 +31,12 @@ class RolesTableSeeder extends Seeder
                 'description' => 'Trabajador/es del aeropuerto'
             ]
         );
+        DB::table('roles')->insert(
+            [
+                'type' => 'Cliente',
+                'description' => 'Cliente del aeropuerto'
+            ]
+        );
         
 
     }

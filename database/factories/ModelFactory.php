@@ -25,8 +25,8 @@ $factory->define(App\Flight::class, function (Faker $faker) {
     return [
         'end_date'          => date("Y-m-d H:i:s"),
         'begin_date'        => date("Y-m-d H:i:s"),
-        'origin_id'         => App\Citie::all()->random()->id,
-        'destination_id'    => App\Citie::all()->random()->id, //Corregir que no se repitan
+        'origin_id'         => rand(1,5),
+        'destination_id'    => rand(1,5), //Corregir que no se repitan
         'platform'          => $faker-> randomDigit,
 
     ];

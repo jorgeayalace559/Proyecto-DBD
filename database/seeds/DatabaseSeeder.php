@@ -29,6 +29,5 @@ class DatabaseSeeder extends Seeder
         $this->call(TicketsTableSeeder::class);
         $this->call(CarsTableSeeder::class);
 
-
     }
 }
