@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePurchaseOrder extends Migration
+class CreateCarsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,16 @@ class CreatePurchaseOrder extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_order', function (Blueprint $table) {
+        Schema::create('cars', function (Blueprint $table) {
             $table->increments('id');
-            $table->int('total_cost');
-            $table->timestamps('date');
+
+            $table->integer('capacity');
+            $table->string('patent');
+
+            $table->unsignedInteger('city_id');
+            $table->foreign('city_id')->references('id')->on('cities');
+
+            $table->timestamps();
         });
     }
 
@@ -27,6 +33,6 @@ class CreatePurchaseOrder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_order');
+        Schema::dropIfExists('cars');
     }
 }

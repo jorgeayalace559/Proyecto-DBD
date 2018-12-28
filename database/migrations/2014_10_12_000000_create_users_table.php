@@ -16,21 +16,23 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->int('miles');
+            $table->integer('miles');
             $table->string('rut');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('role_id')->references('id')->on('role');
+
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 
     /**
      * Reverse the migrations.
      *
-     * @return void
+     * @return vpopmail_del_domain(domain)
      */
     public function down()
     {

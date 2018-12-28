@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRole extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,17 @@ class CreateRole extends Migration
      */
     public function up()
     {
-        Schema::create('role', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('type');
-            $table->string('description');
+            $table->string('bank');
+            $table->string('count');
+            $table->integer('quotas');
+
+            $table->unsignedInteger('purchase_order_id');
+            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
+
             $table->timestamps();
         });
     }
@@ -28,6 +35,6 @@ class CreateRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role');
+        Schema::dropIfExists('payments');
     }
 }
