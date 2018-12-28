@@ -11,6 +11,6 @@ class Ticket_ReservationsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //Se rellena en base a como se llenan los Tickets.
     }
 }

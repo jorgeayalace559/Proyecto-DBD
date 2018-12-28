@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Car_Reservation;
 
 class Car_ReservationsTableSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class Car_ReservationsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //Tabla se rellena con datos de car
     }
 }

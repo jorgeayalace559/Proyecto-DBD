@@ -7,7 +7,7 @@ $factory->define(App\PurchaseOrder::class, function (Faker $faker) {
 
         'cost' => rand(15000,20000),
         'date' => today(),
-        'user_id' => rand(1,5)
+        'user_id' => App\User::all()->random()->id,
 
     ];
 });

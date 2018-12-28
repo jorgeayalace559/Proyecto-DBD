@@ -12,7 +12,7 @@ class InsuranceReservationsTableSeeder extends Seeder
     public function run()
     {
         
-        factory(App\InsuranceReservation::class, 5)->create()->make();
+        //Tabla se rellena con datos de Insurance
     
     }
 }

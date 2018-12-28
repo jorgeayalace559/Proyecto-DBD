@@ -18,8 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CitiesTableSeeder::class);
         $this->call(HotelsTableSeeder::class);
         $this->call(RoomsTableSeeder::class);
-        //$this->call(PurchaseOrdersTableSeeder::class);
-        //$this->call(InsuranceReservationsTableSeeder::class);
+        $this->call(PurchaseOrdersTableSeeder::class);
         $this->call(InsurancesTableSeeder::class);
         
         
@@ -30,6 +29,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CarsTableSeeder::class);
 
         $this->call(PassengersTableSeeder::class);
+        //$this->call(LuggagesTableSeeder::class);
+        $this->call(PackagesTableSeeder::class);
 
     }
 }

@@ -11,6 +11,6 @@ class Package_ReservationsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //Tabla se rellena con datos de Package
     }
 }

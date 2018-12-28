@@ -11,6 +11,6 @@ class Room_ReservationsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //Se rellena en base a los creados en Room
     }
 }

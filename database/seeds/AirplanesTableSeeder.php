@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Airplane;
 
 class AirplanesTableSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class AirplanesTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(Airplane::class,20)->create();
     }
 }
