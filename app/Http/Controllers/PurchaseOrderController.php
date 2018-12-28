@@ -43,8 +43,9 @@ class PurchaseOrderController extends Controller
         return $purchaseorders;
     }
 
-    public function show(PurchaseOrder $purchaseorders)
+    public function show($id)
     {
+    	$purchaseorders = PurchaseOrder::findOrFail($id);
     	return $purchaseorders;
     }
 

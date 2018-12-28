@@ -47,8 +47,9 @@ class InsuranceReservationController extends Controller
         return $insurancereservations;
     }
 
-    public function show(InsuranceReservation $insurancereservations)
+    public function show($id)
     {
+    	$insurancereservations = InsuranceReservation::findOrFail($id);
     	return $insurancereservations;
     }
 

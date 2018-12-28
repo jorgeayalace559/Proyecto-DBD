@@ -45,8 +45,9 @@ class TicketReservationController extends Controller
         return $ticketreservations;
     }
 
-    public function show(TicketReservation $ticketreservations)
+    public function show($id)
     {
+    	$ticketreservations = TicketReservation::findOrFail($id);
     	return $ticketreservations;
     }
 

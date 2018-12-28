@@ -49,8 +49,9 @@ class PackageController extends Controller
         return $packages;
     }
 
-    public function show(Package $packages)
+    public function show($id)
     {
+    	$packages = Package::findOrFail($id);
     	return $packages;
     }
 
