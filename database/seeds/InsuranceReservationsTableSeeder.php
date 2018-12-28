@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\InsuranceReservation;
 
 class InsuranceReservationsTableSeeder extends Seeder
 {
@@ -12,7 +13,7 @@ class InsuranceReservationsTableSeeder extends Seeder
     public function run()
     {
         
-        //Tabla se rellena con datos de Insurance
+        factory(App\InsuranceReservation::class, 50)->create();
     
     }
 }

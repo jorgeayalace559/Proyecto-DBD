@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\PackageReservation;
 
-class Package_ReservationsTableSeeder extends Seeder
+class PackageReservationsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,6 @@ class Package_ReservationsTableSeeder extends Seeder
      */
     public function run()
     {
-        //Tabla se rellena con datos de Package
+        factory(App\PackageReservation::class, 50)->create();
     }
 }

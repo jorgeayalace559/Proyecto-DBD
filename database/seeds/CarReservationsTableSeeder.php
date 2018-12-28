@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\CarReservation;
 
-class Room_ReservationsTableSeeder extends Seeder
+class CarReservationsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,6 @@ class Room_ReservationsTableSeeder extends Seeder
      */
     public function run()
     {
-        //Se rellena en base a los creados en Room
+        factory(App\CarReservation::class, 50)->create();
     }
 }

@@ -17,7 +17,6 @@ class CreateTicketReservationsTable extends Migration
             $table->increments('id');
 
             $table->integer('cost');
-            $table->timestamp('date');
 
             $table->unsignedInteger('purchase_order_id');
             $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');

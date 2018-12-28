@@ -12,6 +12,6 @@ class PassengersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Passenger::class,100)->create();
+        factory(Passenger::class,10)->create();
     }
 }
