@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Airplane extends Model
 {
     protected $fillable = [
+        'name',
     	'capacity',
     	'flight_id'
     ];

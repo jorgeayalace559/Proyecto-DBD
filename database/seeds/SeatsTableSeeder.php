@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Seat;
 
 class SeatsTableSeeder extends Seeder
 {
@@ -11,6 +12,7 @@ class SeatsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(App\Seat::class,50)->create();
+
     }
 }
