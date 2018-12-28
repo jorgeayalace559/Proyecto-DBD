@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\TicketReservation;
 
-class Car_ReservationsTableSeeder extends Seeder
+class TicketReservationsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,7 @@ class Car_ReservationsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(App\TicketReservation::class, 50)->create();
+	
     }
 }

@@ -4,13 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Room_Reservation extends Model
+class TicketReservation extends Model
 {
     protected $fillable = [
     	'cost',
     	'date',
-    	'begin_date',
-    	'end_date',
     	'purchase_order_id',
     	'package_id'
     ];
@@ -23,7 +21,7 @@ class Room_Reservation extends Model
         return $this->belongsTo('App\PurchaseOrder');
     }
 
-    public function rooms(){
-        return $this->hasMany('App\Room');
+    public function tickets(){
+    	return $this->hasMany('App\Ticket');
     }
 }

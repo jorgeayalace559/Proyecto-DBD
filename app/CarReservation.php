@@ -4,11 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Car_Reservation extends Model
+class CarReservation extends Model
 {
    	protected $fillable = [
     	'cost',
-    	'date',
     	'begin_date',
     	'end_date',
     	'purchase_order_id',

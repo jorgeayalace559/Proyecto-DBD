@@ -10,7 +10,7 @@ class Luggage extends Model
     	'weight',
     	'cost',
     	'type',
-    	'passenger_id'
+    	'passenger_id',
     ];
 
     public function passenger(){

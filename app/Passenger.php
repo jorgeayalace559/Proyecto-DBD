@@ -9,7 +9,7 @@ class Passenger extends Model
     protected $fillable = [
     	'rut',
     	'name',
-    	'ticket_id'
+    	'ticket_id',
     ];
 
     public function luggages(){

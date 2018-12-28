@@ -17,7 +17,6 @@ class CreateCarReservationsTable extends Migration
             $table->increments('id');
 
             $table->integer('cost');
-            $table->timestamp('date');
             $table->timestamp('begin_date');
             $table->timestamp('end_date');
 

@@ -11,6 +11,6 @@ class PaymentsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //se rellena en base a la informacion del usuario
     }
 }

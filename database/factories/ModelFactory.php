@@ -4,6 +4,7 @@ use Faker\Generator as Faker;
 use App\Citie;
 use App\Flight;
 use App\Ticket;
+use App\Luggage;
 
 $factory->define(App\Car::class, function (Faker $faker) {
     return [
@@ -31,3 +32,93 @@ $factory->define(App\Flight::class, function (Faker $faker) {
 
     ];
 });
+
+$factory->define(App\Hotel::class, function (Faker $faker) {
+
+    return [
+
+        'name' => $faker->lastName,
+        'stars' => rand(1,5),
+        'capacity' => rand(30,80)
+
+    ];
+
+});
+
+$factory->define(App\Luggage::class, function (Faker $faker) {
+    return [
+        'weight'              => rand(0,50),
+        'cost'                => App\Luggage::all()->weight*1500,
+        'type'                => $faker->text(20),
+        'passenger_id'        => App\Passenger::all()->random()->id,
+    ];
+});
+
+$factory->define(App\Package::class, function (Faker $faker) {
+    return [
+        'quantity'                     => rand(1,6),
+        'name'                         => $faker->text(20),
+        'cost'                         => rand(100000,2000000),
+        'nights'                       => rand(2,6),
+        'origin_id'                    => App\Citie::all()->random()->id,
+        'destination_id'               => App\Citie::all()->random()->id,
+    ];
+});
+
+$factory->define(App\Passenger::class, function (Faker $faker) {
+    return [
+        'rut'                  => rand(15000000,22000000),
+        'name'                 => $faker->name,
+        'ticket_id'            => App\Ticket::all()->random()->id,
+
+    ];
+});
+
+$factory->define(App\CarReservation::class, function (Faker $faker) {
+    return [
+        'begin_date'                    => date("Y-m-d H:i:s"),
+        'end_date'                      => date("Y-m-d H:i:s"),
+        'cost'                          => rand(30000,1500),
+        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
+        'package_id'                    => App\Package::all()->random()->id,
+    ];
+});
+
+$factory->define(App\InsuranceReservation::class, function (Faker $faker) {
+    return [
+        'begin_date'                    => date("Y-m-d H:i:s"),
+        'end_date'                      => date("Y-m-d H:i:s"),
+        'cost'                          => rand(30000,150000),
+        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
+        'package_id'                    => App\Package::all()->random()->id,
+    ];
+});
+
+$factory->define(App\PackageReservation::class, function (Faker $faker) {
+    return [
+        'begin_date'                    => date("Y-m-d H:i:s"),
+        'end_date'                      => date("Y-m-d H:i:s"),
+        'cost'                          => rand(30000,150000),
+        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
+        'package_id'                    => App\Package::all()->random()->id,
+    ];
+});
+
+$factory->define(App\RoomReservation::class, function (Faker $faker) {
+    return [
+        'begin_date'                    => date("Y-m-d H:i:s"),
+        'end_date'                      => date("Y-m-d H:i:s"),
+        'cost'                          => rand(30000,150000),
+        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
+        'package_id'                    => App\Package::all()->random()->id,
+    ];
+});
+
+$factory->define(App\TicketReservation::class, function (Faker $faker) {
+    return [
+        'cost'                          => rand(30000,150000),
+        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
+        'package_id'                    => App\Package::all()->random()->id,
+    ];
+});
+

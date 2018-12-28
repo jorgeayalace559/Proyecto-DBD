@@ -8,16 +8,20 @@ class InsuranceReservation extends Model
 {
     protected $fillable = [
     	'cost',
-    	'date',
     	'begin_date',
     	'end_date',
-    	'purchase_order_id'
+    	'purchase_order_id',
+        'package_id',
     ];
 
     public function purchase_order(){
         return $this->belongsTo('App\PurchaseOrder');
     }
 
+    public function package(){
+        return $this->belongsTo('App\Package');
+    }
+    
     public function insurances(){
     	return $this->hasMany('App\Insurances');
     }
