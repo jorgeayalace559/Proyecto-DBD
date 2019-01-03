@@ -39,13 +39,6 @@ class HotelController extends Controller
     {
         return Hotel::create($request->all());
     }
-<<<<<<< Updated upstream
-
-    public function show($id)
-    {
-    	$hotels = Hotel::findOrFail($id);
-        return $hotels;
-=======
  
     /**
      * Display the specified resource.
@@ -56,7 +49,6 @@ class HotelController extends Controller
     public function show($id)
     {
         return Hotel::find($id);
->>>>>>> Stashed changes
     }
  
     /**

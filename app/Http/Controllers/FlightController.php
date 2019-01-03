@@ -38,13 +38,6 @@ class FlightController extends Controller
     {
         return Flight::create($request->all());
     }
-<<<<<<< Updated upstream
-
-    public function show($id)
-    {
-    	$flights = Flight::findOrFail($id);
-        return $flights;
-=======
  
     /**
      * Display the specified resource.
@@ -55,7 +48,6 @@ class FlightController extends Controller
     public function show($id)
     {
         return Flight::find($id);
->>>>>>> Stashed changes
     }
  
     /**

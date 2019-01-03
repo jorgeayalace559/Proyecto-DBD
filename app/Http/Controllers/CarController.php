@@ -39,13 +39,6 @@ class CarController extends Controller
     {
         return Car::create($request->all());
     }
-<<<<<<< Updated upstream
-
-    public function show($id)
-    {
-        $cars = Car::findOrFail($id);
-    	return $cars;
-=======
  
     /**
      * Display the specified resource.
@@ -56,7 +49,6 @@ class CarController extends Controller
     public function show($id)
     {
         return Car::find($id);
->>>>>>> Stashed changes
     }
  
     /**

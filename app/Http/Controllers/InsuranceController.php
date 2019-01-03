@@ -39,13 +39,6 @@ class InsuranceController extends Controller
     {
         return Insurance::create($request->all());
     }
-<<<<<<< Updated upstream
-
-    public function show($id)
-    {
-    	$insurances = Insurance::findOrFail($id);
-        return $insurances;
-=======
  
     /**
      * Display the specified resource.
@@ -56,7 +49,6 @@ class InsuranceController extends Controller
     public function show($id)
     {
         return Insurance::find($id);
->>>>>>> Stashed changes
     }
  
     /**

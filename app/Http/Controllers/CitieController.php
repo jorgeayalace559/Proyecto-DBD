@@ -39,13 +39,6 @@ class CitieController extends Controller
     {
         return Citie::create($request->all());
     }
-<<<<<<< Updated upstream
-
-    public function show( $id)
-    {
-    	$cities = Citie::findOrFail($id);
-        return $cities;
-=======
  
     /**
      * Display the specified resource.
@@ -56,7 +49,6 @@ class CitieController extends Controller
     public function show($id)
     {
         return Citie::find($id);
->>>>>>> Stashed changes
     }
  
     /**

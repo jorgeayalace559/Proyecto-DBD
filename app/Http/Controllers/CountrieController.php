@@ -39,13 +39,6 @@ class CountrieController extends Controller
     {
         return Countrie::create($request->all());
     }
-<<<<<<< Updated upstream
-
-    public function show($id)
-    {
-    	$countries = Countrie::findOrFail($id);
-        return $countries;
-=======
  
     /**
      * Display the specified resource.
@@ -56,7 +49,6 @@ class CountrieController extends Controller
     public function show($id)
     {
         return Countrie::find($id);
->>>>>>> Stashed changes
     }
  
     /**

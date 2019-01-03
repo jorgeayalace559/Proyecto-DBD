@@ -39,13 +39,6 @@ class CarReservationController extends Controller
     {
         return CarReservation::create($request->all());
     }
-<<<<<<< Updated upstream
-
-    public function show($id)
-    {
-        $carreservations = CarReservation::findOrFail($id);
-        return $carreservations;
-=======
  
     /**
      * Display the specified resource.
@@ -56,7 +49,6 @@ class CarReservationController extends Controller
     public function show($id)
     {
         return CarReservation::find($id);
->>>>>>> Stashed changes
     }
  
     /**
