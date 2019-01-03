@@ -15,27 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//ESTO SE DEBE HACER POR CADA UNO DE LOS CONTROLADORES
+//FALTA HACER LAS DISTINTAS VALIDACIONES EN EL CASO DE QUE SE USE STORE
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('airplanes','AirplaneController');
-Route::resource('cities','CitieController');
-Route::resource('cars','CarController');
-Route::resource('countries','CountrieController');
-Route::resource('flights','FlightController');
-Route::resource('hotels','HotelController');
-Route::resource('insurances','InsuranceController');
-Route::resource('insurances_reservations','InsuranceReservationController');
-Route::resource('luggages','LuggageController');
-Route::resource('packages','PackageController');
-Route::resource('passengers','PassengerController');
-Route::resource('payments','PaymentController');
-Route::resource('purchase_orders','PurchaseOrderController');
-Route::resource('roles','RoleController');
-Route::resource('room_reservations','RoomReservationController');
-Route::resource('seats','SeatController');
-Route::resource('states','StateController');
-Route::resource('tickets','TicketController');
-Route::resource('ticket_reservations','TicketReservationController');
-Route::resource('users','UserController');
+//Airplanes
+Route::get('/Airplane/all', 'AirplaneController@index');
+Route::get('/Airplane/show/{id}', 'AirplaneController@show');
+Route::post('/Airplane/destroy/{id}', 'AirplaneController@destroy');
+Route::post('/Airplane/store', 'AirplaneController@store');
