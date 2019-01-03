@@ -8,75 +8,91 @@ use Validator;
 
 class InsuranceController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'age' => 'required|numeric',
-    		'type' => 'required|string',
-    		'city' => 'required|string'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$insurances = Insurance::all();
-    	return $insurances;
-    }
-
-    public function create(Request $request)
-    {
-    	//
-    }
-
-    public function store(Request $request)
-    {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $insurances = new \App\Insurance;
-        $insurances->age = $request->get('age');
-        $insurances->type = $request->get('type');
-        $insurances->city = $request->get('city');
-        $insurances->save();
+        $insurances = Insurance::all();
         return $insurances;
     }
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        return Insurance::create($request->all());
+    }
+<<<<<<< Updated upstream
 
     public function show($id)
     {
     	$insurances = Insurance::findOrFail($id);
         return $insurances;
-    }
-
-    public function edit(Insurance $Insurance)
+=======
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-    	//
+        return Insurance::find($id);
+>>>>>>> Stashed changes
     }
-
-    public function update(Request $request, Insurance $insurances)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $insurances = new \App\Insurance;
-        $insurances->age = $request->get('age');
-        $insurances->type = $request->get('type');
-        $insurances->city = $request->get('city');
-        $insurances->save();
-        return $insurances;
+        //
     }
-
-    public function destroy(Insurance $insurances)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	if($insurances->es_valido){
-            $insurances->es_valido = false;
-            $insurances->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        //
+    }
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $insurances = Insurance::find($id);
+        $insurances->delete();
+        return "Se ha eliminado un seguro";
     }
 }
 

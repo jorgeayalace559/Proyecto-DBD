@@ -7,81 +7,90 @@ use App\Flight;
 use Validator;
 class FlightController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'destination_id' => 'required|numeric',
-    		'begin_date' => 'required|string',
-    		'end_date' => 'required|string',
-    		'origin_id' => 'required|numeric',
-    		'platform' => 'required|numeric'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$flights = Flight::all();
-    	return $flights;
-    }
-
-    public function create(Request $request)
-    {
-    	//
-    }
-
-    public function store(Request $request)
-    {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $flights = new \App\Flight;
-        $flights->destination_id = $request->get('destination_id');
-        $flights->begin_date = $request->get('begin_date');
-        $flights->end_date = $request->get('end_date');
-        $flights->origin_id = $request->get('origin_id');
-        $flights->platform = $request->get('platform');
-        $flights->save();
+        $flights = Flight::all();
         return $flights;
     }
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        return Flight::create($request->all());
+    }
+<<<<<<< Updated upstream
 
     public function show($id)
     {
     	$flights = Flight::findOrFail($id);
         return $flights;
-    }
-
-    public function edit(Flight $Flight)
+=======
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-    	//
+        return Flight::find($id);
+>>>>>>> Stashed changes
     }
-
-    public function update(Request $request, Flight $flights)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $flights = new \App\Flight;
-        $flights->cost = $request->get('cost');
-        $flights->date = $request->get('date');
-        $flights->begin_date = $request->get('begin_date');
-        $flights->end_date = $request->get('end_date');
-        $flights->purchase_order_id = $request->get('purchase_order_id');
-        $flights->package_id = $request->get('package_id');
-        $flights->save();
-        return $flights;
+        //
     }
-
-    public function destroy(Flight $flights)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	if($flights->es_valido){
-            $flights->es_valido = false;
-            $flights->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        //
+    }
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $airplanes = Flight::find($id);
+        $airplanes->delete();
+        return "Se ha eliminado un vuelo";
     }
 }

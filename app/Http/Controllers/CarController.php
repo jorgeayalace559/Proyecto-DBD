@@ -8,70 +8,90 @@ use Validator;
 
 class CarController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'name' => 'required|string',
-    		'airport_name' => 'required|string'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$cars = Car::all();
-    	return $cars;
-    }
-
-    public function create(Request $request)
-    {
-    	//
-    }
-
-    public function store(Request $request)
-    {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $cars = new \App\Car;
-        $cars->nombre = $request->get('nombre');
-        $cars->airport_name = $request->get('airport_name');
-        $cars->save();
+        $cars = Car::all();
         return $cars;
     }
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        return Car::create($request->all());
+    }
+<<<<<<< Updated upstream
 
     public function show($id)
     {
         $cars = Car::findOrFail($id);
     	return $cars;
-    }
-
-    public function edit(Car $cars)
+=======
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-    	//
+        return Car::find($id);
+>>>>>>> Stashed changes
     }
-
-    public function update(Request $request, Car $cars)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        $cars = new \App\Car;
-        $cars->nombre = $request->get('nombre');
-        $cars->airport_name = $request->get('airport_name');
-        $cars->save();
-        return $cars;
+        //
     }
-
-    public function destroy(Car $cars)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	if($cars->es_valido){
-            $cars->es_valido = false;
-            $cars->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        //
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $cars = Car::find($id);
+        $cars->delete();
+        return "Se ha eliminado un auto";
     }
 }

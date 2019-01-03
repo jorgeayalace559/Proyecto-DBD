@@ -8,70 +8,90 @@ use Validator;
 
 class CitieController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'name' => 'required|string',
-    		'airport_name' => 'required|string'
-    	];
-    }
-
+	 /**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$cities = Citie::all();
-    	return $cities;
+        $city = Citie::all();
+        return $city;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $cities = new \App\Citie;
-        $cities->nombre = $request->get('nombre');
-        $cities->airport_name = $request->get('airport_name');
-        $cities->save();
-        return $cities;
+        return Citie::create($request->all());
     }
+<<<<<<< Updated upstream
 
     public function show( $id)
     {
     	$cities = Citie::findOrFail($id);
         return $cities;
-    }
-
-    public function edit(Citie $cities)
+=======
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-    	//
+        return Citie::find($id);
+>>>>>>> Stashed changes
     }
-
-    public function update(Request $request, Citie $cities)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        $cities = new \App\Citie;
-        $cities->nombre = $request->get('nombre');
-        $cities->airport_name = $request->get('airport_name');
-        $cities->save();
-        return $cities;
+        //
     }
-
-    public function destroy(Citie $cities)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	if($cities->es_valido){
-            $cities->es_valido = false;
-            $cities->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        //
+    }
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $city = Citie::find($id);
+        $city->delete();
+        return "Se ha eliminado una ciudad";
     }
 }

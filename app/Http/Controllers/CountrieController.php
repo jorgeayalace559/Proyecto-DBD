@@ -8,68 +8,90 @@ use Validator;
 
 class CountrieController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'name' => 'required|string'
-    	];
-    }
-
+	 /**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$countries = Countrie::all();
-    	return $countries;
+        $country = Countrie::all();
+        return $country;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $countries = new \App\Countrie;
-        $countries->name = $request->get('name');
-        $countries->save();
-        return $countries;
+        return Countrie::create($request->all());
     }
+<<<<<<< Updated upstream
 
     public function show($id)
     {
     	$countries = Countrie::findOrFail($id);
         return $countries;
-    }
-
-    public function edit(Car $car)
+=======
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-    	//
+        return Countrie::find($id);
+>>>>>>> Stashed changes
     }
-
-    public function update(Request $request, Car $countries)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $countries = new \App\Countrie;
-        $countries->name = $request->get('name');
-        $countries->save();
-        return $countries;
+        //
     }
-
-    public function destroy(Car $countries)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	if($countries->es_valido){
-            $countries->es_valido = false;
-            $countries->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        //
+    }
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $country = Countrie::find($id);
+        $country->delete();
+        return "Se ha eliminado un pais";
     }
 }

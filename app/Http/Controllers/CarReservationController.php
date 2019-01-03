@@ -3,88 +3,95 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\CarReservation
+use App\CarReservation;
 use Validator;
 
 class CarReservationController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'cost' => 'required|numeric',
-    		'date' => 'required|string',
-    		'begin_date' => 'required|string',
-    		'end_date' => 'required|string',
-    		'purchase_order_id' => 'required|numeric',
-    		'package_id' => 'required|numeric'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$carreservations = CarReservation::all();
-    	return $carreservations;
+        $carReservations = CarReservation::all();
+        return $carReservations;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $carreservations = new \App\CarReservation;
-        $carreservations->cost = $request->get('cost');
-        $carreservations->date = $request->get('date');
-        $carreservations->begin_date = $request->get('begin_date');
-        $carreservations->end_date = $request->get('end_date');
-        $carreservations->purchase_order_id = $request->get('purchase_order_id');
-        $carreservations->package_id = $request->get('package_id');
-        $carreservations->save();
-        return $carreservations;
+        return CarReservation::create($request->all());
     }
+<<<<<<< Updated upstream
 
     public function show($id)
     {
         $carreservations = CarReservation::findOrFail($id);
         return $carreservations;
-    }
-
-    public function edit(CarReservation $carreservations)
+=======
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-    	//
+        return CarReservation::find($id);
+>>>>>>> Stashed changes
     }
-
-    public function update(Request $request, CarReservation $carreservations)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $carreservations = new \App\CarReservation;
-        $carreservations->cost = $request->get('cost');
-        $carreservations->date = $request->get('date');
-        $carreservations->begin_date = $request->get('begin_date');
-        $carreservations->end_date = $request->get('end_date');
-        $carreservations->purchase_order_id = $request->get('purchase_order_id');
-        $carreservations->package_id = $request->get('package_id');
-        $carreservations->save();
-        return $carreservations;
+        //
     }
-
-    public function destroy(CarReservation $carreservations)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	if($carreservations->es_valido){
-            $carreservations->es_valido = false;
-            $carreservations->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        //
+    }
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $carReservations = CarReservation::find($id);
+        $carReservations->delete();
+        return "Se ha eliminado una reserva de auto";
     }
 }
