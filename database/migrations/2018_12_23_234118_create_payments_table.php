@@ -22,7 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->integer('quotas');
 
             $table->unsignedInteger('purchase_order_id');
-            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
+            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders')->onDelete('cascade');
 
             $table->timestamps();
         });

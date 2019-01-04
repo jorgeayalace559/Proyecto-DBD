@@ -23,9 +23,9 @@ class CreatePackagesTable extends Migration
             $table->integer('nights');
 
             $table->unsignedInteger('origin_id');
-            $table->foreign('origin_id')->references('id')->on('cities');
+            $table->foreign('origin_id')->references('id')->on('cities')->onDelete('cascade');
             $table->unsignedInteger('destination_id');
-            $table->foreign('destination_id')->references('id')->on('cities');
+            $table->foreign('destination_id')->references('id')->on('cities')->onDelete('cascade');
 
             $table->timestamps();
         });

@@ -36,7 +36,25 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
-        return Flight::create($request->all());
+        $verifyFlight = Flight::find($request->id);
+        $flight = new Flight();
+
+        if($verifyFlight == null){
+
+            $flight->create([
+                'destination_id' => $request->destination_id,
+                'begin_date' => $request->begin_date,
+                'end_date' => $request->end_date,
+                'origin_id' => $request->origin_id,
+                'platform' => $request->platform
+
+            ]);
+        }
+        else{
+            return "El vuelo ingresado ya existe";
+        }
+
+        return Flight::all();
     }
  
     /**

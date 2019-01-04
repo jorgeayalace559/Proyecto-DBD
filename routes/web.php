@@ -21,5 +21,11 @@ Route::get('/', function () {
 //Airplanes
 Route::get('/Airplane/all', 'AirplaneController@index');
 Route::get('/Airplane/show/{id}', 'AirplaneController@show');
-Route::post('/Airplane/destroy/{id}', 'AirplaneController@destroy');
+Route::get('/Airplane/destroy/{id}', 'AirplaneController@destroy');
 Route::post('/Airplane/store', 'AirplaneController@store');
+
+//flights
+Route::get('/Flight/all', 'FlightController@index');
+Route::get('/Flight/show/{id}', 'FlightController@show');
+Route::get('/Flight/destroy/{id}', 'FlightController@destroy');
+Route::post('/Flight/store', 'FlightController@store');
