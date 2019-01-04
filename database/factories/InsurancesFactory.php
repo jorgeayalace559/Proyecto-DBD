@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\InsuranceReservation;
 
 $factory->define(App\Insurance::class, function (Faker $faker) {
    
@@ -27,7 +28,8 @@ $factory->define(App\Insurance::class, function (Faker $faker) {
         
         'edad' => rand(1,100) ,
     	'type' => $insurance,
-    	'city' => $faker->city
+    	'city' => $faker->city,
+        'insurance_reservation_id' => App\InsuranceReservation::all()->random()->id,
 
     ];
 });

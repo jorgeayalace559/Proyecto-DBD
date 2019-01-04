@@ -210,7 +210,7 @@ CREATE TABLE public.cities (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     airport_name character varying(255) NOT NULL,
-    country_id integer NOT NULL
+    countrie_id integer NOT NULL
 );
 
 
@@ -2382,11 +2382,11 @@ ALTER TABLE ONLY public.cars
 
 
 --
--- Name: cities cities_country_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: homestead
+-- Name: cities cities_countrie_id_foreign; Type: FK CONSTRAINT; Schema: public; Owner: homestead
 --
 
 ALTER TABLE ONLY public.cities
-    ADD CONSTRAINT cities_country_id_foreign FOREIGN KEY (country_id) REFERENCES public.countries(id);
+    ADD CONSTRAINT cities_countrie_id_foreign FOREIGN KEY (countrie_id) REFERENCES public.countries(id);
 
 
 --

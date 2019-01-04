@@ -37,7 +37,23 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        return Car::create($request->all());
+        $verifyCar = Car::find($request->id);
+        $car = new Car();
+
+        if($verifyCar == null){
+
+            $car->create([
+                'capacity' => $request->capacity,
+                'city_id' => $request->city_id,
+                'patent' => $request->patent
+
+            ]);
+        }
+        else{
+            return "El auto ingresado ya existe";
+        }
+
+        return Car::all();
     }
  
     /**

@@ -9,10 +9,11 @@ class Insurance extends Model
     protected $fillable = [
     	'edad',
     	'type',
-    	'city'
+    	'city',
+    	'insurance_reservation_id'
     ];
 
     public function insurance_reservation(){
-    	return $this->belongsTo('App\InsuranceReservation');
+    	return $this->hasMany('App\InsuranceReservation');
     }
 }

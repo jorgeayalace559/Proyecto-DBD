@@ -10,10 +10,11 @@ class Car extends Model
     	'capacity',
     	'city_id',
     	'patent',
+        'car_reservation_id'
     ];
 
-    public function car_reservation(){
-    	return $this->belongsTo('App\Car_Reservation');
+    public function car_reservations(){
+        return $this->hasMany('App\CarReservation');
     }
 
     public function citie(){

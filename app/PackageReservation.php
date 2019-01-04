@@ -10,8 +10,7 @@ class PackageReservation extends Model
     	'cost',
     	'begin_date',
     	'end_date',
-    	'purchase_order_id',
-    	'package_id'
+    	'purchase_order_id'
     ];
 
     public function package(){

@@ -37,7 +37,23 @@ class CitieController extends Controller
      */
     public function store(Request $request)
     {
-        return Citie::create($request->all());
+        $verifyCitie = Citie::find($request->id);
+        $citie = new Citie();
+
+        if($verifyCitie == null){
+
+            $citie->create([
+                'name' => $request->name,
+                'airport_name' => $request->airport_name,
+                'countrie_id' => $request->countrie_id
+
+            ]);
+        }
+        else{
+            return "La ciudad ingresada ya existe";
+        }
+
+        return Citie::all();
     }
  
     /**

@@ -11,6 +11,7 @@ $factory->define(App\Car::class, function (Faker $faker) {
         'capacity'				=> rand(5,8),
         'city_id'				=> App\Citie::all()->random()->id,
         'patent'				=> $faker-> bothify($string = '##????'),
+        'car_reservation_id'    => App\CarReservation::all()->random()->id,
     ];
 });
 
@@ -19,6 +20,7 @@ $factory->define(App\Ticket::class, function (Faker $faker) {
         'cost'					=> rand(20000,30000),
         'quantity_passengers'	=> rand(100,150),
         'flight_id'				=> App\Flight::all()->random()->id,
+        'ticket_reservation_id'             => App\TicketReservation::all()->random()->id,
     ];
 });
 
@@ -62,6 +64,7 @@ $factory->define(App\Package::class, function (Faker $faker) {
         'nights'                       => rand(2,6),
         'origin_id'                    => App\Citie::all()->random()->id,
         'destination_id'               => App\Citie::all()->random()->id,
+        'package_reservation_id'       => App\PackageReservation::all()->random()->id,
     ];
 });
 
@@ -118,7 +121,6 @@ $factory->define(App\PackageReservation::class, function (Faker $faker) {
         'end_date'                      => date("Y-m-d H:i:s"),
         'cost'                          => rand(30000,150000),
         'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
-        'package_id'                    => App\Package::all()->random()->id,
     ];
 });
 

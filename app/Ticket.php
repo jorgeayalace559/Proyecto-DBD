@@ -11,6 +11,7 @@ class Ticket extends Model
     	'cost',
     	'quantity_passengers',
     	'flight_id',
+        'ticket_reservation_id',
     ];
 
     public function passengers(){
@@ -18,7 +19,7 @@ class Ticket extends Model
     }
 
     public function ticket_reservation(){
-        return $this->belongsTo('App\Ticket_Reservation');
+        return $this->hasMany('App\TicketReservation');
     }
 
     public function seats(){

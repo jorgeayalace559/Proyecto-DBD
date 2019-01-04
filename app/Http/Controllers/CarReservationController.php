@@ -37,7 +37,25 @@ class CarReservationController extends Controller
      */
     public function store(Request $request)
     {
-        return CarReservation::create($request->all());
+        $verifyCarReservation = CarReservation::find($request->id);
+        $carReservation = new CarReservation();
+
+        if($verifyCarReservation == null){
+
+            $carReservation->create([
+                'cost' => $request->cost,
+                'begin_date' => $request->begin_date,
+                'end_date' => $request->end_date,
+                'purchase_order_id' => $request->purchase_order_id,
+                'package_id' => $request->package_id
+
+            ]);
+        }
+        else{
+            return "La reserva ingresada ya existe";
+        }
+
+        return CarReservation::all();
     }
  
     /**

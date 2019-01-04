@@ -11,7 +11,8 @@ class Room extends Model
     	'capacity',
         'cost',
         'type',
-    	'hotel_id'
+    	'hotel_id',
+        'room_reservation_id'
     ];
 
     public function hotel(){
@@ -19,6 +20,6 @@ class Room extends Model
     }
 
     public function room_reservation(){
-    	return $this->belongsTo('App\Room_Reservation');
+    	return $this->hasMany('App\RoomReservation');
     }
 }

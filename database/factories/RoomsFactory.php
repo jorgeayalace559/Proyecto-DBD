@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\RoomReservation;
 
 $factory->define(App\Room::class, function (Faker $faker) {
     
@@ -34,6 +35,7 @@ $factory->define(App\Room::class, function (Faker $faker) {
         'cost' => $cost,
         'type' => $type,
         'hotel_id' => App\Hotel::all()->random()->id,
+        'room_reservation_id' => App\RoomReservation::all()->random()->id,
 
     ];
 });
