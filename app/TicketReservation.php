@@ -12,6 +12,7 @@ class TicketReservation extends Model
     	'purchase_order_id',
     	'package_id'
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function package(){
         return $this->belongsTo('App\Package');

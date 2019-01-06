@@ -14,6 +14,9 @@ class InsuranceReservation extends Model
         'package_id',
     ];
 
+    protected $hidden=['updated_at'];
+
+
     public function purchase_order(){
         return $this->belongsTo('App\PurchaseOrder');
     }

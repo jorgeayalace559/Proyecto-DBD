@@ -65,6 +65,7 @@ $factory->define(App\Package::class, function (Faker $faker) {
         'origin_id'                    => App\Citie::all()->random()->id,
         'destination_id'               => App\Citie::all()->random()->id,
         'package_reservation_id'       => App\PackageReservation::all()->random()->id,
+        'room_reservation_id'          => App\RoomReservation::all()->random()->id
     ];
 });
 
@@ -124,13 +125,20 @@ $factory->define(App\PackageReservation::class, function (Faker $faker) {
     ];
 });
 
+
 $factory->define(App\RoomReservation::class, function (Faker $faker) {
+    $days = rand(1,5);
+    $room = App\Room::all()->random()->id;
+    $habitacionCosto = App\Room::find($room)->cost;
+    $costo = $habitacionCosto * $days;
+    $fechaInicio = $faker->dateTimeBetween('-20 days','now',null);
     return [
-        'begin_date'                    => date("Y-m-d H:i:s"),
-        'end_date'                      => date("Y-m-d H:i:s"),
-        'cost'                          => rand(30000,150000),
+        'begin_date'                    => $fechaInicio,
+        'end_date'                      => $faker->dateTimeBetween($fechaInicio,'+'.$days.' days',null),
+        'day'                           => $days,
+        'cost'                          => $costo,
         'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
-        'package_id'                    => App\Package::all()->random()->id,
+        'room_id'                       => $room
     ];
 });
 

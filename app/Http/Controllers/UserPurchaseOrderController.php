@@ -3,20 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Hotel;
-use Validator;
+use App\purchaseOrder;
+use App\User;
 
-class HotelController extends Controller
+class UserPurchaseOrderController extends Controller
 {
-	/**
+    /**
 	* Display a listing of the resource.
 	*
 	* @return \Illuminate\Http\Response
 	*/
-    public function index()
+    public function index($id)
     {
-        $hotels = Hotel::all();
-        return $hotels;
+        $user = User::find($id);      
+        if (!$user) {
+        	return response()->json(['mensaje'=>'No se encuentra el hotel'],404);
+        }
+        $purchaseOrder = $user->purchaseOrders;
+        return response()->json(['datos'=>$purchaseOrder],202);
     }
  
     /**
@@ -37,33 +41,7 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-        $verifyHotel = Hotel::find($request->id);
-        $hotels = new Hotel();
-
-        if($verifyHotel == null){
-
-            $stars = $request->stars;
-            $capacity = $request->capacity;
-            $name = $request->name;
-
-            if(is_numeric($name) and $capacity > 0 and $capacity <100 and $stars > -1 and $stars < 6){
-
-                $hotels->create([
-                    'stars' => $request->stars,
-                    'capacity' => $request->capacity,
-                    'name' => $request->name
-
-                ]);
-            }
-            else{
-                return "Error en el ingreso de parametros";
-            }
-        }
-        else{
-            return "El hotel ingresado ya existe";
-        }
-
-        return Hotel::all();
+        //
     }
  
     /**
@@ -74,7 +52,7 @@ class HotelController extends Controller
      */
     public function show($id)
     {
-        return Hotel::find($id);
+        //return Hotel::find($id);
     }
  
     /**
@@ -108,8 +86,6 @@ class HotelController extends Controller
      */
     public function destroy($id)
     {
-        $hotels = Hotel::find($id);
-        $hotels->delete();
-        return "Se ha eliminado un hotel";
+        //
     }
 }

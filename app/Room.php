@@ -11,9 +11,9 @@ class Room extends Model
     	'capacity',
         'cost',
         'type',
-    	'hotel_id',
-        'room_reservation_id'
+    	'hotel_id'
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function hotel(){
         return $this->belongsTo('App\Hotel');

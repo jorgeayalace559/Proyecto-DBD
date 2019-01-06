@@ -15,6 +15,8 @@ class Airplane extends Model
     	'flight_id'
     ];
 
+    protected $hidden=['created_at','updated_at'];
+
     public function flight(){
     	return $this->belongsTo('App\Flight');
     }

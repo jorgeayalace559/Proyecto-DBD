@@ -11,6 +11,7 @@ class Passenger extends Model
     	'name',
     	'ticket_id',
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function luggages(){
         return $this->hasMany('App\Luggage');

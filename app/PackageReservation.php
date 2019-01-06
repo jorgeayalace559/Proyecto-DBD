@@ -12,6 +12,7 @@ class PackageReservation extends Model
     	'end_date',
     	'purchase_order_id'
     ];
+    protected $hidden=['updated_at'];
 
     public function package(){
         return $this->belongsTo('App\Package');

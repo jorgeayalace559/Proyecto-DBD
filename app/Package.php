@@ -13,8 +13,10 @@ class Package extends Model
     	'nights',
     	'origin_id',
     	'destination_id',
+        'room_reservation_id',
         'package_reservation_id'
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function car_reservations(){
         return $this->hasMany('App\CarReservation');
@@ -29,6 +31,6 @@ class Package extends Model
     }
 
     public function room_reservations(){
-    	return $this->hasMany('App\RoomReservation');
+    	return $this->belongsTo('App\RoomReservation');
     }
 }

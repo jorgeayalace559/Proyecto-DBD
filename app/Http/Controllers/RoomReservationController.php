@@ -58,9 +58,9 @@ class RoomReservationController extends Controller
                     'cost' => $cost,
                     'begin_date' => $begin_date,
                     'end_date' => $end_date,
-                    'purchase_order_id' => $request->purchase_order_id,
-                    'package_id' => $request->package_id
-     
+                    'day' => $day,
+                    'room_id' => $room_id,
+                    'purchase_order_id' => $request->purchase_order_id    
                 ]);
 
             }

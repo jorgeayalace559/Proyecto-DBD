@@ -39,3 +39,8 @@ Route::resource('State','StateController');
 Route::resource('Ticket','TicketController');
 Route::resource('TicketReservation','TicketReservationController');
 Route::resource('User','UserController');
+
+//ANIDADAS
+Route::resource('Hotel.Room','HotelRoomController',['except'=>['show']]);
+Route::resource('User.PurchaseOrder','UserPurchaseOrderController',['except'=>['show']]);
+Route::resource('Ticket.Passenger','TicketPassengerController',['except'=>['show']]);

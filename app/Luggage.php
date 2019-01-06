@@ -15,6 +15,7 @@ class Luggage extends Model
     	'type',
     	'passenger_id',
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function passenger(){
     	return $this->belongsTo('App\Passenger');

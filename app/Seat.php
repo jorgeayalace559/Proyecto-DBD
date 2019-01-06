@@ -13,6 +13,7 @@ class Seat extends Model
     	'ticket_id',
         'airplane_id'
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function ticket(){
     	return $this->belongsTo('App\Ticket');

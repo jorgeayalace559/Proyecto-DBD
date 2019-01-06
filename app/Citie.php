@@ -12,6 +12,9 @@ class Citie extends Model
         'country_id'
     ];
 
+    protected $hidden=['created_at','updated_at'];
+    
+
     public function flights(){
         return $this->hasMany('App\Flight');
     }

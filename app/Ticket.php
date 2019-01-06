@@ -13,6 +13,7 @@ class Ticket extends Model
     	'flight_id',
         'ticket_reservation_id'
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function passengers(){
         return $this->hasMany('App\Passenger');

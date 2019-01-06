@@ -66,7 +66,8 @@ class PackageController extends Controller
                     'nights' => $nights,
                     'origin_id' => $origin_id,
                     'destination_id' => $destination_id,
-                    'package_reservation_id' => $package_reservation_id
+                    'package_reservation_id' => $package_reservation_id,
+                    'room_reservation_id' => $room_reservation_id
     
                 ]);
 

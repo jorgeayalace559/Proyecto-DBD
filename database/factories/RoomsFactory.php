@@ -28,14 +28,19 @@ $factory->define(App\Room::class, function (Faker $faker) {
         $cost = rand(25000,30000);
     }
 
+    $hotel = App\Hotel::all()->random()->id;
+    $capacity = App\Hotel::all()->random()->capacity;
+    $number = $faker->numberBetween(1,$capacity);
+    //$numberSearch = App\Hotel::where('capacity',$number)->get;
+
+
+
     return [
 
-        'number' => rand(1,100),
+        'number' => $number,
         'capacity' => rand(1,4),
         'cost' => $cost,
         'type' => $type,
-        'hotel_id' => App\Hotel::all()->random()->id,
-        'room_reservation_id' => App\RoomReservation::all()->random()->id,
-
+        'hotel_id' => $hotel
     ];
 });

@@ -13,6 +13,9 @@ class Insurance extends Model
     	'insurance_reservation_id'
     ];
 
+    protected $hidden=['created_at','updated_at'];
+
+
     public function insurance_reservation(){
     	return $this->hasMany('App\InsuranceReservation');
     }

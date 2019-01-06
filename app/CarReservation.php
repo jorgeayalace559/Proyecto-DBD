@@ -14,6 +14,8 @@ class CarReservation extends Model
     	'package_id'
     ];
 
+    protected $hidden=['updated_at'];
+
     public function cars(){
         return $this->hasMany('App\Car');
     }

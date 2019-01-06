@@ -4,19 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Hotel;
-use Validator;
+use App\Room;
 
-class HotelController extends Controller
+class HotelRoomController extends Controller
 {
-	/**
+    /**
 	* Display a listing of the resource.
 	*
 	* @return \Illuminate\Http\Response
 	*/
-    public function index()
+    public function index($id)
     {
-        $hotels = Hotel::all();
-        return $hotels;
+        $hotel = Hotel::find($id);      
+        if (!$hotel) {
+        	return response()->json(['mensaje'=>'No se encuentra el hotel'],404);
+        }
+        $room = $hotel->rooms;
+        return response()->json(['datos'=>$room],202);
     }
  
     /**
@@ -42,22 +46,12 @@ class HotelController extends Controller
 
         if($verifyHotel == null){
 
-            $stars = $request->stars;
-            $capacity = $request->capacity;
-            $name = $request->name;
+            $hotels->create([
+                'stars' => $request->stars,
+                'capacity' => $request->capacity,
+                'name' => $request->name
 
-            if(is_numeric($name) and $capacity > 0 and $capacity <100 and $stars > -1 and $stars < 6){
-
-                $hotels->create([
-                    'stars' => $request->stars,
-                    'capacity' => $request->capacity,
-                    'name' => $request->name
-
-                ]);
-            }
-            else{
-                return "Error en el ingreso de parametros";
-            }
+            ]);
         }
         else{
             return "El hotel ingresado ya existe";
