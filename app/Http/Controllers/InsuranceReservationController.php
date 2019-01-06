@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\InsuranceReservation;
+use App\PurchaseOrder;
+use App\Package;
 use Validator;
 
 class InsuranceReservationController extends Controller
@@ -42,14 +44,26 @@ class InsuranceReservationController extends Controller
 
         if($verifyInsuranceReservation == null){
 
-            $insurance_reservations->create([
-                'cost' => $request->cost,
-                'begin_date' => $request->begin_date,
-                'end_date' => $request->end_date,
-                'purchase_order_id' => $request->purchase_order_id,
-                'package_id' => $request->package_id
+            $cost = $request->cost;
+            $begin_date = $request->begin_date;
+            $end_date = $request->end_date;
+            $purchase_order_id = PurchaseOrder::find($request->purchase_order_id);
+            $package_id = Package::find($request->package_id);
 
-            ]);
+            if($cost > 0  and  $purchase_order_id != null and $package_id != null){
+
+                $insurance_reservations->create([
+                    'cost' => $request->cost,
+                    'begin_date' => $request->begin_date,
+                    'end_date' => $request->end_date,
+                    'purchase_order_id' => $request->purchase_order_id,
+                    'package_id' => $request->package_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
         }
         else{
             return "La reserva de seguro ingresada ya existe";

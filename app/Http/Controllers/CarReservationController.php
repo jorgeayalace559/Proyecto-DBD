@@ -61,6 +61,9 @@ class CarReservationController extends Controller
 
                 ]);
             }
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
         else{
             return "La reserva ingresada ya existe";

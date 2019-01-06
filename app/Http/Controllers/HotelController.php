@@ -42,12 +42,22 @@ class HotelController extends Controller
 
         if($verifyHotel == null){
 
-            $hotels->create([
-                'stars' => $request->stars,
-                'capacity' => $request->capacity,
-                'name' => $request->name
+            $stars = $request->stars;
+            $capacity = $request->capacity;
+            $name = $request->name;
 
-            ]);
+            if(is_numeric($name) and $capacity > 0 and $capacity <100 0 and $stars > -1 and $stars < 6){
+
+                $hotels->create([
+                    'stars' => $request->stars,
+                    'capacity' => $request->capacity,
+                    'name' => $request->name
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
         }
         else{
             return "El hotel ingresado ya existe";

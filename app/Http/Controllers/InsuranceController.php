@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Insurance;
+use App\InsuranceReservation;
 use Validator;
 
 class InsuranceController extends Controller
@@ -42,13 +43,24 @@ class InsuranceController extends Controller
 
         if($verifyInsurance == null){
 
-            $insurance->create([
-                'age' => $request->age,
-                'type' => $request->type,
-                'city' => $request->city,
-                'insurance_reservation_id' => $request->insurance_reservation_id
+            $age = $request->age;
+            $type = $request->type;
+            $city = $request->city;
+            $insurance_reservation_id = InsuranceReservation::find($request->insurance_reservation_id);
 
-            ]);
+             if($age > 17 and $age < 100 and !(is_numeric($type)) and !(is_numeric($city)) and $insurance_reservation_id != null){
+
+                $insurance->create([
+                    'age' => $request->age,
+                    'type' => $request->type,
+                    'city' => $request->city,
+                    'insurance_reservation_id' => $request->insurance_reservation_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
         }
         else{
             return "El seguro ingresado ya existe";

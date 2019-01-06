@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Luggage;
+use App\Passenger;
 use Validator;
 
 class LuggageController extends Controller
@@ -42,13 +43,24 @@ class LuggageController extends Controller
 
         if($verifyLuggage == null){
 
-            $luggages->create([
-                'weight' => $request->weight,
-                'cost' => $request->cost,
-                'type' => $request->type,
-                'passenger_id' => $request->passenger_id
+            $weight = $request->weight;
+            $cost = $request->cost;
+            $type = $request->type;
+            $passenger_id = Passenger::find($request->passenger_id);
 
-            ]);
+            if($weight > 0  and $weight < 50 and  $cost > 0 and !(is_numeric($type)) and $passenger_id != null){
+
+                $luggages->create([
+                    'weight' => $request->weight,
+                    'cost' => $request->cost,
+                    'type' => $request->type,
+                    'passenger_id' => $request->passenger_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros"; 
+            }
         }
         else{
             return "El equipaje ingresado ya existe";
