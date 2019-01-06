@@ -8,83 +8,103 @@ use Validator;
 
 class PackageController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'quantity' => 'required|numeric',
-	    	'name' => 'required|string',
-	    	'cost' => 'required|numeric',
-	    	'nights' => 'required|numeric',
-	    	'origin_id' => 'required|numeric',
-	    	'destination_id' => 'required|numeric'
-    	];
-    }
-
+/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$packages = Package::all();
-    	return $packages;
+        $packages = Package::all();
+        return $packages;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $packages = new \App\Package;
-        $packages->quantity = $request->get('quantity');
-        $packages->name = $request->get('name');
-        $packages->cost = $request->get('cost');
-        $packages->nights = $request->get('nights');
-        $packages->origin_id = $request->get('origin_id');
-        $packages->destination_id = $request->get('destination_id');
-        $packages->save();
-        return $packages;
-    }
+         $verifyPackage = Package::find($request->id);
+         $package = new Package();
+ 
+         if($verifyPackage == null){
+ 
+             $package->create([
 
+                 'quantity' => $request->quantity,
+    	         'name' => $request->name,
+                 'cost' => $request->cost,
+                 'nights' => $request->nights,
+                 'origin_id' => $request->origin_id,
+                 'destination_id' => $request->destination_id,
+                 'package_reservation_id' => $request->package_reservation_id
+ 
+             ]);
+         }
+         else{
+             return "El paquete ingresado ya existe";
+         }
+ 
+         return Package::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$packages = Package::findOrFail($id);
-    	return $packages;
+        return Package::find($id);
     }
-
-    public function edit(Package $packages)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, Package $packages)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $packages = new \App\Package;
-        $packages->quantity = $request->get('quantity');
-        $packages->name = $request->get('name');
-        $packages->cost = $request->get('cost');
-        $packages->nights = $request->get('nights');
-        $packages->origin_id = $request->get('origin_id');
-        $packages->destination_id = $request->get('destination_id');
-        $packages->save();
-        return $packages;
+        //
     }
-
-    public function destroy(Package $packages)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($packages->es_valido){
-            $packages->es_valido = false;
-            $packages->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $package = Package::find($id);
+        $package->delete();
+        return "Se ha eliminado un paquete";
     }
 }

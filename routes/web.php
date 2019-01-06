@@ -15,16 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//ESTO SE DEBE HACER POR CADA UNO DE LOS CONTROLADORES
-//FALTA HACER LAS DISTINTAS VALIDACIONES EN EL CASO DE QUE SE USE STORE
 
-//Airplanes
-//Route::get('/Airplane/all', 'AirplaneController@index');
-//Route::get('/Airplane/show/{id}', 'AirplaneController@show');
-//Route::get('/Airplane/destroy/{id}', 'AirplaneController@destroy');
-//Route::post('/Airplane/store', 'AirplaneController@store');
-
-//flights
 Route::resource('Airplane','AirplaneController');
 Route::resource('Car','CarController');
 Route::resource('CarReservation','CarReservationController');
@@ -48,7 +39,3 @@ Route::resource('State','StateController');
 Route::resource('Ticket','TicketController');
 Route::resource('TicketReservation','TicketReservationController');
 Route::resource('User','UserController');
-//Route::get('/Flight/all', 'FlightController@index');
-//Route::get('/Flight/show/{id}', 'FlightController@show');
-//Route::delete('/Flight/destroy/{id}', 'FlightController@destroy');
-//Route::post('/Flight/store', 'FlightController@store');

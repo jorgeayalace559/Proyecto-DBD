@@ -11,7 +11,7 @@ class Ticket extends Model
     	'cost',
     	'quantity_passengers',
     	'flight_id',
-        'ticket_reservation_id',
+        'ticket_reservation_id'
     ];
 
     public function passengers(){

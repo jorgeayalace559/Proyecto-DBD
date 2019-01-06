@@ -8,83 +8,99 @@ use Validator;
 
 class PackageReservationController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'cost' => 'required|numeric',
-    		'date' => 'required|string',
-    		'begin_date' => 'required|string',
-    		'end_date' => 'required|string',
-    		'purchase_order_id' => 'required|numeric',
-    		'package_id' => 'required|numeric'
-    	];
-    }
-
+	 /**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$packagereservations = PackageReservation::all();
-    	return $packagereservations;
+        $packageReservations = PackageReservation::all();
+        return $packageReservations;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $packagereservations = new \App\PackageReservation;
-        $packagereservations->cost = $request->get('cost');
-        $packagereservations->date = $request->get('date');
-        $packagereservations->begin_date = $request->get('begin_date');
-        $packagereservations->end_date = $request->get('end_date');
-        $packagereservations->purchase_order_id = $request->get('purchase_order_id');
-        $packagereservations->package_id = $request->get('package_id');
-        $packagereservations->save();
-        return $packagereservations;
+         $verifyPackageReservation = PackageReservation::find($request->id);
+         $packageReservation = new PackageReservation();
+ 
+         if($verifyPackageReservation == null){
+ 
+             $packageReservation->create([
+                 'cost' => $request->cost,
+    	         'begin_date' => $request->begin_date,
+    	         'end_date' => $request->end_date,
+    	         'purchase_order_id'=> $request->purchase_order_id
+ 
+             ]);
+         }
+         else{
+             return "La reserva de paquete ya existe";
+         }
+ 
+         return PackageReservation::all();
     }
-
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$packagereservations = PackageReservation::findOrFail($id);
-    	return $packagereservations;
+        return PackageReservation::find($id);
     }
-
-    public function edit(PackageReservation $packagereservations)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, PackageReservation $packagereservations)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $packagereservations = new \App\PackageReservation;
-        $packagereservations->cost = $request->get('cost');
-        $packagereservations->date = $request->get('date');
-        $packagereservations->begin_date = $request->get('begin_date');
-        $packagereservations->end_date = $request->get('end_date');
-        $packagereservations->purchase_order_id = $request->get('purchase_order_id');
-        $packagereservations->package_id = $request->get('package_id');
-        $packagereservations->save();
-        return $packagereservations;
+        //
     }
-
-    public function destroy(PackageReservation $packagereservations)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($packagereservations->es_valido){
-            $packagereservations->es_valido = false;
-            $packagereservations->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $packageReservation = PackageReservation::find($id);
+        $packageReservation->delete();
+        return "Se ha eliminado una reserva de paquete";
     }
 }

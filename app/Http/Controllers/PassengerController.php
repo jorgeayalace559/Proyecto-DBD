@@ -8,74 +8,98 @@ use Validator;
 
 class PassengerController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'rut' => 'required|string',
-    		'name' => 'required|string',
-    		'ticket_id' => 'required|numeric'
-    	];
-    }
-
+	 /**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$passengers = Passenger::all();
-    	return $passengers;
+        $passengers = Passenger::all();
+        return $passengers;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $passengers = new \App\Passenger;
-        $passengers->rut = $request->get('rut');
-        $passengers->name = $request->get('name');
-        $passengers->ticket_id = $request->get('ticket_id');
-        $passengers->save();
-        return $passengers;
+         $verifyPassenger = Passenger::find($request->id);
+         $passenger = new Passenger();
+ 
+         if($verifyPassenger == null){
+ 
+             $passenger->create([
+                 'rut' => $request->rut,
+    	         'name' => $request->name,
+    	         'ticket_id' => $request->ticket_id
+ 
+             ]);
+         }
+         else{
+             return "El pasajero ingresado ya existe";
+         }
+ 
+         return Passenger::all();
     }
-
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$passengers = Passenger::findOrFail($id);
-    	return $passengers;
+        return Passenger::find($id);
     }
-
-    public function edit(Passenger $passengers)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, Passenger $passengers)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $passengers = new \App\Passenger;
-        $passengers->rut = $request->get('rut');
-        $passengers->name = $request->get('name');
-        $passengers->ticket_id = $request->get('ticket_id');
-        $passengers->save();
-        return $passengers;
+        //
     }
-
-    public function destroy(Passenger $passengers)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($passengers->es_valido){
-            $passengers->es_valido = false;
-            $passengers->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $passenger = Passenger::find($id);
+        $passenger->delete();
+        return "Se ha eliminado un pasajero";
     }
 }

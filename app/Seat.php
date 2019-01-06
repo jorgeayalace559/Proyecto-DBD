@@ -11,7 +11,7 @@ class Seat extends Model
     	'type',
     	'remaining',
     	'ticket_id',
-        'airplane_id',
+        'airplane_id'
     ];
 
     public function ticket(){

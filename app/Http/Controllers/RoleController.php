@@ -8,71 +8,97 @@ use Validator;
 
 class RoleController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'type' => 'required|numeric',
-    		'description' => 'required|string'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$roles = Role::all();
-    	return $roles;
+        $roles = Role::all();
+        return $roles;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $roles = new \App\Role;
-        $roles->type = $request->get('type');
-        $roles->description = $request->get('description');
-        $roles->save();
-        return $roles;
+         $verifyRole = Role::find($request->id);
+         $role = new Role();
+ 
+         if($verifyRole == null){
+ 
+             $role->create([
+                 'type' => $request->type,
+                 'description' => $request->description
+ 
+             ]);
+         }
+         else{
+             return "El rol ingresado ya existe";
+         }
+ 
+         return Role::all();
     }
-
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$roles = Role::findOrFail($id);
-    	return $roles;
+        return Role::find($id);
     }
-
-    public function edit(Role $roles)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, Role $roles)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $roles = new \App\Role;
-        $roles->type = $request->get('type');
-        $roles->description = $request->get('description');
-        $roles->save();
-        return $roles;
+        //
     }
-
-    public function destroy(Role $roles)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($roles->es_valido){
-            $roles->es_valido = false;
-            $roles->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $role = Role::find($id);
+        $role->delete();
+        return "Se ha eliminado un rol";
     }
 }
