@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Citie;
+use App\Countrie;
 use Validator;	
 
 class CitieController extends Controller
@@ -42,12 +43,22 @@ class CitieController extends Controller
 
         if($verifyCitie == null){
 
-            $city->create([
-                'name' => $request->name,
-                'airport_name' => $request->airport_name,
-                'country_id' => $request->country_id
+            $name = $request->name;
+            $airport_name = $request->airport_name;
+            $country_id = Countrie::find($request->country_id);
 
-            ]);
+            if(!(is_numeric($name)) and !(is_numeric($airport_name)) and $country_id != null){
+
+                $city->create([
+                    'name' => $request->name,
+                    'airport_name' => $request->airport_name,
+                    'country_id' => $request->country_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de datos";
+            }
         }
         else{
             return "La ciudad ingresada ya existe";

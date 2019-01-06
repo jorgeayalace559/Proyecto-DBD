@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Car;
+use App\Citie;
+use App\CarReservation;
 use Validator;
 
 class CarController extends Controller
@@ -42,12 +44,24 @@ class CarController extends Controller
 
         if($verifyCar == null){
 
-            $cars->create([
-                'capacity' => $request->capacity,
-                'city_id' => $request->city_id,
-                'patent' => $request->patent
+            $capacity = $request->capacity;
+            $city_id = Citie::find($request->city_id);
+            $patent = $request->patent;
+            $car_reservation_id = CarReservation::find($request->car_reservation_id);
 
-            ]);
+            if($city_id != null and $car_reservation_id != null and $patent != null and $capacity > 1 and $capacity < 9){
+
+                $cars->create([
+                    'capacity' => $request->capacity,
+                    'city_id' => $request->city_id,
+                    'patent' => $request->patent,
+                    'car_reservation_id' => $request->car_reservation_id
+
+                ]);
+            }
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
         else{
             return "El auto ingresado ya existe";

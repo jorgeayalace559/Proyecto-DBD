@@ -42,10 +42,18 @@ class CountrieController extends Controller
 
         if($verifyCountrie == null){
 
-            $country->create([
-                'name' => $request->name,
+            $name = $request->name;
 
-            ]);
+            if(!(is_numeric($name))){
+
+                $country->create([
+                    'name' => $request->name,
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de datos";
+            }
         }
         else{
             return "El pais ingresado ya existe";

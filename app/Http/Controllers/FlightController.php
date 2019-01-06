@@ -41,14 +41,26 @@ class FlightController extends Controller
 
         if($verifyFlight == null){
 
-            $flights->create([
-                'destination_id' => $request->destination_id,
-                'begin_date' => $request->begin_date,
-                'end_date' => $request->end_date,
-                'origin_id' => $request->origin_id,
-                'platform' => $request->platform
+            $destination_id = Citie::find($request->origin_id);
+            $begin_date = $request->begin_date;
+            $end_date = $request->end_date;
+            $origin_id = Citie::find($request->origin_id);
+            $platform = $request->platform;
 
-            ]);
+            if(is_numeric($name) and $destination_id != null and $origin_id != null){
+
+                $flights->create([
+                    'destination_id' => $request->destination_id,
+                    'begin_date' => $request->begin_date,
+                    'end_date' => $request->end_date,
+                    'origin_id' => $request->origin_id,
+                    'platform' => $request->platform
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
         }
         else{
             return "El vuelo ingresado ya existe";
