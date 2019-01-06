@@ -37,7 +37,24 @@ class InsuranceController extends Controller
      */
     public function store(Request $request)
     {
-        return Insurance::create($request->all());
+        $verifyInsurance = Insurance::find($request->id);
+        $insurance = new Insurance();
+
+        if($verifyInsurance == null){
+
+            $insurance->create([
+                'age' => $request->age,
+                'type' => $request->type,
+                'city' => $request->city,
+                'insurance_reservation_id' => $request->insurance_reservation_id
+
+            ]);
+        }
+        else{
+            return "El seguro ingresado ya existe";
+        }
+
+        return Insurance::all();
     }
  
     /**

@@ -38,11 +38,11 @@ class CarReservationController extends Controller
     public function store(Request $request)
     {
         $verifyCarReservation = CarReservation::find($request->id);
-        $carReservation = new CarReservation();
+        $carReservations = new CarReservation();
 
         if($verifyCarReservation == null){
 
-            $carReservation->create([
+            $carReservations->create([
                 'cost' => $request->cost,
                 'begin_date' => $request->begin_date,
                 'end_date' => $request->end_date,

@@ -37,11 +37,11 @@ class FlightController extends Controller
     public function store(Request $request)
     {
         $verifyFlight = Flight::find($request->id);
-        $flight = new Flight();
+        $flights = new Flight();
 
         if($verifyFlight == null){
 
-            $flight->create([
+            $flights->create([
                 'destination_id' => $request->destination_id,
                 'begin_date' => $request->begin_date,
                 'end_date' => $request->end_date,
@@ -99,8 +99,8 @@ class FlightController extends Controller
      */
     public function destroy($id)
     {
-        $airplanes = Flight::find($id);
-        $airplanes->delete();
+        $flights = Flight::find($id);
+        $flights->delete();
         return "Se ha eliminado un vuelo";
     }
 }

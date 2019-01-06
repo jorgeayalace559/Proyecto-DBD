@@ -38,11 +38,11 @@ class CitieController extends Controller
     public function store(Request $request)
     {
         $verifyCitie = Citie::find($request->id);
-        $citie = new Citie();
+        $city = new Citie();
 
         if($verifyCitie == null){
 
-            $citie->create([
+            $city->create([
                 'name' => $request->name,
                 'airport_name' => $request->airport_name,
                 'countrie_id' => $request->countrie_id

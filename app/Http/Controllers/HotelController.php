@@ -37,7 +37,23 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-        return Hotel::create($request->all());
+        $verifyHotel = Hotel::find($request->id);
+        $hotels = new Hotel();
+
+        if($verifyHotel == null){
+
+            $hotels->create([
+                'stars' => $request->stars,
+                'capacity' => $request->capacity,
+                'type' => $request->type
+
+            ]);
+        }
+        else{
+            return "El hotel ingresado ya existe";
+        }
+
+        return Hotel::all();
     }
  
     /**

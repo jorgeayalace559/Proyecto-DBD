@@ -38,11 +38,11 @@ class CarController extends Controller
     public function store(Request $request)
     {
         $verifyCar = Car::find($request->id);
-        $car = new Car();
+        $cars = new Car();
 
         if($verifyCar == null){
 
-            $car->create([
+            $cars->create([
                 'capacity' => $request->capacity,
                 'city_id' => $request->city_id,
                 'patent' => $request->patent

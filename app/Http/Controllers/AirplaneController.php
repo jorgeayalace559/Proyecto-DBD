@@ -38,11 +38,11 @@ class AirplaneController extends Controller
    public function store(Request $request)
    {
 		$verifyAirplane = Airplane::find($request->id);
-		$airplane = new Airplane();
+		$airplanes = new Airplane();
 
 		if($verifyAirplane == null){
 
-			$airplane->create([
+			$airplanes->create([
 				'name' => $request->name,
 				'capacity' => $request->capacity,
 				'flight_id' => $request->flight_id

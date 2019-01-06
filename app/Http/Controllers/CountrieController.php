@@ -37,7 +37,21 @@ class CountrieController extends Controller
      */
     public function store(Request $request)
     {
-        return Countrie::create($request->all());
+        $verifyCountrie = Countrie::find($request->id);
+        $country = new Countrie();
+
+        if($verifyCountrie == null){
+
+            $country->create([
+                'name' => $request->name,
+
+            ]);
+        }
+        else{
+            return "El pais ingresado ya existe";
+        }
+
+        return Countrie::all();
     }
  
     /**
