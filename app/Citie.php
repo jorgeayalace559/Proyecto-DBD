@@ -9,7 +9,7 @@ class Citie extends Model
     protected $fillable = [
     	'name',
     	'airport_name',
-        'countrie_id'
+        'country_id'
     ];
 
     public function flights(){

@@ -15,8 +15,8 @@ class TicketReservationController extends Controller
 	*/
     public function index()
     {
-        $airplanes = Airplane::all();
-        return $airplanes;
+        $ticketReservation = TicketReservation::all();
+        return $ticketReservation;
     }
  
     /**

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Insurance extends Model
 {
     protected $fillable = [
-    	'edad',
+    	'age',
     	'type',
     	'city',
     	'insurance_reservation_id'

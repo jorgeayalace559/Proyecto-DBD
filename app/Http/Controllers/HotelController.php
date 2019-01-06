@@ -45,7 +45,7 @@ class HotelController extends Controller
             $hotels->create([
                 'stars' => $request->stars,
                 'capacity' => $request->capacity,
-                'type' => $request->type
+                'name' => $request->name
 
             ]);
         }

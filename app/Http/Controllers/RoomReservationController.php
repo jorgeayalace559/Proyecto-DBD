@@ -44,7 +44,6 @@ class RoomReservationController extends Controller
  
              $roomReservation->create([
                 'cost' => $request->cost,
-                'date' => $request->date,
                 'begin_date' => $request->begin_date,
                 'end_date' => $request->end_date,
                 'purchase_order_id' => $request->purchase_order_id,
@@ -56,7 +55,7 @@ class RoomReservationController extends Controller
              return "La reserva de habitación ingresada ya existe";
          }
  
-         return AirpRoomReservationlane::all();
+         return RoomReservation::all();
     }
  
     /**

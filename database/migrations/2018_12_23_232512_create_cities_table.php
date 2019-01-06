@@ -19,8 +19,10 @@ class CreateCitiesTable extends Migration
             $table->string('name');
             $table->string('airport_name');
 
-            $table->unsignedInteger('countrie_id');
-            $table->foreign('countrie_id')->references('id')->on('countries')->onDelete('cascade');
+            $table->unsignedInteger('country_id');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+
+            $table->timestamps();
 
         });
     }

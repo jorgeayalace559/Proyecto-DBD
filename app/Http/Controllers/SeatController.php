@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Seats;
+use App\Seat;
 use Validator;
 
 class SeatController extends Controller
@@ -15,8 +15,8 @@ class SeatController extends Controller
 	*/
     public function index()
     {
-        $airplanes = Airplane::all();
-        return $airplanes;
+        $seat = Seat::all();
+        return $seat;
     }
  
     /**
@@ -38,7 +38,7 @@ class SeatController extends Controller
     public function store(Request $request)
     {
          $verifySeat = Seat::find($request->id);
-         $set = new Seat();
+         $seat = new Seat();
  
          if($verifySeat == null){
  

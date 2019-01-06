@@ -45,7 +45,7 @@ class CitieController extends Controller
             $city->create([
                 'name' => $request->name,
                 'airport_name' => $request->airport_name,
-                'countrie_id' => $request->countrie_id
+                'country_id' => $request->country_id
 
             ]);
         }

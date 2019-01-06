@@ -45,9 +45,9 @@ class TicketController extends Controller
  
              $ticket->create([
                 'cost' => $request->cost,
-                'quantity_passengers'  => $request->cost,
-                'flight_id'  => $request->cost,
-                'ticket_reservation_id'  => $request->cost
+                'quantity_passengers'  => $request->quantity_passengers,
+                'flight_id'  => $request->flight_id,
+                'ticket_reservation_id'  => $request->ticket_reservation_id
  
              ]);
          }

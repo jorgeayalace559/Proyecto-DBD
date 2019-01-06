@@ -9,7 +9,7 @@ class Hotel extends Model
     protected $fillable = [
     	'stars',
     	'capacity',
-    	'type'
+    	'name'
     ];
 
     public function rooms(){
