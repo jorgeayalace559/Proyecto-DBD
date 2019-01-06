@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Airplane;	
+use App\Flight;
 use Session;
 
 class AirplaneController extends Controller
@@ -42,12 +43,28 @@ class AirplaneController extends Controller
 
 		if($verifyAirplane == null){
 
-			$airplanes->create([
-				'name' => $request->name,
-				'capacity' => $request->capacity,
-				'flight_id' => $request->flight_id
+			//Se guarda el nombre ingresado en una variable.
+			$name = $request->name;
+			//Se guarda la capacidad ingresada en una variable.
+			$capacity = $request->capacity;
+			//Se busca si la id ingresada existe en la tabla flight.
+			//Da null si la id no existe.
+			$flight_id = Flight::find($request->flight_id);
 
-			]);
+			if($flight_id != null and !(is_numeric($name) and $capacity > 50 and $capacity < 80)){
+
+				$airplanes->create([
+					
+					'name' => $name,
+					'capacity' => $capacity,
+					'flight_id' => $request->flight_id
+	
+				]);
+
+			}
+			else{
+				return "Error en los parametros ingresados";
+			}
 		}
 		else{
 			return "El avión ingresado ya existe";
