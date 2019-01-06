@@ -51,7 +51,7 @@ class AirplaneController extends Controller
 			//Da null si la id no existe.
 			$flight_id = Flight::find($request->flight_id);
 
-			if($flight_id != null and !(is_numeric($name) and $capacity > 50 and $capacity < 80)){
+			if($flight_id != null and !(is_numeric($name)) and $capacity > 50 and $capacity < 80){
 
 				$airplanes->create([
 					
