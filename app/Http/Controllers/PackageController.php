@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Package;
+use App\Citie;
+use App\PackageReservation;
 use Validator;
 
 class PackageController extends Controller
@@ -37,26 +39,45 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyPackage = Package::find($request->id);
-         $package = new Package();
+        $verifyPackage = Package::find($request->id);
+        $package = new Package();
  
-         if($verifyPackage == null){
- 
-             $package->create([
+        if($verifyPackage == null){
+            
+            $quantity  = $request->quantity;
+            $name = $request->name;
+            $cost = $request->cost;
+            $nights = $request->nights;
+            $origin_id = Citie::find($request->origin_id);
+            $destination_id = Citie::find($request->destination_id);
+            $package_reservation_id = PackageReservation::find($request->package_reservation_id);
 
-                 'quantity' => $request->quantity,
-    	         'name' => $request->name,
-                 'cost' => $request->cost,
-                 'nights' => $request->nights,
-                 'origin_id' => $request->origin_id,
-                 'destination_id' => $request->destination_id,
-                 'package_reservation_id' => $request->package_reservation_id
- 
-             ]);
-         }
-         else{
+            if(is_numeric($quantity) and $quantity > 0
+               and is_numeric($cost) and $cost > 0
+               and is_numeric($nights) and $nights > 0
+               and !(is_numeric($name))
+               and $origin_id != null and $destination_id != null and $package_reservation_id != null){
+
+                $package->create([
+
+                    'quantity' => $quantity,
+                    'name' => $name,
+                    'cost' => $cost,
+                    'nights' => $nights,
+                    'origin_id' => $origin_id,
+                    'destination_id' => $destination_id,
+                    'package_reservation_id' => $package_reservation_id
+    
+                ]);
+
+               }
+            else{
+                return "Error en los parametros ingresados";
+            }
+        }
+        else{
              return "El paquete ingresado ya existe";
-         }
+        }
  
          return Package::all();
     }

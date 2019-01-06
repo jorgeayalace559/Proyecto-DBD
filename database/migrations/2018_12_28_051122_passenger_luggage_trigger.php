@@ -43,7 +43,7 @@ class PassengerLuggageTrigger extends Migration
     public function down()
     {
         
-        DB::unprepared('DROP TRIGGER `tg_Flight_State`');
+        DB::unprepared('DROP TRIGGER ` tg_Passenger_Luggage`');
 
     }
 }

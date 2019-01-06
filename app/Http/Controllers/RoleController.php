@@ -37,22 +37,35 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyRole = Role::find($request->id);
-         $role = new Role();
+        $verifyRole = Role::find($request->id);
+        $role = new Role();
  
-         if($verifyRole == null){
+        if($verifyRole == null){
  
-             $role->create([
-                 'type' => $request->type,
-                 'description' => $request->description
+            $type = $request->type;
+            $description = $request->description;
+
+            if( !(is_numeric($type)) and !(is_numeric($description))){
+               
+                $role->create([
+
+                    'type' => $type,
+                    'description' => $description
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+            
+        }
+        else{
+            return "El rol ingresado ya existe";
+        }
  
-             ]);
-         }
-         else{
-             return "El rol ingresado ya existe";
-         }
- 
-         return Role::all();
+        return Role::all();
     }
  
     /**

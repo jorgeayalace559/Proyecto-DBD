@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\State;
+use App\Flight;
 use Validator;
 
 class StateController extends Controller
@@ -37,20 +38,32 @@ class StateController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyState = State::find($request->id);
-         $state = new State();
+        $verifyState = State::find($request->id);
+        $state = new State();
+    
+        if($verifyState == null){
  
-         if($verifyState == null){
- 
-             $state->create([
-                'condition' => $request->condition,
-                'flight_id' => $request->flight_id
- 
-             ]);
-         }
-         else{
-             return "El estado ingresado ya existe";
-         }
+            $condition = $request->condition;
+            $flight_id = Flight::find($request->flight_id);
+
+            if(!(is_numeric($condition)) and $flight_id != null){
+
+                $state->create([
+                    'condition' => $condition,
+                    'flight_id' => $request->flight_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+            
+        }
+        else{
+            return "El estado ingresado ya existe";
+        }
  
          return State::all();
     }

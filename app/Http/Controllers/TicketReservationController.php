@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TicketReservation;
+use App\PurchaseOrder;
+use App\Package;
 use Validator;
 
 class TicketReservationController extends Controller
@@ -37,24 +39,39 @@ class TicketReservationController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyTicketReservation = TicketReservation::find($request->id);
-         $ticketReservation = new TicketReservation();
+        $verifyTicketReservation = TicketReservation::find($request->id);
+        $ticketReservation = new TicketReservation();
  
-         if($verifyTicketReservation == null){
+        if($verifyTicketReservation == null){
  
-             $ticketReservation->create([
-                'cost' => $request->cost,
-                'date' => $request->date,
-                'purchase_order_id' => $request->purchase_order_id,
-                'package_id' => $request->package_id
+            $cost = $request->cost;
+            $date = $request->date;
+            $purchase_order_id = PurchaseOrder::find($request->purchase_order_id);
+            $package_id = Package::find($request->package_id);
+
+            if(is_numeric($cost) and $cost > 0
+               and $purchase_order_id != null and $package_id != null){
+
+                $ticketReservation->create([
+                    'cost' => $cost,
+                    'date' => $date,
+                    'purchase_order_id' => $request->purchase_order_id,
+                    'package_id' => $request->package_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+           
+        }
+        else{
+            return "La reserva del ticket ingresado ya existe";
+        }
  
-             ]);
-         }
-         else{
-             return "La reserva del ticket ingresado ya existe";
-         }
- 
-         return TicketReservation::all();
+        return TicketReservation::all();
     }
  
     /**

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Room;
+use App\Hotel;
+use App\RoomReservation;
 use Validator;
 
 class RoomController extends Controller
@@ -37,26 +39,45 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyRoom = Room::find($request->id);
-         $room = new Room();
+        $verifyRoom = Room::find($request->id);
+        $room = new Room();
  
-         if($verifyRoom == null){
+        if($verifyRoom == null){
  
-             $room->create([
-                 'number' => $request->number,
-    	         'capacity' => $request->capacity,
-                 'cost' => $request->cost,
-                 'type' => $request->type,
-    	         'hotel_id' => $request->hotel_id,
-                 'room_reservation_id' => $request->room_reservation_id
+            $number = $request->number;
+            $capacity = $request->capacity;
+            $cost = $request->cost;
+            $type = $request->type;
+            $hotel_id = Hotel::find($request->hotel_id);
+            $room_reservation_id = RoomReservation::find($request->room_reservation_id);
+
+            if(is_numeric($number) and $number > 0
+               and is_numeric($capacity) and $capacity > 0 and $capacity < 8
+               and is_numeric($cost) and $cost > 0
+               and !(is_numeric($type))
+               and $hotel_id != null and $room_reservation_id != null){
+
+                $room->create([
+                    'number' => $number,
+                    'capacity' => $capacity,
+                    'cost' => $cost,
+                    'type' => $type,
+                    'hotel_id' => $request->hotel_id,
+                    'room_reservation_id' => $request->room_reservation_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }            
+        }
+        else{
+            return "La habtiacion ingresada ya existe";
+        }
  
-             ]);
-         }
-         else{
-             return "La habtiacion ingresada ya existe";
-         }
- 
-         return Room::all();
+        return Room::all();
     }
  
     /**

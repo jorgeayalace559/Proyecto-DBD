@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Payment;
+use App\PurchaseOrder;
 use Validator;
 
 class PaymentController extends Controller
@@ -37,25 +38,42 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyPayment = Payment::find($request->id);
-         $payment = new Payment();
+        $verifyPayment = Payment::find($request->id);
+        $payment = new Payment();
  
-         if($verifyPayment == null){
+        if($verifyPayment == null){
  
-             $payment->create([
-                 'type' => $request->type,
-    	         'bank' => $request->bank,
-    	         'count' => $request->count,
-    	         'quotas' => $request->quotas,
-    	         'purchase_order_id' => $request->purchase_order_id
+            $type = $request->type;
+    	    $bank = $request->bank;
+    	    $count = $request->count;
+    	    $quotas = $request->quotas;
+    	    $purchase_order_id = PurchaseOrder::find($request->purchase_order_id);
+
+            if(!(is_numeric($type)) and !(is_numeric($bank)) and !(is_numeric($count))
+                and is_numeric($quotas) and $quotas > 0
+                and $purchase_order_id != null ){
+
+                $payment->create([
+        
+                    'type' => $type,
+                    'bank' => $bank,
+                    'count' => $count,
+                    'quotas' => $quotas,
+                    'purchase_order_id' => $request->purchase_order_id
+    
+                ]);
+
+            }
+            else{
+                return "Error en los parametros ingresados";
+            }
+            
+        }
+        else{
+            return "El medio de pago ingresado ya existe";
+        }
  
-             ]);
-         }
-         else{
-             return "El medio de pago ingresado ya existe";
-         }
- 
-         return Payment::all();
+        return Payment::all();
     }
  
     /**

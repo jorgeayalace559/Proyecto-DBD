@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ticket;
+use App\TicketReservation;
+use App\Flight;
 use Validator;
 
 class TicketController extends Controller
@@ -38,24 +40,40 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyTicket = Ticket::find($request->id);
-         $ticket = new Ticket();
+        $verifyTicket = Ticket::find($request->id);
+        $ticket = new Ticket();
  
-         if($verifyTicket == null){
+        if($verifyTicket == null){
  
-             $ticket->create([
-                'cost' => $request->cost,
-                'quantity_passengers'  => $request->quantity_passengers,
-                'flight_id'  => $request->flight_id,
-                'ticket_reservation_id'  => $request->ticket_reservation_id
+            $cost = $request->cost;
+            $quantity_passengers  = $request->quantity_passengers;
+            $flight_id  = $request->flight_id;
+            $ticket_reservation_id  = $request->ticket_reservation_id;
+
+            if(is_numeric($cost) and $cost > 0
+            and is_numeric($quantity_passengers) and $quantity_passengers > 0
+            and $flight_id != null and $ticket_reservation_id != null){
+
+                $ticket->create([
+                    'cost' => $cost,
+                    'quantity_passengers'  => $quantity_passengers,
+                    'flight_id'  => $request->flight_id,
+                    'ticket_reservation_id'  => $request->ticket_reservation_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+
+        }
+        else{
+            return "El ticket ingresado ya existe";
+        }
  
-             ]);
-         }
-         else{
-             return "El ticket ingresado ya existe";
-         }
- 
-         return Ticket::all();
+        return Ticket::all();
     }
  
     /**

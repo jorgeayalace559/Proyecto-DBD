@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Luggage extends Model
 {
+
+	protected $table = 'luggages'; 
+
     protected $fillable = [
     	'weight',
     	'cost',

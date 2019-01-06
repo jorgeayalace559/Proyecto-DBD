@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Passenger;
+use App\Ticket;
 use Validator;
 
 class PassengerController extends Controller
@@ -37,21 +38,33 @@ class PassengerController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyPassenger = Passenger::find($request->id);
-         $passenger = new Passenger();
+        $verifyPassenger = Passenger::find($request->id);
+        $passenger = new Passenger();
  
-         if($verifyPassenger == null){
+        if($verifyPassenger == null){
  
-             $passenger->create([
-                 'rut' => $request->rut,
-    	         'name' => $request->name,
-    	         'ticket_id' => $request->ticket_id
- 
-             ]);
-         }
-         else{
+            $rut = $request->rut;
+            $name = $request->name;
+            $ticket_id = Ticket::find($request->ticket_id);
+
+            if(!(is_numeric($name))
+               and $ticket_id != null){
+
+                $passenger->create([
+
+                    'rut' => $rut,
+                    'name' => $name,
+                    'ticket_id' => $request->ticket_id
+    
+                ]);
+            }
+            else{
+                return "Error en los parametros ingresados";
+            }
+        }
+        else{
              return "El pasajero ingresado ya existe";
-         }
+        }
  
          return Passenger::all();
     }

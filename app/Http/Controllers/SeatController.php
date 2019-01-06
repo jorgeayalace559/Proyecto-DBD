@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Seat;
+use App\Airplane;
+use App\Ticket;
 use Validator;
 
 class SeatController extends Controller
@@ -37,25 +39,44 @@ class SeatController extends Controller
      */
     public function store(Request $request)
     {
-         $verifySeat = Seat::find($request->id);
-         $seat = new Seat();
+        $verifySeat = Seat::find($request->id);
+        $seat = new Seat();
  
-         if($verifySeat == null){
+        if($verifySeat == null){
  
-             $seat->create([
-                'number' => $request->number,
-                'type' => $request->type,
-                'remaining' => $request->remaining,
-                'ticket_id' => $request->ticket_id,
-                'airplane_id' => $request->airplane_id
+            $number = $request->number;
+            $type = $request->type;
+            $remaining = $request->remaining;
+            $ticket_id = $request->ticket_id;
+            $airplane_id = $request->airplane_id;
+
+            if(is_numeric($number) and $number > 0
+               and !(is_numeric($type))
+               and is_numeric($remaining) and $remaining > 0
+               and $ticket_id != null and $airplane_id != null){
+
+                $seat->create([
+
+                    'number' => $number,
+                    'type' => $type,
+                    'remaining' => $remaining,
+                    'ticket_id' => $request->ticket_id,
+                    'airplane_id' => $request->airplane_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+            
+        }
+        else{
+            return "El asiento ingresado ya existe";
+        }
  
-             ]);
-         }
-         else{
-             return "El asiento ingresado ya existe";
-         }
- 
-         return Seat::all();
+        return Seat::all();
     }
  
     /**

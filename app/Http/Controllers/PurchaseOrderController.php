@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PurchaseOrder;
+use App\User;
 use Validator;
 
 class PurchaseOrderController extends Controller
@@ -37,23 +38,37 @@ class PurchaseOrderController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyPurchaseOrder = PurchaseOrder::find($request->id);
-         $purchaseOrder = new PurchaseOrder();
+        $verifyPurchaseOrder = PurchaseOrder::find($request->id);
+        $purchaseOrder = new PurchaseOrder();
  
-         if($verifyPurchaseOrder == null){
+        if($verifyPurchaseOrder == null){
  
-             $purchaseOrder->create([
-                'cost' => $request->cost,
-                'date' => $request->date,
-                'user_id' => $request->user_id
+            $cost = $request->cost;
+            $date = $request->date;
+            $user_id = $request->user_id;
  
-             ]);
-         }
-         else{
-             return "La orden de compra ingresada ya existe";
-         }
+            if(is_numeric($cost) and $cost > 0 
+                and $user_id != null){
+                
+                $purchaseOrder->create([
+                    
+                    'cost' => $cost,
+                    'date' => $date,
+                    'user_id' => $request->user_id
+         
+                ]);
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+
+        }
+        else{
+            return "La orden de compra ingresada ya existe";
+        }
  
-         return PurchaseOrder::all();
+        return PurchaseOrder::all();
     }
  
     /**

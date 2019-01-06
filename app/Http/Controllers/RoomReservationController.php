@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\RoomReservation;
+use App\PurchaseOrder;
+use App\Package;
 use Validator;
 
 class RoomReservationController extends Controller
@@ -37,25 +39,42 @@ class RoomReservationController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyRoomReservation = RoomReservation::find($request->id);
-         $roomReservation = new RoomReservation();
+        $verifyRoomReservation = RoomReservation::find($request->id);
+        $roomReservation = new RoomReservation();
  
-         if($verifyRoomReservation == null){
+        if($verifyRoomReservation == null){
  
-             $roomReservation->create([
-                'cost' => $request->cost,
-                'begin_date' => $request->begin_date,
-                'end_date' => $request->end_date,
-                'purchase_order_id' => $request->purchase_order_id,
-                'package_id' => $request->package_id
- 
-             ]);
-         }
+            $cost = $request->cost;
+            $begin_date = $request->begin_date;
+            $end_date = $request->end_date;
+            $purchase_order_id = PurchaseOrder::find($request->purchase_order_id);
+            $package_id = Package::find($request->package_id);
+
+            if(is_numeric($cost) and $cost > 0
+               and $end_date > $begin_date
+               and $purchase_order_id != null and $package_id != null){
+
+                $roomReservation->create([
+                    'cost' => $cost,
+                    'begin_date' => $begin_date,
+                    'end_date' => $end_date,
+                    'purchase_order_id' => $request->purchase_order_id,
+                    'package_id' => $request->package_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+            
+        }
          else{
-             return "La reserva de habitación ingresada ya existe";
-         }
+            return "La reserva de habitación ingresada ya existe";
+        }
  
-         return RoomReservation::all();
+        return RoomReservation::all();
     }
  
     /**

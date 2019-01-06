@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Role;
 use Validator;
 
 class UserController extends Controller
@@ -37,27 +38,47 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-         $verifyUser = User::find($request->id);
-         $user = new User();
+        $verifyUser = User::find($request->id);
+        $user = new User();
  
-         if($verifyUser == null){
+        if($verifyUser == null){
  
-             $user->create([
-                'name' => $request->name, 
-                'email' => $request->email, 
-                'password' => $request->password,
-                'email_verified_at' => $request->email_verified_at,
-                'miles' => $request->miles,
-                'rut' => $request->rut,
-                'role_id' => $request->role_id
+            $name = $request->name;
+            $email = $request->email; 
+            $password = $request->password;
+            $email_verified_at = $request->email_verified_at;
+            $miles = $request->miles;
+            $rut = $request->rut;
+            $role_id = Role::find($request->role_id);
+
+            if(!(is_numeric($name)) and !(is_numeric($email))
+            and !(is_numeric($password)) and !(is_numeric($rut))
+            and is_numeric($miles) and $miles > 0
+            and $role_id != null){
+
+                $user->create([
+                    'name' => $name, 
+                    'email' => $email, 
+                    'password' => $password,
+                    'email_verified_at' => $email_verified_at,
+                    'miles' => $miles,
+                    'rut' => $rut,
+                    'role_id' => $request->role_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+            
+        }
+        else{
+            return "El usuario ingresado ya existe";
+        }
  
-             ]);
-         }
-         else{
-             return "El usuario ingresado ya existe";
-         }
- 
-         return User::all();
+        return User::all();
     }
  
     /**
