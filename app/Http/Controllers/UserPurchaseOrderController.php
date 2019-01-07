@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\purchaseOrder;
+use App\PurchaseOrder;
 use App\User;
 
 class UserPurchaseOrderController extends Controller
@@ -39,21 +39,27 @@ class UserPurchaseOrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        //
+        if (!$request->get('cost') || !$request->get('date')) 
+        {
+            return response()->json(['mensaje'=>'Datos invalidos o incompletos'],404);
+        }
+
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['mensaje'=>'Usuario no existe'],404);
+        }
+
+        PurchaseOrder::create([
+                'cost'=>$request->get('cost'),
+                'date'=>$request->get('date'),
+                'user_id'=>$id
+        ]);
+
+        return response()->json(['mensaje'=>'PurchaseOrder se a creado con exito'],201);
     }
  
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //return Hotel::find($id);
-    }
  
     /**
      * Show the form for editing the specified resource.
@@ -84,8 +90,19 @@ class UserPurchaseOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idUser,$idPurchaseOrder)
     {
-        //
+        $user=User::find($idUser);
+        if(!$user)
+        {
+            return response()->json(['mensaje'=>'User no existe'],404);
+        }
+        $purchaseOrder =$user->purchaseOrders()->find($idPurchaseOrder);
+        if (!$purchaseOrder) 
+        {
+            return response()->json(['mensaje'=>'PurchaseOrder no se encuentra asociada a User'],404);
+        }
+        $purchaseOrder->delete();
+        return response()->json(['mensaje'=>'PurchaseOrder a sido eliminada'],201);
     }
 }

@@ -39,37 +39,29 @@ class HotelRoomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        $verifyHotel = Hotel::find($request->id);
-        $hotels = new Hotel();
-
-        if($verifyHotel == null){
-
-            $hotels->create([
-                'stars' => $request->stars,
-                'capacity' => $request->capacity,
-                'name' => $request->name
-
-            ]);
-        }
-        else{
-            return "El hotel ingresado ya existe";
+        if (!$request->get('number') || !$request->get('capacity') || !$request->get('cost')|| !$request->get('type')) 
+        {
+            return response()->json(['mensaje'=>'Datos invalidos o incompletos'],404);
         }
 
-        return Hotel::all();
+        $hotel = Hotel::find($id);
+        if (!$hotel) {
+            return response()->json(['mensaje'=>'Hotel no existe'],404);
+        }
+
+        Room::create([
+                'number'=>$request->get('number'),
+                'capacity'=>$request->get('capacity'),
+                'cost'=>$request->get('cost'),
+                'type'=>$request->get('type'),
+                'hotel_id'=>$id
+        ]);
+
+        return response()->json(['mensaje'=>'Room se a creado con exito'],201);
     }
  
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return Hotel::find($id);
-    }
  
     /**
      * Show the form for editing the specified resource.
@@ -100,10 +92,19 @@ class HotelRoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idHotel,$idRoom)
     {
-        $hotels = Hotel::find($id);
-        $hotels->delete();
-        return "Se ha eliminado un hotel";
+        $hotel=Hotel::find($idHotel);
+        if(!$hotel)
+        {
+            return response()->json(['mensaje'=>'Hotel no existe'],404);
+        }
+        $room =$hotel->rooms()->find($idRoom);
+        if (!$room) 
+        {
+            return response()->json(['mensaje'=>'Room no se encuentra asociada a hotel'],404);
+        }
+        $room->delete();
+        return response()->json(['mensaje'=>'Room a sido eliminada'],201);
     }
 }

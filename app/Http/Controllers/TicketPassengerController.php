@@ -39,21 +39,27 @@ class TicketPassengerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        //
+        if (!$request->get('rut') || !$request->get('name')) 
+        {
+            return response()->json(['mensaje'=>'Datos invalidos o incompletos'],404);
+        }
+
+        $ticket = Ticket::find($id);
+        if (!$ticket) {
+            return response()->json(['mensaje'=>'Ticket no existe'],404);
+        }
+
+        Passenger::create([
+                'rut'=>$request->get('rut'),
+                'name'=>$request->get('name'),
+                'ticket_id'=>$id
+        ]);
+
+        return response()->json(['mensaje'=>'Passenger se a creado con exito'],201);
     }
  
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //return Hotel::find($id);
-    }
  
     /**
      * Show the form for editing the specified resource.
@@ -84,8 +90,19 @@ class TicketPassengerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($idTicket,$idPassenger)
     {
-        //
+        $ticket=Ticket::find($idTicket);
+        if(!$ticket)
+        {
+            return response()->json(['mensaje'=>'Ticket no existe'],404);
+        }
+        $passenger =$ticket->passengers()->find($idPassenger);
+        if (!$passenger) 
+        {
+            return response()->json(['mensaje'=>'Passenger no se encuentra asociada a Ticket'],404);
+        }
+        $passenger->delete();
+        return response()->json(['mensaje'=>'Passenger a sido eliminada'],201);
     }
 }
