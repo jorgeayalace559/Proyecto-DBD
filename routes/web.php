@@ -44,3 +44,6 @@ Route::resource('User','UserController');
 Route::resource('Hotel.Room','HotelRoomController',['except'=>['show']]);
 Route::resource('User.PurchaseOrder','UserPurchaseOrderController',['except'=>['show']]);
 Route::resource('Ticket.Passenger','TicketPassengerController',['except'=>['show']]);
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
