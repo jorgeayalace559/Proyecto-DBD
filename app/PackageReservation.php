@@ -15,7 +15,7 @@ class PackageReservation extends Model
     protected $hidden=['updated_at'];
 
     public function package(){
-        return $this->belongsTo('App\Package');
+        return $this->hasMany('App\Package');
     }
 
     public function purchase_order(){

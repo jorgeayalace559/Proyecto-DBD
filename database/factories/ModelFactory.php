@@ -65,7 +65,10 @@ $factory->define(App\Package::class, function (Faker $faker) {
         'origin_id'                    => App\Citie::all()->random()->id,
         'destination_id'               => App\Citie::all()->random()->id,
         'package_reservation_id'       => App\PackageReservation::all()->random()->id,
-        'room_reservation_id'          => App\RoomReservation::all()->random()->id
+        'room_reservation_id'          => App\RoomReservation::all()->random()->id,
+        'car_reservation_id'           => App\CarReservation::all()->random()->id,
+        'insurance_reservation_id'     => App\InsuranceReservation::all()->random()->id,
+        'ticket_reservation_id'        => App\TicketReservation::all()->random()->id,
     ];
 });
 
@@ -101,8 +104,7 @@ $factory->define(App\CarReservation::class, function (Faker $faker) {
         'begin_date'                    => date("Y-m-d H:i:s"),
         'end_date'                      => date("Y-m-d H:i:s"),
         'cost'                          => rand(30000,1500),
-        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
-        'package_id'                    => App\Package::all()->random()->id,
+        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id
     ];
 });
 
@@ -111,8 +113,7 @@ $factory->define(App\InsuranceReservation::class, function (Faker $faker) {
         'begin_date'                    => date("Y-m-d H:i:s"),
         'end_date'                      => date("Y-m-d H:i:s"),
         'cost'                          => rand(30000,150000),
-        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
-        'package_id'                    => App\Package::all()->random()->id,
+        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id
     ];
 });
 
@@ -145,8 +146,7 @@ $factory->define(App\RoomReservation::class, function (Faker $faker) {
 $factory->define(App\TicketReservation::class, function (Faker $faker) {
     return [
         'cost'                          => rand(30000,150000),
-        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
-        'package_id'                    => App\Package::all()->random()->id,
+        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id
     ];
 });
 

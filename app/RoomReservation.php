@@ -17,7 +17,7 @@ class RoomReservation extends Model
     protected $hidden=['updated_at'];
 
     public function package(){
-        return $this->hasMany('App\Package');
+        return $this->belongsTo('App\Package');
     }
 
     public function purchase_order(){

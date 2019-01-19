@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PackageReservationsTableSeeder::class);
         $this->call(RoomsTableSeeder::class);
         $this->call(RoomReservationsTableSeeder::class);
-        $this->call(PackagesTableSeeder::class);
         $this->call(InsuranceReservationsTableSeeder::class);
         $this->call(InsurancesTableSeeder::class);
         $this->call(TicketReservationsTableSeeder::class);
@@ -32,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SeatsTableSeeder::class);
         $this->call(CarReservationsTableSeeder::class);
         $this->call(CarsTableSeeder::class);
+        $this->call(PackagesTableSeeder::class);
         
         
 
