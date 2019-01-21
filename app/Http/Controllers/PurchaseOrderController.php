@@ -36,7 +36,7 @@ class PurchaseOrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyPurchaseOrder = PurchaseOrder::find($request->id);
         $purchaseOrder = new PurchaseOrder();
@@ -44,13 +44,13 @@ class PurchaseOrderController extends Controller
         if($verifyPurchaseOrder == null){
  
             $cost = $request->cost;
-            $date = $request->date;
+            $date = $request->fecha;            //CON DATE NO FUNCIONA, DEBE ESTAR RESERVADO
             $user_id = $request->user_id;
  
             if(is_numeric($cost) and $cost > 0 
                 and $user_id != null){
                 
-                $purchaseOrder->create([
+                $purchaseOrder->updateOrCreate([
                     
                     'cost' => $cost,
                     'date' => $date,
@@ -65,7 +65,28 @@ class PurchaseOrderController extends Controller
 
         }
         else{
-            return "La orden de compra ingresada ya existe";
+            $cost = $request->cost;
+            $date = $request->fecha;
+            $user_id = $request->user_id;
+ 
+            if(is_numeric($cost) and $cost > 0 
+                and $user_id != null){
+                
+                $purchaseOrder->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    
+                    'cost' => $cost,
+                    'date' => $date,
+                    'user_id' => $request->user_id
+         
+                ]);
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
  
         return PurchaseOrder::all();

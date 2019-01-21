@@ -37,7 +37,7 @@ class CarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyCar = Car::find($request->id);
         $cars = new Car();
@@ -51,7 +51,7 @@ class CarController extends Controller
 
             if($city_id != null and $car_reservation_id != null and $patent != null and $capacity > 1 and $capacity < 9){
 
-                $cars->create([
+                $cars->updateOrCreate([
                     'capacity' => $request->capacity,
                     'city_id' => $request->city_id,
                     'patent' => $request->patent,
@@ -64,7 +64,28 @@ class CarController extends Controller
             }
         }
         else{
-            return "El auto ingresado ya existe";
+
+            $capacity = $request->capacity;
+            $city_id = Citie::find($request->city_id);
+            $patent = $request->patent;
+            $car_reservation_id = CarReservation::find($request->car_reservation_id);
+
+            if($city_id != null and $car_reservation_id != null and $patent != null and $capacity > 1 and $capacity < 9){
+
+                $cars->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'capacity' => $request->capacity,
+                    'city_id' => $request->city_id,
+                    'patent' => $request->patent,
+                    'car_reservation_id' => $request->car_reservation_id
+
+                ]);
+            }
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
 
         return Car::all();

@@ -36,7 +36,7 @@ class PassengerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyPassenger = Passenger::find($request->id);
         $passenger = new Passenger();
@@ -50,7 +50,7 @@ class PassengerController extends Controller
             if(!(is_numeric($name))
                and $ticket_id != null){
 
-                $passenger->create([
+                $passenger->updateOrCreate([
 
                     'rut' => $rut,
                     'name' => $name,
@@ -63,7 +63,28 @@ class PassengerController extends Controller
             }
         }
         else{
-             return "El pasajero ingresado ya existe";
+
+            $rut = $request->rut;
+            $name = $request->name;
+            $ticket_id = Ticket::find($request->ticket_id);
+
+            if(!(is_numeric($name))
+               and $ticket_id != null){
+
+                $passenger->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+
+                    'rut' => $rut,
+                    'name' => $name,
+                    'ticket_id' => $request->ticket_id
+    
+                ]);
+            }
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
  
          return Passenger::all();

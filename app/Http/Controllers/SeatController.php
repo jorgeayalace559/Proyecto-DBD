@@ -37,7 +37,7 @@ class SeatController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifySeat = Seat::find($request->id);
         $seat = new Seat();
@@ -46,6 +46,7 @@ class SeatController extends Controller
  
             $number = $request->number;
             $type = $request->type;
+            return $type;
             $remaining = $request->remaining;
             $ticket_id = $request->ticket_id;
             $airplane_id = $request->airplane_id;
@@ -55,7 +56,7 @@ class SeatController extends Controller
                and is_numeric($remaining) and $remaining > 0
                and $ticket_id != null and $airplane_id != null){
 
-                $seat->create([
+                $seat->updateOrCreate([
 
                     'number' => $number,
                     'type' => $type,
@@ -73,7 +74,34 @@ class SeatController extends Controller
             
         }
         else{
-            return "El asiento ingresado ya existe";
+            $number = $request->number;
+            $type = $request->type;
+            $remaining = $request->remaining;
+            $ticket_id = $request->ticket_id;
+            $airplane_id = $request->airplane_id;
+
+            if(is_numeric($number) and $number > 0
+               and !(is_numeric($type))
+               and is_numeric($remaining) and $remaining > 0
+               and $ticket_id != null and $airplane_id != null){
+
+                $seat->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'number' => $number,
+                    'type' => $type,
+                    'remaining' => $remaining,
+                    'ticket_id' => $request->ticket_id,
+                    'airplane_id' => $request->airplane_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
  
         return Seat::all();

@@ -38,7 +38,7 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyTicket = Ticket::find($request->id);
         $ticket = new Ticket();
@@ -47,14 +47,14 @@ class TicketController extends Controller
  
             $cost = $request->cost;
             $quantity_passengers  = $request->quantity_passengers;
-            $flight_id  = $request->flight_id;
-            $ticket_reservation_id  = $request->ticket_reservation_id;
+            $flight_id  = Flight::find($request->flight_id);
+            $ticket_reservation_id  = TicketReservation::find($request->ticket_reservation_id);
 
             if(is_numeric($cost) and $cost > 0
             and is_numeric($quantity_passengers) and $quantity_passengers > 0
             and $flight_id != null and $ticket_reservation_id != null){
 
-                $ticket->create([
+                $ticket->updateOrCreate([
                     'cost' => $cost,
                     'quantity_passengers'  => $quantity_passengers,
                     'flight_id'  => $request->flight_id,
@@ -70,7 +70,31 @@ class TicketController extends Controller
 
         }
         else{
-            return "El ticket ingresado ya existe";
+            $cost = $request->cost;
+            $quantity_passengers  = $request->quantity_passengers;
+            $flight_id  = $request->flight_id;
+            $ticket_reservation_id  = $request->ticket_reservation_id;
+
+            if(is_numeric($cost) and $cost > 0
+            and is_numeric($quantity_passengers) and $quantity_passengers > 0
+            and $flight_id != null and $ticket_reservation_id != null){
+
+                $ticket->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'cost' => $cost,
+                    'quantity_passengers'  => $quantity_passengers,
+                    'flight_id'  => $request->flight_id,
+                    'ticket_reservation_id'  => $request->ticket_reservation_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
  
         return Ticket::all();

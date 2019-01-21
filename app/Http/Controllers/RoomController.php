@@ -37,7 +37,7 @@ class RoomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyRoom = Room::find($request->id);
         $room = new Room();
@@ -57,7 +57,7 @@ class RoomController extends Controller
                and !(is_numeric($type))
                and $hotel_id != null and $room_reservation_id != null){
 
-                $room->create([
+                $room->updateOrCreate([
                     'number' => $number,
                     'capacity' => $capacity,
                     'cost' => $cost,
@@ -73,7 +73,37 @@ class RoomController extends Controller
             }            
         }
         else{
-            return "La habtiacion ingresada ya existe";
+            
+            $number = $request->number;
+            $capacity = $request->capacity;
+            $cost = $request->cost;
+            $type = $request->type;
+            $hotel_id = Hotel::find($request->hotel_id);
+            $room_reservation_id = RoomReservation::find($request->room_reservation_id);
+
+            if(is_numeric($number) and $number > 0
+               and is_numeric($capacity) and $capacity > 0 and $capacity < 8
+               and is_numeric($cost) and $cost > 0
+               and !(is_numeric($type))
+               and $hotel_id != null and $room_reservation_id != null){
+
+                $room->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'number' => $number,
+                    'capacity' => $capacity,
+                    'cost' => $cost,
+                    'type' => $type,
+                    'hotel_id' => $request->hotel_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            } 
         }
  
         return Room::all();

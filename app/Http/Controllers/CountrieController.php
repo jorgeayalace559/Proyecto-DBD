@@ -35,7 +35,7 @@ class CountrieController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyCountrie = Countrie::find($request->id);
         $country = new Countrie();
@@ -56,7 +56,19 @@ class CountrieController extends Controller
             }
         }
         else{
-            return "El pais ingresado ya existe";
+
+            $name = $request->name;
+
+            if(!(is_numeric($name))){
+
+                $country->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'name' => $request->name,
+
+                ]);
+            }
         }
 
         return Countrie::all();

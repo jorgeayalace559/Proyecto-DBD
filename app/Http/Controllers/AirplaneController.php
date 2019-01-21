@@ -36,13 +36,14 @@ class AirplaneController extends Controller
 	* @param  \Illuminate\Http\Request  $request
 	* @return \Illuminate\Http\Response
 	*/
-   public function store(Request $request)
+   public function storeOrUpdate(Request $request)
    {
 		$verifyAirplane = Airplane::find($request->id);
-		$airplanes = new Airplane();
 
 		if($verifyAirplane == null){
 
+			//Se instancia un objeto del modelo
+			$airplanes = new Airplane();
 			//Se guarda el nombre ingresado en una variable.
 			$name = $request->name;
 			//Se guarda la capacidad ingresada en una variable.
@@ -53,7 +54,7 @@ class AirplaneController extends Controller
 
 			if($flight_id != null and !(is_numeric($name)) and $capacity > 50 and $capacity < 80){
 
-				$airplanes->create([
+				$airplanes->updateOrCreate([
 					
 					'name' => $name,
 					'capacity' => $capacity,
@@ -66,8 +67,36 @@ class AirplaneController extends Controller
 				return "Error en los parametros ingresados";
 			}
 		}
+
 		else{
-			return "El avión ingresado ya existe";
+			
+			//Se instancia un objeto del modelo
+			$airplanes = new Airplane();
+			//Se guarda el nombre ingresado en una variable.
+			$name = $request->name;
+			//Se guarda la capacidad ingresada en una variable.
+			$capacity = $request->capacity;
+			//Se busca si la id ingresada existe en la tabla flight.
+			//Da null si la id no existe.
+			$flight_id = Flight::find($request->flight_id);
+
+			if($flight_id != null and !(is_numeric($name)) and $capacity > 50 and $capacity < 80){
+				
+				$airplanes->updateOrCreate([
+					'id' => $request->id
+				],
+				
+				[			
+					'name' => $name,
+					'capacity' => $capacity,
+					'flight_id' => $request->flight_id
+	
+				]);
+
+			}
+			else{
+				return "Error en los parametros ingresados";
+			}
 		}
 
 		return Airplane::all();

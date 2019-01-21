@@ -36,7 +36,7 @@ class StateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyState = State::find($request->id);
         $state = new State();
@@ -48,7 +48,7 @@ class StateController extends Controller
 
             if(!(is_numeric($condition)) and $flight_id != null){
 
-                $state->create([
+                $state->updateOrCreate([
                     'condition' => $condition,
                     'flight_id' => $request->flight_id
      
@@ -62,7 +62,31 @@ class StateController extends Controller
             
         }
         else{
-            return "El estado ingresado ya existe";
+            $verifyState = State::find($request->id);
+            $state = new State();
+        
+            if($verifyState == null){
+    
+                $condition = $request->condition;
+                $flight_id = Flight::find($request->flight_id);
+
+                if(!(is_numeric($condition)) and $flight_id != null){
+
+                    $state->updateOrCreate([
+                        'id' => $request->id
+                    ],
+                    [
+                        'condition' => $condition,
+                        'flight_id' => $request->flight_id
+        
+                    ]);
+
+                }
+
+                else{
+                    return "Error en los parametros ingresados";
+                }
+            }
         }
  
          return State::all();

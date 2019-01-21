@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Package;
 use App\Citie;
+use App\RoomReservation;
+use App\CarReservation;
 use App\PackageReservation;
+use App\InsuranceReservation;
+use App\TicketReservation;
 use Validator;
 
 class PackageController extends Controller
@@ -37,7 +41,7 @@ class PackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyPackage = Package::find($request->id);
         $package = new Package();
@@ -51,14 +55,19 @@ class PackageController extends Controller
             $origin_id = Citie::find($request->origin_id);
             $destination_id = Citie::find($request->destination_id);
             $package_reservation_id = PackageReservation::find($request->package_reservation_id);
+            $room_reservation_id = RoomReservation::find($request->room_reservation_id);
+            $car_reservation_id = CarReservation::find($request->car_reservation_id);
+            $ticket_reservation_id = TicketReservation::find($request->ticket_reservation_id);
+            $insurance_reservation_id = InsuranceReservation::find($request->insurance_reservation_id);
 
             if(is_numeric($quantity) and $quantity > 0
                and is_numeric($cost) and $cost > 0
                and is_numeric($nights) and $nights > 0
                and !(is_numeric($name))
-               and $origin_id != null and $destination_id != null and $package_reservation_id != null){
+               and $origin_id != null and $destination_id != null and $package_reservation_id != null and $room_reservation_id != null
+               and $car_reservation_id != null and $ticket_reservation_id != null and $insurance_reservation_id != null){
 
-                $package->create([
+                $package->updateOrCreate([
 
                     'quantity' => $quantity,
                     'name' => $name,
@@ -67,7 +76,10 @@ class PackageController extends Controller
                     'origin_id' => $origin_id,
                     'destination_id' => $destination_id,
                     'package_reservation_id' => $package_reservation_id,
-                    'room_reservation_id' => $room_reservation_id
+                    'room_reservation_id' => $room_reservation_id,
+                    'car_reservation_id' => $car_reservation_id,
+                    'ticket_reservation_id' => $ticket_reservation_id,
+                    'insurance_reservation_id' => $insurance_reservation_id
     
                 ]);
 
@@ -77,7 +89,49 @@ class PackageController extends Controller
             }
         }
         else{
-             return "El paquete ingresado ya existe";
+            $quantity  = $request->quantity;
+            $name = $request->name;
+            $cost = $request->cost;
+            $nights = $request->nights;
+            $origin_id = Citie::find($request->origin_id);
+            $destination_id = Citie::find($request->destination_id);
+            $package_reservation_id = PackageReservation::find($request->package_reservation_id);
+            $room_reservation_id = RoomReservation::find($request->room_reservation_id);
+            $car_reservation_id = CarReservation::find($request->car_reservation_id);
+            $ticket_reservation_id = TicketReservation::find($request->ticket_reservation_id);
+            $insurance_reservation_id = InsuranceReservation::find($request->insurance_reservation_id);
+
+            if(is_numeric($quantity) and $quantity > 0
+               and is_numeric($cost) and $cost > 0
+               and is_numeric($nights) and $nights > 0
+               and !(is_numeric($name))
+               and $origin_id != null and $destination_id != null and $package_reservation_id != null and $room_reservation_id != null
+               and $car_reservation_id != null and $ticket_reservation_id != null and $insurance_reservation_id != null){
+
+                $package->updateOrCreate([
+                    'id' => $request->id
+                ],
+                
+                [
+
+                    'quantity' => $quantity,
+                    'name' => $name,
+                    'cost' => $cost,
+                    'nights' => $nights,
+                    'origin_id' => $origin_id,
+                    'destination_id' => $destination_id,
+                    'package_reservation_id' => $package_reservation_id,
+                    'room_reservation_id' => $room_reservation_id,
+                    'car_reservation_id' => $car_reservation_id,
+                    'ticket_reservation_id' => $ticket_reservation_id,
+                    'insurance_reservation_id' => $insurance_reservation_id
+    
+                ]);
+
+               }
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
  
          return Package::all();

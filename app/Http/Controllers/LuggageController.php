@@ -36,7 +36,7 @@ class LuggageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyLuggage = Luggage::find($request->id);
         $luggages = new Luggage();
@@ -48,9 +48,9 @@ class LuggageController extends Controller
             $type = $request->type;
             $passenger_id = Passenger::find($request->passenger_id);
 
-            if($weight > 0  and $weight < 50 and  $cost > 0 and !(is_numeric($type)) and $passenger_id != null){
+            if($weight > 0 and $weight < 50 and $cost > 0 and !(is_numeric($type)) and $passenger_id != null){
 
-                $luggages->create([
+                $luggages->updateOrCreate([
                     'weight' => $request->weight,
                     'cost' => $request->cost,
                     'type' => $request->type,
@@ -63,7 +63,28 @@ class LuggageController extends Controller
             }
         }
         else{
-            return "El equipaje ingresado ya existe";
+
+            $weight = $request->weight;
+            $cost = $request->cost;
+            $type = $request->type;
+            $passenger_id = Passenger::find($request->passenger_id);
+
+            if($weight > 0 and $weight < 50 and $cost > 0 and !(is_numeric($type)) and $passenger_id != null){
+
+                $luggages->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'weight' => $request->weight,
+                    'cost' => $request->cost,
+                    'type' => $request->type,
+                    'passenger_id' => $request->passenger_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros"; 
+            }
         }
 
         return Luggage::all();

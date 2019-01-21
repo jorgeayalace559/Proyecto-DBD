@@ -17,7 +17,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->increments('id');
 
             $table->integer('cost');
-            $table->timestamp('date');
+            $table->timestamp('date')->nullable();
 
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

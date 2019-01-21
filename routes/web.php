@@ -20,28 +20,45 @@ Route::get('/','HomeController@index');
 
 
 Route::resource('Airplane','AirplaneController');
+Route::post('Airplane','AirplaneController@storeOrUpdate');
 Route::resource('Car','CarController');
+Route::post('Car','CarController@storeOrUpdate');
 Route::resource('CarReservation','CarReservationController');
 Route::resource('Citie','CitieController');
+Route::post('Citie','CitieController@storeOrUpdate');
 Route::resource('Countrie','CountrieController');
+Route::post('Countrie','CountrieController@storeOrUpdate'); 
 Route::resource('Flight','FlightController');
+Route::post('Flight','FlightController@storeOrUpdate');
 Route::resource('Hotel','HotelController');
+Route::post('Hotel','HotelController@storeOrUpdate');
 Route::resource('Insurance','InsuranceController');
+Route::post('Insurance','InsuranceController@storeOrUpdate');
 Route::resource('InsuranceReservation','InsuranceReservationController');
 Route::resource('Luggage','LuggageController');
+Route::post('Luggage','LuggageController@storeOrUpdate'); // PROBLEMA TRIGGER
 Route::resource('Package','PackageController');
+Route::post('Package','PackageController@storeOrUpdate'); // PROBLEMA
 Route::resource('PackageReservation','PackageReservationController');
 Route::resource('Passenger','PassengerController');
+Route::post('Passenger','PassengerController@storeOrUpdate');
 Route::resource('Payment','PaymentController');
+Route::post('Payment','PaymentController@storeOrUpdate'); // PROBLEMA TRIGGER
 Route::resource('PurchaseOrder','PurchaseOrderController');
+Route::post('PurchaseOrder','PurchaseOrderController@storeOrUpdate');
 Route::resource('Role','RoleController');
 Route::resource('Room','RoomController');
+Route::post('Room','RoomController@storeOrUpdate');
 Route::resource('RoomReservation','RoomReservationController');
 Route::resource('Seat','SeatController');
+Route::post('Seat','SeatController@storeOrUpdate'); // PROBLEMA
 Route::resource('State','StateController');
+Route::post('State','StateController@storeOrUpdate'); // PROBLEMA TRIGGER
 Route::resource('Ticket','TicketController');
+Route::post('Ticket','TicketController@storeOrUpdate');
 Route::resource('TicketReservation','TicketReservationController');
 Route::resource('User','UserController');
+Route::post('User','UserController@storeOrUpdate');  // PROBLEMA
 
 //ANIDADAS
 Route::resource('Hotel.Room','HotelRoomController',['except'=>['show']]);

@@ -36,7 +36,7 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyPayment = Payment::find($request->id);
         $payment = new Payment();
@@ -53,7 +53,7 @@ class PaymentController extends Controller
                 and is_numeric($quotas) and $quotas > 0
                 and $purchase_order_id != null ){
 
-                $payment->create([
+                $payment->updateOrCreate([
         
                     'type' => $type,
                     'bank' => $bank,
@@ -70,7 +70,34 @@ class PaymentController extends Controller
             
         }
         else{
-            return "El medio de pago ingresado ya existe";
+            $type = $request->type;
+    	    $bank = $request->bank;
+    	    $count = $request->count;
+    	    $quotas = $request->quotas;
+    	    $purchase_order_id = PurchaseOrder::find($request->purchase_order_id);
+
+            if(!(is_numeric($type)) and !(is_numeric($bank)) and !(is_numeric($count))
+                and is_numeric($quotas) and $quotas > 0
+                and $purchase_order_id != null ){
+
+                $payment->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+        
+                    'type' => $type,
+                    'bank' => $bank,
+                    'count' => $count,
+                    'quotas' => $quotas,
+                    'purchase_order_id' => $request->purchase_order_id
+    
+                ]);
+
+            }
+            else{
+                return "Error en los parametros ingresados";
+            }
+            
         }
  
         return Payment::all();

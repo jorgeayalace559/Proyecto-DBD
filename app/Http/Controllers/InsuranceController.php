@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Insurance;
+use App\Citie;
 use App\InsuranceReservation;
 use Validator;
 
@@ -36,7 +37,7 @@ class InsuranceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyInsurance = Insurance::find($request->id);
         $insurance = new Insurance();
@@ -45,12 +46,12 @@ class InsuranceController extends Controller
 
             $age = $request->age;
             $type = $request->type;
-            $city = $request->city;
+            $city = Citie::find($request->city);
             $insurance_reservation_id = InsuranceReservation::find($request->insurance_reservation_id);
 
-             if($age > 17 and $age < 100 and !(is_numeric($type)) and !(is_numeric($city)) and $insurance_reservation_id != null){
+             if($age > 17 and $age < 100 and !(is_numeric($type)) and $city != null and $insurance_reservation_id != null){
 
-                $insurance->create([
+                $insurance->updateOrCreate([
                     'age' => $request->age,
                     'type' => $request->type,
                     'city' => $request->city,
@@ -63,7 +64,27 @@ class InsuranceController extends Controller
             }
         }
         else{
-            return "El seguro ingresado ya existe";
+            $age = $request->age;
+            $type = $request->type;
+            $city = $request->city;
+            $insurance_reservation_id = InsuranceReservation::find($request->insurance_reservation_id);
+
+             if($age > 17 and $age < 100 and !(is_numeric($type)) and $city != null and $insurance_reservation_id != null){
+
+                $insurance->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'age' => $request->age,
+                    'type' => $request->type,
+                    'city' => $request->city,
+                    'insurance_reservation_id' => $request->insurance_reservation_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
         }
 
         return Insurance::all();

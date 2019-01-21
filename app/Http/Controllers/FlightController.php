@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Flight;
+use App\Citie;
 use Validator;
 class FlightController extends Controller
 {
@@ -34,7 +35,7 @@ class FlightController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyFlight = Flight::find($request->id);
         $flights = new Flight();
@@ -47,9 +48,9 @@ class FlightController extends Controller
             $origin_id = Citie::find($request->origin_id);
             $platform = $request->platform;
 
-            if(is_numeric($name) and $destination_id != null and $origin_id != null){
+            if(is_numeric($platform) and $destination_id != null and $origin_id != null){
 
-                $flights->create([
+                $flights->updateOrCreate([
                     'destination_id' => $request->destination_id,
                     'begin_date' => $request->begin_date,
                     'end_date' => $request->end_date,
@@ -63,7 +64,31 @@ class FlightController extends Controller
             }
         }
         else{
-            return "El vuelo ingresado ya existe";
+
+            $destination_id = Citie::find($request->origin_id);
+            $begin_date = $request->begin_date;
+            $end_date = $request->end_date;
+            $origin_id = Citie::find($request->origin_id);
+            $platform = $request->platform;
+
+            if(is_numeric($platform) and $destination_id != null and $origin_id != null){
+
+                $flights->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'destination_id' => $request->destination_id,
+                    'begin_date' => $request->begin_date,
+                    'end_date' => $request->end_date,
+                    'origin_id' => $request->origin_id,
+                    'platform' => $request->platform
+
+                ]);
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
 
         return Flight::all();

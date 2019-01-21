@@ -35,7 +35,7 @@ class HotelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyHotel = Hotel::find($request->id);
         $hotels = new Hotel();
@@ -46,9 +46,9 @@ class HotelController extends Controller
             $capacity = $request->capacity;
             $name = $request->name;
 
-            if(is_numeric($name) and $capacity > 0 and $capacity <100 and $stars > -1 and $stars < 6){
+            if(!(is_numeric($name)) and $capacity > 0 and $capacity <100 and $stars > -1 and $stars < 6){
 
-                $hotels->create([
+                $hotels->updateOrCreate([
                     'stars' => $request->stars,
                     'capacity' => $request->capacity,
                     'name' => $request->name
@@ -60,7 +60,25 @@ class HotelController extends Controller
             }
         }
         else{
-            return "El hotel ingresado ya existe";
+            $stars = $request->stars;
+            $capacity = $request->capacity;
+            $name = $request->name;
+
+            if(!(is_numeric($name)) and $capacity > 0 and $capacity <100 and $stars > -1 and $stars < 6){
+
+                $hotels->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'stars' => $request->stars,
+                    'capacity' => $request->capacity,
+                    'name' => $request->name
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
         }
 
         return Hotel::all();

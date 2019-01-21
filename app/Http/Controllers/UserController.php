@@ -36,7 +36,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
         $verifyUser = User::find($request->id);
         $user = new User();
@@ -49,6 +49,7 @@ class UserController extends Controller
             $email_verified_at = $request->email_verified_at;
             $miles = $request->miles;
             $rut = $request->rut;
+            return $rut;
             $role_id = Role::find($request->role_id);
 
             if(!(is_numeric($name)) and !(is_numeric($email))
@@ -56,7 +57,7 @@ class UserController extends Controller
             and is_numeric($miles) and $miles > 0
             and $role_id != null){
 
-                $user->create([
+                $user->updateOrCreate([
                     'name' => $name, 
                     'email' => $email, 
                     'password' => $password,
@@ -75,7 +76,39 @@ class UserController extends Controller
             
         }
         else{
-            return "El usuario ingresado ya existe";
+
+            $name = $request->name;
+            $email = $request->email; 
+            $password = $request->password;
+            $email_verified_at = $request->email_verified_at;
+            $miles = $request->miles;
+            $rut = $request->rut;
+            $role_id = Role::find($request->role_id);
+
+            if(!(is_numeric($name)) and !(is_numeric($email))
+            and !(is_numeric($password)) and !(is_numeric($rut))
+            and is_numeric($miles) and $miles > 0
+            and $role_id != null){
+
+                $user->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'name' => $name, 
+                    'email' => $email, 
+                    'password' => $password,
+                    'email_verified_at' => $email_verified_at,
+                    'miles' => $miles,
+                    'rut' => $rut,
+                    'role_id' => $request->role_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
  
         return User::all();

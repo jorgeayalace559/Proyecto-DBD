@@ -28,7 +28,7 @@ $factory->define(App\Insurance::class, function (Faker $faker) {
         
         'age' => rand(1,100) ,
     	'type' => $insurance,
-    	'city' => $faker->city,
+    	'city' => rand(1,5),
         'insurance_reservation_id' => App\InsuranceReservation::all()->random()->id,
 
     ];

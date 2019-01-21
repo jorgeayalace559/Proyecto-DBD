@@ -36,8 +36,7 @@ class CitieController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function storeOrUpdate(Request $request){
         $verifyCitie = Citie::find($request->id);
         $city = new Citie();
 
@@ -49,7 +48,7 @@ class CitieController extends Controller
 
             if(!(is_numeric($name)) and !(is_numeric($airport_name)) and $country_id != null){
 
-                $city->create([
+                $city->updateOrCreate([
                     'name' => $request->name,
                     'airport_name' => $request->airport_name,
                     'country_id' => $request->country_id
@@ -61,7 +60,27 @@ class CitieController extends Controller
             }
         }
         else{
-            return "La ciudad ingresada ya existe";
+
+            $name = $request->name;
+            $airport_name = $request->airport_name;
+            $country_id = Countrie::find($request->country_id);
+
+            if(!(is_numeric($name)) and !(is_numeric($airport_name)) and $country_id != null){
+
+                $city->updateOrCreate([
+                    'id' => $request->id
+                ],
+                
+                [
+                    'name' => $request->name,
+                    'airport_name' => $request->airport_name,
+                    'country_id' => $request->country_id
+
+                ]);
+            }
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
 
         return Citie::all();
