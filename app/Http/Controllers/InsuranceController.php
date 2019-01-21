@@ -18,7 +18,7 @@ class InsuranceController extends Controller
     public function index()
     {
         $insurances = Insurance::all();
-        return $insurances;
+        return view('insurance.show',['insurances'=> $insurances]);
     }
  
     /**

@@ -22,7 +22,7 @@ class PackageController extends Controller
     public function index()
     {
         $packages = Package::all();
-        return $packages;
+        return view('package.show',['packages'=> $packages]);
     }
  
     /**

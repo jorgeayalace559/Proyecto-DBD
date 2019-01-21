@@ -16,7 +16,15 @@
 });
 */
 
+//Hay que desplegar un menu en todas. (No sé como) (Aún)
+
 Route::get('/','HomeController@index');
+Route::get('/airplanes','AirplaneController@index');  
+Route::get('/insurance','InsuranceController@index');
+Route::get('/car','CarController@index');
+Route::get('/hotel','HotelController@index');
+Route::get('/package','PackageController@index');
+Route::get('/state','StateController@index');
 
 
 Route::resource('Airplane','AirplaneController');

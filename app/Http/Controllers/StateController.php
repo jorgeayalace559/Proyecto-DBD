@@ -17,7 +17,7 @@ class StateController extends Controller
     public function index()
     {
         $states = State::all();
-        return $states;
+        return view('state.show',['states'=> $states]);
     }
  
     /**

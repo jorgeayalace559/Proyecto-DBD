@@ -19,15 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-<<<<<<< Updated upstream
             $table->integer('miles')->nullable();
             $table->string('rut')->nullable();
             $table->rememberToken();
-=======
-            $table->integer('miles');
-            $table->string('rut');
-            $table->rememberToken()->nullable();   //CAMBIE ESTO PARA UNA PRUEBA.
->>>>>>> Stashed changes
             $table->timestamps();
 
             $table->unsignedInteger('role_id')->default(4);

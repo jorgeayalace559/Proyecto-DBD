@@ -17,7 +17,7 @@ class AirplaneController extends Controller
    public function index()
    {
 	   $airplanes = Airplane::all();
-	   return $airplanes;
+	   return view('airplanes.show',['airplanes'=> $airplanes	]);
    }
 
    /**
@@ -111,7 +111,7 @@ class AirplaneController extends Controller
    public function show($id)
    {
 	   return Airplane::find($id);
-   }
+   }	
 
    /**
 	* Show the form for editing the specified resource.
