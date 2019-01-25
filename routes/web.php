@@ -25,6 +25,7 @@ Route::get('/car','CarController@index');
 Route::get('/hotel','HotelController@index');
 Route::get('/package','PackageController@index');
 Route::get('/state','StateController@index');
+Route::get('/flight','FlightController@index');
 
 
 Route::resource('Airplane','AirplaneController');

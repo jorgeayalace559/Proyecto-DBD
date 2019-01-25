@@ -18,7 +18,8 @@ class CarController extends Controller
     public function index()
     {
         $cars = Car::all();
-        return view('car.show',['cars'=> $cars]);
+        $cities = Citie::all();
+        return view('car.show',['cars'=> $cars, 'cities' => $cities]);
     }
  
     /**

@@ -9,10 +9,16 @@
             <input type="date" name="fecha">
         </form>
         <br> <br>
-        <form action="/action_page.php">
-            ¿A donde Viajas?:
-            <input name="tripDate" type="text">
-        </form>
+        ¿A donde viajas?
+        @if(count($cities)>0)
+            <select class="custom-select">
+                <option selected></option>         
+                @foreach($cities->all() as $citie)
+                    <option name="ciudadOrigen" value="{{ $citie->name }}">{{ $citie->name }}</option>
+                @endforeach        
+            </select>
+        @endif
+    <br><br>
         <br> <br>
         <div style="width:400px;">
             <div style="float: left; width: 130px"> 
@@ -22,13 +28,9 @@
                     <option value="2">Grupal</option>
                 </select>
             </div>
+            <br> <br>
+            <br> <br>   
             <div style="float: right; width: 22<div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    <label class="form-check-label" for="exampleRadios1">
-                    Solo Ida
-                    </label>
-                </div>5px"> 
-                <div class="form-check">
                     <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
                     <label class="form-check-label" for="exampleRadios1">
                     Solo Ida
@@ -42,7 +44,6 @@
                 </div>
             </div>
         </div>
-        <br> <br>
         <br> <br>
         <form action="/action_page.php">
             Edad de los pasajeros:

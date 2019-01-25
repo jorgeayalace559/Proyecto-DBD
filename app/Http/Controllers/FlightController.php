@@ -16,7 +16,7 @@ class FlightController extends Controller
     public function index()
     {
         $flights = Flight::all();
-        return $flights;
+        return view('flight.show',['flights'=> $flights]);
     }
  
     /**
