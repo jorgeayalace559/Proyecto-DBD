@@ -15,8 +15,8 @@ class PurchaseOrderPaymentTrigger extends Migration
         RETURNS trigger AS
         $BODY$
         BEGIN
-            INSERT INTO payments(id, type, bank, count,quotas, purchase_order_id, created_at, updated_at)
-            VALUES (NEW.id, null, null, null, 0, NEW.id, now(), null);
+            INSERT INTO payments(type, bank, count,quotas, purchase_order_id, created_at, updated_at)
+            VALUES (null, null, null, 0, NEW.id, now(), null);
             RETURN NEW;
         END
         $BODY$

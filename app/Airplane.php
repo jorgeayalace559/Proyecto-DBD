@@ -11,7 +11,8 @@ class Airplane extends Model
 
     protected $fillable = [
         'name',
-    	'capacity',
+        'capacity',
+        'remaining',
     	'flight_id'
     ];
 

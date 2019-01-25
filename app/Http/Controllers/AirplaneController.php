@@ -52,12 +52,13 @@ class AirplaneController extends Controller
 			//Da null si la id no existe.
 			$flight_id = Flight::find($request->flight_id);
 
-			if($flight_id != null and !(is_numeric($name)) and $capacity > 50 and $capacity < 80){
+			if($flight_id != null and !(is_numeric($name)) and $capacity > 50 and $capacity < 80  and is_numeric($remaining) and $remaining > 0 ){
 
 				$airplanes->updateOrCreate([
 					
 					'name' => $name,
 					'capacity' => $capacity,
+					'remaining' => $remaining,
 					'flight_id' => $request->flight_id
 	
 				]);
@@ -76,11 +77,12 @@ class AirplaneController extends Controller
 			$name = $request->name;
 			//Se guarda la capacidad ingresada en una variable.
 			$capacity = $request->capacity;
+			$remaining = $request->remaining;
 			//Se busca si la id ingresada existe en la tabla flight.
 			//Da null si la id no existe.
 			$flight_id = Flight::find($request->flight_id);
 
-			if($flight_id != null and !(is_numeric($name)) and $capacity > 50 and $capacity < 80){
+			if($flight_id != null and !(is_numeric($name)) and $capacity > 50 and $capacity < 80 and is_numeric($remaining) and $remaining > 0 ){
 				
 				$airplanes->updateOrCreate([
 					'id' => $request->id
@@ -88,6 +90,7 @@ class AirplaneController extends Controller
 				
 				[			
 					'name' => $name,
+					'remaining' => $remaining,
 					'capacity' => $capacity,
 					'flight_id' => $request->flight_id
 	

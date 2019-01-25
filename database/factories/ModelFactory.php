@@ -25,14 +25,19 @@ $factory->define(App\Ticket::class, function (Faker $faker) {
 });
 
 $factory->define(App\Flight::class, function (Faker $faker) {
-    return [
-        'end_date'          => date("Y-m-d H:i:s"),
-        'begin_date'        => date("Y-m-d H:i:s"),
-        'origin_id'         => rand(1,5),
-        'destination_id'    => rand(1,5), //Corregir que no se repitan
-        'platform'          => $faker-> randomDigit,
 
-    ];
+    $beginDate = $faker->dateTimeBetween('this week', '+ 6 days');
+    $endDate = $faker->dateTimeBetween($beginDate, strtotime('+ 6 days'));
+
+        return [
+            'end_date'          => date("Y-m-d H:i:s"),
+            'begin_date'        => date("Y-m-d H:i:s"),
+            'origin_id'         => rand(1,5),
+            'destination_id'    => rand(1,5), //Corregir que no se repitan
+            'platform'          => $faker-> randomDigit,
+    
+        ];
+    
 });
 
 $factory->define(App\Hotel::class, function (Faker $faker) {
@@ -85,7 +90,6 @@ $factory->define(App\Seat::class, function (Faker $faker) {
     return [
         'number'             => rand(1,100),
         'type'               => $faker->text(15),
-        'remaining'          => rand(2,50),
         'ticket_id'          => App\Ticket::all()->random()->id,
         'airplane_id'        => App\Airplane::all()->random()->id,
     ];
@@ -95,6 +99,7 @@ $factory->define(App\Airplane::class, function (Faker $faker) {
     return [
         'name'             => $faker->name,
         'capacity'         => rand(1,100),
+        'remaining'          => rand(2,50),
         'flight_id'        => App\Flight::all()->random()->id,
     ];
 });

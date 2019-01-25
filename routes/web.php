@@ -25,6 +25,10 @@ Route::get('/car','CarController@index');
 Route::get('/hotel','HotelController@index');
 Route::get('/package','PackageController@index');
 Route::get('/state','StateController@index');
+Route::get('/flight','FlightController@index');
+Route::get('/check-in','CheckInController@index');
+Route::get('/user','UserController@index');
+Route::get('/user-update','UpdateUserController@index');
 
 
 Route::resource('Airplane','AirplaneController');
@@ -44,14 +48,14 @@ Route::resource('Insurance','InsuranceController');
 Route::post('Insurance','InsuranceController@storeOrUpdate');
 Route::resource('InsuranceReservation','InsuranceReservationController');
 Route::resource('Luggage','LuggageController');
-Route::post('Luggage','LuggageController@storeOrUpdate'); // PROBLEMA TRIGGER
+Route::post('Luggage','LuggageController@storeOrUpdate');
 Route::resource('Package','PackageController');
 Route::post('Package','PackageController@storeOrUpdate'); // PROBLEMA
 Route::resource('PackageReservation','PackageReservationController');
 Route::resource('Passenger','PassengerController');
 Route::post('Passenger','PassengerController@storeOrUpdate');
 Route::resource('Payment','PaymentController');
-Route::post('Payment','PaymentController@storeOrUpdate'); // PROBLEMA TRIGGER
+Route::post('Payment','PaymentController@storeOrUpdate');
 Route::resource('PurchaseOrder','PurchaseOrderController');
 Route::post('PurchaseOrder','PurchaseOrderController@storeOrUpdate');
 Route::resource('Role','RoleController');
@@ -61,7 +65,7 @@ Route::resource('RoomReservation','RoomReservationController');
 Route::resource('Seat','SeatController');
 Route::post('Seat','SeatController@storeOrUpdate'); // PROBLEMA
 Route::resource('State','StateController');
-Route::post('State','StateController@storeOrUpdate'); // PROBLEMA TRIGGER
+Route::post('State','StateController@storeOrUpdate'); // NO ACTUALIZA
 Route::resource('Ticket','TicketController');
 Route::post('Ticket','TicketController@storeOrUpdate');
 Route::resource('TicketReservation','TicketReservationController');

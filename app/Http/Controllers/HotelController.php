@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Hotel;
+use App\Citie;
 use Validator;
 
 class HotelController extends Controller
@@ -16,7 +17,8 @@ class HotelController extends Controller
     public function index()
     {
         $hotels = Hotel::all();
-        return view('hotel.show',['hotels'=> $hotels]);
+        $cities = Citie::all();
+        return view('hotel.show',['hotels'=> $hotels,'cities' => $cities]);
     }
  
     /**

@@ -4,10 +4,16 @@
         Reserva de Habitacion
     </div>
     <br> <br>
-    <form action="/action_page.php">
-        ¿A donde Viajas?:
-        <input name="tripDate" type="text">
-    </form>
+    ¿A donde viajas?:
+    @if(count($cities)>0)
+        <select class="custom-select">
+            <option selected></option>         
+            @foreach($cities->all() as $citie)
+                <option name="ciudadOrigen" value="{{ $citie->name }}">{{ $citie->name }}</option>
+            @endforeach        
+        </select>
+    @endif
+    <br><br>
     <br> <br>
     <div style="width:400px;">
         <div style="float: left; width: 130px"> 
