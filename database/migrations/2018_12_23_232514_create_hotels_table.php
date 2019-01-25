@@ -20,6 +20,9 @@ class CreateHotelsTable extends Migration
             $table->integer('stars');
             $table->integer('capacity');
 
+            $table->unsignedInteger('citie_id');
+            $table->foreign('citie_id')->references('id')->on('cities')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

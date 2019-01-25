@@ -22,8 +22,6 @@ class CreateCarsTable extends Migration
             $table->unsignedInteger('city_id');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
 
-            $table->unsignedInteger('car_reservation_id');
-            $table->foreign('car_reservation_id')->references('id')->on('car_reservations')->onDelete('cascade');
 
             $table->timestamps();
         });

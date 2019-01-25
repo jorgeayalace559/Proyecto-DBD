@@ -10,7 +10,6 @@ class Car extends Model
     	'capacity',
     	'city_id',
     	'patent',
-        'car_reservation_id'
     ];
 
     protected $hidden=['created_at','updated_at'];

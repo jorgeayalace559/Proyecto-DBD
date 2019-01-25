@@ -5,13 +5,17 @@ use App\Citie;
 use App\Flight;
 use App\Ticket;
 use App\Luggage;
+use App\Car;
+use App\CarReservation;
+use App\Hotel;
+use App\RoomReservation;
+use App\Room;
 
 $factory->define(App\Car::class, function (Faker $faker) {
     return [
         'capacity'				=> rand(5,8),
         'city_id'				=> App\Citie::all()->random()->id,
         'patent'				=> $faker-> bothify($string = '##????'),
-        'car_reservation_id'    => App\CarReservation::all()->random()->id,
     ];
 });
 
@@ -26,27 +30,34 @@ $factory->define(App\Ticket::class, function (Faker $faker) {
 
 $factory->define(App\Flight::class, function (Faker $faker) {
 
-    $beginDate = $faker->dateTimeBetween('this day', '+ 6 days');
+    $beginDate = $faker->dateTimeBetween('now', '+ 14 days');
     $endDate = $faker->dateTimeBetween($beginDate,'+ 15 days');
+    $numeroCiudades= Citie::all()->count();
+    $origen = rand(1,$numeroCiudades);
+    $destino = rand(1,$numeroCiudades);
+    while($origen == $destino){
+        $destino = rand(1,$numeroCiudades);
+    } 
 
         return [
             'end_date'          =>  $endDate,
             'begin_date'        =>  $beginDate,
-            'origin_id'         => rand(1,5),
-            'destination_id'    => rand(1,5), //Corregir que no se repitan
-            'platform'          => $faker-> randomDigit,
+            'origin_id'         => $origen,
+            'destination_id'    => $destino, //Corregir que no se repitan
+            'platform'          => rand(1,10),
     
         ];
     
 });
 
 $factory->define(App\Hotel::class, function (Faker $faker) {
-
+    $numeroCiudades= Citie::all()->count();
     return [
 
         'name' => $faker->lastName,
         'stars' => rand(1,5),
-        'capacity' => rand(30,80)
+        'capacity' => rand(30,80),
+        'citie_id' => rand(1,$numeroCiudades)
 
     ];
 
@@ -62,13 +73,20 @@ $factory->define(App\Luggage::class, function (Faker $faker) {
 });
 
 $factory->define(App\Package::class, function (Faker $faker) {
+    $origen = Citie::all()->random()->id;
+    $destino = Citie::all()->random()->id;
+    while($origen == $destino){
+        $destino = Citie::all()->random()->id;
+    } 
+
+
     return [
         'quantity'                     => rand(1,6),
         'name'                         => $faker->text(20),
         'cost'                         => rand(100000,2000000),
         'nights'                       => rand(2,6),
-        'origin_id'                    => App\Citie::all()->random()->id,
-        'destination_id'               => App\Citie::all()->random()->id,
+        'origin_id'                    => $origen,
+        'destination_id'               => $destino,
         'package_reservation_id'       => App\PackageReservation::all()->random()->id,
         'room_reservation_id'          => App\RoomReservation::all()->random()->id,
         'car_reservation_id'           => App\CarReservation::all()->random()->id,
@@ -137,7 +155,8 @@ $factory->define(App\CarReservation::class, function (Faker $faker) {
         'begin_date'                    => $beginDate,
         'end_date'                      => $endDate,
         'cost'                          => rand(30000,1500),
-        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id
+        'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
+        'car_id'                        => Car::all()->random()->id
     ];
 });
 

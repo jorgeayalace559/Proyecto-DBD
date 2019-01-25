@@ -23,6 +23,9 @@ class CreateCarReservationsTable extends Migration
             $table->unsignedInteger('purchase_order_id');
             $table->foreign('purchase_order_id')->references('id')->on('purchase_orders')->onDelete('cascade');
 
+            $table->unsignedInteger('car_id');
+            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

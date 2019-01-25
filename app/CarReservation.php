@@ -10,13 +10,14 @@ class CarReservation extends Model
     	'cost',
     	'begin_date',
     	'end_date',
-    	'purchase_order_id'
+    	'purchase_order_id',
+        'car_id'
     ];
 
     protected $hidden=['updated_at'];
 
-    public function cars(){
-        return $this->hasMany('App\Car');
+    public function car(){
+        return $this->belongsTo('App\Car');
     }
 
     public function purchase_order(){
