@@ -1,6 +1,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head> 
-        <title>Mi perfil</title>
+        <title>Auto</title>
 
             <!--  jQuery -->
             <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -27,9 +27,6 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#">Principal <span class="sr-only">(current)</span></a>
-                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">Reserva Tu Vuelo</a>
                   </li>
