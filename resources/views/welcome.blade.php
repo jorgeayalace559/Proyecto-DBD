@@ -90,50 +90,56 @@
                     MIATAM
                 </div>
                 <form action="{{ route('buscarVuelo') }}" method="POST">
-                    @csrf
+                    @method('GET')
 
-                    @if (count($cities)>0)
-                    <select class="custom-select">
-                        <option selected>Ciudad Origen</option>         
-                            @foreach($cities->all() as $citie)
-                            <option name="origin_id" value="{{ $citie->name }}">{{ $citie->name }}</option>
-                            @endforeach        
-                    </select>
-                    <br> <br>
-                    <select class="custom-select">
-                        <option selected>Ciudad Destino</option>         
-                            @foreach($cities->all() as $citie)
-                            <option name="destination_id" value="{{ $citie->name }}">{{ $citie->name }}</option>
-                            @endforeach        
-                    </select>
-                    @endif
-                    <div name="tipo-viaje" class="form-check">
-                      <input class="form-check-input" type="radio" name="ida"  value="ida" checked>
-                      <label class="form-check-label" for="exampleRadios1">
-                        Solo Ida
-                      </label>
+                    <div class="row">
+                        <div>
+                            @if (count($cities)>0)
+                            <select class="custom-select">
+                                <option selected>Ciudad Origen</option>         
+                                    @foreach($cities->all() as $citie)
+                                    <option type="text" name="origin_id" class="form-control" value="{{ $citie->name }}">{{ $citie->name }}</option>
+                                    @endforeach        
+                            </select>
+                            <br> <br>
+                            <select class="custom-select">
+                                <option selected>Ciudad Destino</option>         
+                                    @foreach($cities->all() as $citie)
+                                    <option type="text" name="destination_id" class="form-control" value="{{ $citie->name }}">{{ $citie->name }}</option>
+                                    @endforeach        
+                            </select>
+                            @endif
+                        </div>
+                        <div name="tipo-viaje" class="form-check">
+                          <input class="form-check-input" type="radio" name="ida"  value="ida" checked>
+                          <label class="form-check-label" for="exampleRadios1">
+                            Solo Ida
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="ida-vuelta"  value="ida-vuelta">
+                          <label class="form-check-label" for="exampleRadios2">
+                            Ida y Vuelta
+                          </label>
+                        </div>
+                        <div>
+                            <select class="custom-select mr-sm-2" name="pasajeros">
+                                <option selected>Número Pasajeros</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                            <br> <br>
+                            <select class="custom-select mr-sm-2" name="clase">
+                                <option selected value="Economy">Economy</option>
+                                <option value="Premium Economy">Premium Economy</option>
+                                <option value="Premium Business">Premium Business</option>
+                            </select>
+                            <br> <br>
+                            <button type="submit" class="btn btn-primary">BUSCAR</button>
+                        </div>
                     </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="ida-vuelta"  value="ida-vuelta">
-                      <label class="form-check-label" for="exampleRadios2">
-                        Ida y Vuelta
-                      </label>
-                    </div>
-                    <select class="custom-select mr-sm-2" name="pasajeros">
-                        <option selected>Número Pasajeros</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                    <br> <br>
-                    <select class="custom-select mr-sm-2" name="clase">
-                        <option selected value="Economy">Economy</option>
-                        <option value="Premium Economy">Premium Economy</option>
-                        <option value="Premium Business">Premium Business</option>
-                    </select>
-                    <br> <br>
-                <button type="submit" class="btn btn-primary">BUSCAR</button>
                 </form>
             </div>
         </div>

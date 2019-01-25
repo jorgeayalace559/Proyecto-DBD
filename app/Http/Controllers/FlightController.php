@@ -133,15 +133,15 @@ class FlightController extends Controller
     public function buscarVuelo(Request $request){
         $request->validate([
             'origin_id' => 'required',
-            'destination_id' => 'required'
+            'destination_id' => 'required',
+
         ]);
-        print_r("pase");
+
         $origin = Citie::find($request->origin_id);
-        print_r($origin->name);
         $destination = Citie::find($request->destination_id);
-        print_r($destination->name);
         $flights = Flight::all()->where("origin_id","=",$origin->id)->where("destination_id","=",$destination->id);
-        //Session::flash('message','Consulta realizada con exito');
-        return $flights;
+        //Session::flash('message','Consulta realizada con éxito');
+        $cities = Citie::all();
+        return view('flight.show',['flights'=> $flights,'cities'=>$cities,'origin'=>$origin,'destination'=>$destination]);
     }
 }
