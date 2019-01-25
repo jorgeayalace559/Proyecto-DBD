@@ -20,8 +20,8 @@ class PassengerLuggageTrigger extends Migration
         RETURNS trigger AS
         $BODY$
         BEGIN
-            INSERT INTO luggages(id, weight, cost, type, passenger_id, created_at, updated_at)
-            VALUES (NEW.id, 0, 0, \'No posee equipaje\', NEW.id, now(), null);
+            INSERT INTO luggages(weight, cost, type, passenger_id, created_at, updated_at)
+            VALUES (0, 0, \'No posee equipaje\', NEW.id, now(), null);
             RETURN NEW;
         END
         $BODY$

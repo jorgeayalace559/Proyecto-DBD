@@ -18,7 +18,6 @@ class CreateSeatsTable extends Migration
 
             $table->integer('number');
             $table->string('type');
-            $table->integer('remaining');
 
             $table->unsignedInteger('ticket_id');
             $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');

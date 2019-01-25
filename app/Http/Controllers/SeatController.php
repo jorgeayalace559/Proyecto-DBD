@@ -46,21 +46,18 @@ class SeatController extends Controller
  
             $number = $request->number;
             $type = $request->type;
-            return $type;
             $remaining = $request->remaining;
             $ticket_id = $request->ticket_id;
             $airplane_id = $request->airplane_id;
 
             if(is_numeric($number) and $number > 0
                and !(is_numeric($type))
-               and is_numeric($remaining) and $remaining > 0
                and $ticket_id != null and $airplane_id != null){
 
                 $seat->updateOrCreate([
 
                     'number' => $number,
                     'type' => $type,
-                    'remaining' => $remaining,
                     'ticket_id' => $request->ticket_id,
                     'airplane_id' => $request->airplane_id
      
@@ -82,7 +79,6 @@ class SeatController extends Controller
 
             if(is_numeric($number) and $number > 0
                and !(is_numeric($type))
-               and is_numeric($remaining) and $remaining > 0
                and $ticket_id != null and $airplane_id != null){
 
                 $seat->updateOrCreate([
@@ -91,7 +87,6 @@ class SeatController extends Controller
                 [
                     'number' => $number,
                     'type' => $type,
-                    'remaining' => $remaining,
                     'ticket_id' => $request->ticket_id,
                     'airplane_id' => $request->airplane_id
      

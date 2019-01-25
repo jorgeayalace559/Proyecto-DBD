@@ -85,7 +85,6 @@ $factory->define(App\Seat::class, function (Faker $faker) {
     return [
         'number'             => rand(1,100),
         'type'               => $faker->text(15),
-        'remaining'          => rand(2,50),
         'ticket_id'          => App\Ticket::all()->random()->id,
         'airplane_id'        => App\Airplane::all()->random()->id,
     ];
@@ -95,6 +94,7 @@ $factory->define(App\Airplane::class, function (Faker $faker) {
     return [
         'name'             => $faker->name,
         'capacity'         => rand(1,100),
+        'remaining'          => rand(2,50),
         'flight_id'        => App\Flight::all()->random()->id,
     ];
 });
