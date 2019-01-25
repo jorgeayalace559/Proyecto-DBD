@@ -8,7 +8,7 @@ class Seat extends Model
 {
     protected $fillable = [
     	'number',
-    	'type',
+
     	'ticket_id',
         'airplane_id'
     ];

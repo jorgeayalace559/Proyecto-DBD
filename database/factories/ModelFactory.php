@@ -18,7 +18,7 @@ $factory->define(App\Car::class, function (Faker $faker) {
 $factory->define(App\Ticket::class, function (Faker $faker) {
     return [
         'cost'					=> rand(20000,30000),
-        'quantity_passengers'	=> rand(100,150),
+        'quantity_passengers'	=> rand(1,4),
         'flight_id'				=> App\Flight::all()->random()->id,
         'ticket_reservation_id'             => App\TicketReservation::all()->random()->id,
     ];
@@ -26,12 +26,12 @@ $factory->define(App\Ticket::class, function (Faker $faker) {
 
 $factory->define(App\Flight::class, function (Faker $faker) {
 
-    $beginDate = $faker->dateTimeBetween('this week', '+ 6 days');
-    $endDate = $faker->dateTimeBetween($beginDate, strtotime('+ 6 days'));
+    $beginDate = $faker->dateTimeBetween('this day', '+ 6 days');
+    $endDate = $faker->dateTimeBetween($beginDate,'+ 15 days');
 
         return [
-            'end_date'          => date("Y-m-d H:i:s"),
-            'begin_date'        => date("Y-m-d H:i:s"),
+            'end_date'          =>  $endDate,
+            'begin_date'        =>  $beginDate,
             'origin_id'         => rand(1,5),
             'destination_id'    => rand(1,5), //Corregir que no se repitan
             'platform'          => $faker-> randomDigit,
@@ -87,60 +87,98 @@ $factory->define(App\Passenger::class, function (Faker $faker) {
 });
 
 $factory->define(App\Seat::class, function (Faker $faker) {
+    
+    $seatType = array(['Asiento1' => 'Economy',
+                       'Asiento2' => 'Premium Economy', 
+                       'Asiento3' => 'Premium Business']);
+
+    $seat = '';
+    $aux = rand(1,3);
+    
+    if($aux == 1){
+        $seat = implode("|",array_column($seatType, 'Asiento1'));
+    }
+    
+    if($aux == 2){
+        $seat = implode("|",array_column($seatType, 'Asiento2'));
+    }
+
+    if($aux == 3){
+        $seat = implode("|",array_column($seatType, 'Asiento3'));
+    }
+
     return [
         'number'             => rand(1,100),
-        'type'               => $faker->text(15),
+        'type'               => $seat,
         'ticket_id'          => App\Ticket::all()->random()->id,
         'airplane_id'        => App\Airplane::all()->random()->id,
     ];
 });
 
 $factory->define(App\Airplane::class, function (Faker $faker) {
+
+    $capacity = rand(144,379);
+    $remaining = $capacity - rand(144,379);
+    
     return [
         'name'             => $faker->name,
-        'capacity'         => rand(1,100),
-        'remaining'          => rand(2,50),
+        'capacity'         => $capacity,
+        'remaining'        => $remaining,
         'flight_id'        => App\Flight::all()->random()->id,
     ];
 });
 
 $factory->define(App\CarReservation::class, function (Faker $faker) {
+
+    $beginDate = $faker->dateTimeBetween('this day', '+ 6 days');
+    $endDate = $faker->dateTimeBetween($beginDate,'+ 15 days');
+
     return [
-        'begin_date'                    => date("Y-m-d H:i:s"),
-        'end_date'                      => date("Y-m-d H:i:s"),
+        'begin_date'                    => $beginDate,
+        'end_date'                      => $endDate,
         'cost'                          => rand(30000,1500),
         'purchase_order_id'             => App\PurchaseOrder::all()->random()->id
     ];
 });
 
 $factory->define(App\InsuranceReservation::class, function (Faker $faker) {
+
+    $beginDate = $faker->dateTimeBetween('this day', '+ 6 days');
+    $endDate = $faker->dateTimeBetween($beginDate,'+ 15 days');
+
     return [
-        'begin_date'                    => date("Y-m-d H:i:s"),
-        'end_date'                      => date("Y-m-d H:i:s"),
+        'begin_date'                    => $beginDate,
+        'end_date'                      => $endDate,
         'cost'                          => rand(30000,150000),
         'purchase_order_id'             => App\PurchaseOrder::all()->random()->id
     ];
 });
 
 $factory->define(App\PackageReservation::class, function (Faker $faker) {
+
+    $beginDate = $faker->dateTimeBetween('this day', '+ 6 days');
+    $endDate = $faker->dateTimeBetween($beginDate,'+ 15 days');
+
     return [
-        'begin_date'                    => date("Y-m-d H:i:s"),
-        'end_date'                      => date("Y-m-d H:i:s"),
+        'begin_date'                    => $beginDate,
+        'end_date'                      => $endDate,
         'cost'                          => rand(30000,150000),
         'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
     ];
 });
-
 
 $factory->define(App\RoomReservation::class, function (Faker $faker) {
     $days = rand(1,5);
     $room = App\Room::all()->random()->id;
     $habitacionCosto = App\Room::find($room)->cost;
     $costo = $habitacionCosto * $days;
-    $fechaInicio = $faker->dateTimeBetween('-20 days','now',null);
+    
+    $beginDate = $faker->dateTimeBetween('this day', '+ 6 days');
+    $endDate = $faker->dateTimeBetween($beginDate,'+ 15 days');
+
     return [
-        'begin_date'                    => $fechaInicio,
-        'end_date'                      => $faker->dateTimeBetween($fechaInicio,'+'.$days.' days',null),
+        'begin_date'                    => $beginDate,
+        'end_date'                      => $endDate,
         'day'                           => $days,
         'cost'                          => $costo,
         'purchase_order_id'             => App\PurchaseOrder::all()->random()->id,
@@ -149,9 +187,11 @@ $factory->define(App\RoomReservation::class, function (Faker $faker) {
 });
 
 $factory->define(App\TicketReservation::class, function (Faker $faker) {
+    
     return [
         'cost'                          => rand(30000,150000),
         'purchase_order_id'             => App\PurchaseOrder::all()->random()->id
     ];
+
 });
 
