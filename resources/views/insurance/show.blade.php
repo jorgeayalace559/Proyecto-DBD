@@ -47,12 +47,12 @@
         <br> <br>
         <form action="/action_page.php">
             Edad de los pasajeros:
-            <input name="tripDate" type="text">
+            <input name="age" type="text">
         </form>
         <br> <br>
         <form action="/action_page.php">
             Costo del Viaje:
-            <input name="tripDate" type="text">
+            <input name="cost" type="text">
         </form>
         <br> <br>
         <form action="/action_page.php">

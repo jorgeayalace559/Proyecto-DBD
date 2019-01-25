@@ -27,6 +27,8 @@ Route::get('/package','PackageController@index');
 Route::get('/state','StateController@index');
 Route::get('/flight','FlightController@index');
 Route::get('/check-in','CheckInController@index');
+Route::get('/user','UserController@index');
+Route::get('/user-update','UpdateUserController@index');
 
 
 Route::resource('Airplane','AirplaneController');
@@ -63,7 +65,7 @@ Route::resource('RoomReservation','RoomReservationController');
 Route::resource('Seat','SeatController');
 Route::post('Seat','SeatController@storeOrUpdate'); // PROBLEMA
 Route::resource('State','StateController');
-Route::post('State','StateController@storeOrUpdate'); // PROBLEMA TRIGGER
+Route::post('State','StateController@storeOrUpdate'); // NO ACTUALIZA
 Route::resource('Ticket','TicketController');
 Route::post('Ticket','TicketController@storeOrUpdate');
 Route::resource('TicketReservation','TicketReservationController');
