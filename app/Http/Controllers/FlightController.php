@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Flight;
 use App\Citie;
+use Session;
 use Validator;
 class FlightController extends Controller
 {
@@ -117,18 +118,6 @@ class FlightController extends Controller
     }
  
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
- 
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -139,5 +128,20 @@ class FlightController extends Controller
         $flights = Flight::find($id);
         $flights->delete();
         return "Se ha eliminado un vuelo";
+    }
+
+    public function buscarVuelo(Request $request){
+        $request->validate([
+            'origin_id' => 'required',
+            'destination_id' => 'required'
+        ]);
+        print_r("pase");
+        $origin = Citie::find($request->origin_id);
+        print_r($origin->name);
+        $destination = Citie::find($request->destination_id);
+        print_r($destination->name);
+        $flights = Flight::all()->where("origin_id","=",$origin->id)->where("destination_id","=",$destination->id);
+        //Session::flash('message','Consulta realizada con exito');
+        return $flights;
     }
 }
