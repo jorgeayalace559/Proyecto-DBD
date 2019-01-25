@@ -133,7 +133,7 @@
 <p>Display some text when the checkbox is checked:</p>
 Checkbox: <input type="checkbox" id="myCheck"  onclick="myFunction()">
 <p id="texto" style="display:none">Checkbox is CHECKED!</p>
-
+-->
 <script>
 function myFunction() {
   var mybtn = document.getElementById("mybtn");
@@ -145,4 +145,3 @@ function myFunction() {
   }
 }
 </script>
--->
