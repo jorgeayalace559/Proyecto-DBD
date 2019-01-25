@@ -34,7 +34,7 @@
                     <a class="nav-link" href="#">Reserva Tu Vuelo</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Check-In</a>
+                    <a class="nav-link" href="/check-in">Check-In</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="/state">Estado del Vuelo</a>
