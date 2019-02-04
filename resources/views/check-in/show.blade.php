@@ -28,7 +28,7 @@
               <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Reserva Tu Vuelo</a>
+                    <a class="nav-link" href="/">Reserva Tu Vuelo</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="/check-in">Check-In</a>

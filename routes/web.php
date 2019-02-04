@@ -79,4 +79,4 @@ Route::resource('Ticket.Passenger','TicketPassengerController',['except'=>['show
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/buscarVuelo','FlightController@buscarVuelo')->name('buscarVuelo');
+Route::post('/search','FlightController@buscarVuelo')->name('Flight.search');

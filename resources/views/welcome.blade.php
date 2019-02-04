@@ -1,106 +1,81 @@
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head> 
-        <title>MIATAM</title> 
+@extends('layouts.app')
 
-        <!-- Styles -->
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <!doctype html>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-
-       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <a class="navbar-brand" href="/">MIATAM</a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Reserva Tu Vuelo</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/check-in">Check-In</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/state">Estado del Vuelo</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Vuelo, Hotel y Auto</a>
-                  </li>
-                  
-                </ul>
-              </div>
-            </nav>
-    </head>
-    <body>
+@section('content')
+<div class="container">
     <div class="row">
         <div class="col-3">
             <div class="col-sm-11">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Reserva tu Vuelo</a>
-                    <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Check-In</a>
-                    <a class="nav-link active" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Estado del Vuelo</a>
+                    <a class="nav-link active mb-1" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Reserva tu Vuelo</a>
+                    <a class="nav-link active mb-1" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Check-In</a>
+                    <a class="nav-link active mb-1" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Estado del Vuelo</a>
                     <a class="nav-link active" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Vuelo, Hotel y Auto</a>
                 </div>
                 </div>
-            </div>
-            <div class="col-9">
-                <div class="tab-content" id="v-pills-tabContent">
+        </div>
+        <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
 
                 <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                
-                    <form>
+                    <form action="{{ route('Flight.search') }}" method="POST">
+                        @csrf
+
                         <div class="col-sm-11">
                             <div class="row">
-                                <div class="col">
+                                <div class="form-group col">
                                     <label for="RecogidaVehiculo">Ciudad de Origen:</label>
-                                    <input type="text" class="form-control" placeholder="Ciudad Origen">
+                                    <select class="form-control" name="origin_id">
+                                      @foreach ($cities->all() as $citie)
+                                        <option value="{{$citie->name}}">{{$citie->name}}</option>
+                                      @endforeach 
+                                    </select>
                                 </div>
-                                <div class="col">
-                                    <label for="RecogidaVehiculo">Ciudad de Destino:</label>
-                                    <input type="text" class="form-control" placeholder="Ciudad Destino">
+                                <div class="form-group col">
+                                    <label for="RecogidaVehiculo">Ciudad de Origen:</label>
+                                    <select class="form-control" name="destination_id">
+                                        @foreach ($cities->all() as $citie)
+                                            <option value="{{$citie->name}}">{{$citie->name}}</option>
+                                        @endforeach  
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    </form>
                     <br><br>
-                    <form>
                         <div class="col-sm-11">
                             <div class="row">
-                                <div class="col">
+                                <div class="form-group col">
                                 <br><br>
                                     <label for="Ida">Ida:</label>
-                                    <input type="date" class="form-control" placeholder="Ciudad Destino">
+                                    <input type="date" class="form-control" name="FechaIda" placeholder="Ciudad Destino">
                                 </div>
-                                <div class="col">
+                                <div class="form-group col">
                                 <br><br>
-                                    <label for="Salida">Salida:</label>
-                                    <input type="date" class="form-control" placeholder="Ciudad Destino">
+                                    <label for="Salida">Vuelta:</label>
+                                    <input type="date" class="form-control" name="FechaVuelta"placeholder="Ciudad Destino">
                                 </div>
                             </div>
                         </div>
-                    </form>
                     <br><br>
-                    <form>
                         <div class="col-sm-11">
                             <div class="row">
-                                <div class="col">
+                                <div class="form-group col">
                                 <br><br>
-                                    <label for="RecogidaVehiculo">Cantidad de Pasajeros:</label>
-                                    <input type="text" class="form-control" id="CodigoVueloID" placeholder="Costo...">    
+                                    <label for="Pasajeros">Cantidad de Pasajeros:</label>
+                                    <select class="form-control custom-select mr-sm-2" name="Pasajeros">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>   
                                 </div>
-                                <div class="col">
+                                <div class="form-group col">
                                 <br><br>
-                                    <label for="RecogidaVehiculo">Tipo de Asiento:</label>
-                                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                    <label for="Asiento">Tipo de Asiento:</label>
+                                    <select class="form-control custom-select mr-sm-2" name="Asiento">
                                         <option selected>Tipo De Asiento</option>
-                                        <option value="1">Economy</option>
-                                        <option value="2">Premium Economy</option>
-                                        <option value="3">Premium Business</option>
+                                        <option value="Economy">Economy</option>
+                                        <option value="Premium Economy">Premium Economy</option>
+                                        <option value="Premium Business">Premium Business</option>
                                     </select>
                                 </div>
                             </div>
@@ -108,7 +83,6 @@
                             <button class="btn btn-primary" type="submit"> Buscar Vuelo</button>
                         </div>
                     </form>
-
                 </div>
                 <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 
@@ -132,30 +106,30 @@
                 </div>
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                 
-                    <div class="col-sm-11">
-                        <div class="row">
-                            <div class="col">
-                            <br><br>
-                                <label for="Ida">Numero del Vuelo:</label>
-                                <input type="text" class="form-control" placeholder="Ciudad Destino">
+                    <form>
+                        <div class="col-sm-11">
+                            <div class="row">
+                                <div class="col">
+                                <br><br>
+                                    <label for="Ida">Numero del Vuelo:</label>
+                                    <input type="text" class="form-control" placeholder="Vuelo">
+                                </div>
+                                <div class="col">
+                                <br><br>
+                                    <label for="Salida">Fecha:</label>
+                                    <input type="date" class="form-control" placeholder="Fecha">
+                                </div>
                             </div>
-                            <div class="col">
                             <br><br>
-                                <label for="Salida">Fecha:</label>
-                                <input type="date" class="form-control" placeholder="Ciudad Destino">
-                            </div>
+                            <button class="btn btn-primary" type="submit"> Ver Estado de Vuelo</button>
                         </div>
-                        <br><br>
-                        <button class="btn btn-primary" type="submit"> Ver Estado de Vuelo</button>
-                    </div>
-
+                    </form>
                 </div>
                 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                
-                
                 
                 </div>
             </div>
         </div>
     </div>
-</body>
+</div>
+@endsection
