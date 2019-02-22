@@ -1,6 +1,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head> 
-        <title>Seguro</title>
+        <title>Reservación de Seguro</title>
 
             <!--  jQuery -->
             <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
