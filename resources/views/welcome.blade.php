@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-3">
             <div class="col-sm-11">
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">settings
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">Opciones
                     <a class="nav-link active mb-1" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Reserva tu Vuelo</a>
                     <a class="nav-link active mb-1" id="v-pills-check-in-tab" data-toggle="pill" href="#v-pills-check-in" role="tab" aria-controls="v-pills-check-in" aria-selected="false">Check-In</a>
                     <a class="nav-link active mb-1" id="v-pills-viajes-tab" data-toggle="pill" href="#v-pills-viajes" role="tab" aria-controls="v-pills-viajes" aria-selected="false">Mis Viajes</a>
