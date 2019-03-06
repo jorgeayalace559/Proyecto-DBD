@@ -48,58 +48,89 @@
                         <br><br>
                         <div class="col-sm-11">
                             <div class="row">
-                                <div class="form-check">
-                                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                  <label class="form-check-label" for="exampleRadios1">
-                                    Ida y Vuelta:
-                                  </label>
-                                </div>
-                                <div class="form-check">
-                                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                  <label class="form-check-label" for="exampleRadios2">
-                                    Solo Ida:
-                                  </label>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="form-group col">
-                                <br><br>
-                                    <label for="Ida">Ida:</label>
-                                    <input type="date" class="form-control" name="FechaIda" placeholder="Ciudad Destino">
+                                    <input type="radio" name="radioB" value="IV" checked="checked" onclick = "show(this);"> Ida y Vuelta <br>
                                 </div>
                                 <div class="form-group col">
-                                <br><br>
-                                    <label for="Salida">Vuelta:</label>
-                                    <input type="date" class="form-control" name="FechaVuelta"placeholder="Ciudad Destino">
+                                    <input type="radio" name="radioB" value="I" onclick = "show(this);"> Solo Ida <br>
                                 </div>
                             </div>
                         </div>
-                        <br><br>
-                        <div class="col-sm-11">
+        <!--> <!-->     <div id="item7" style="display:block" class="col-sm-11">
                             <div class="row">
                                 <div class="form-group col">
-                                <br><br>
+                                    <br>
+                                    <label for="Ida">Ida:</label>
+                                    <input type="date" class="form-control" name="FechaIda" placeholder="Ciudad Origen">
+                                </div>
+                                <div class="form-group col">
+                                    <br>
+                                    <label for="Ida">Vuelta:</label>
+                                    <input type="date" class="form-control" name="FechaVuelta" placeholder="Ciudad Destino">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <br>
                                     <label for="Pasajeros">Cantidad de Pasajeros:</label>
                                     <select class="form-control custom-select mr-sm-2" name="Pasajeros">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
-                                    </select>   
+                                    </select>
                                 </div>
                                 <div class="form-group col">
-                                <br><br>
+                                    <br>
                                     <label for="Asiento">Tipo de Asiento:</label>
                                     <select class="form-control custom-select mr-sm-2" name="Asiento">
+                                        <option selected>Tipo De Asiento</option>
                                         <option value="Economy">Economy</option>
                                         <option value="Premium Economy">Premium Economy</option>
                                         <option value="Premium Business">Premium Business</option>
                                     </select>
                                 </div>
                             </div>
-                            <br><br>
-                            <button class="btn btn-primary" type="submit"> Buscar Vuelo</button>
+                            <div>
+                                <br>
+                                <button class="btn btn-primary" type="submit"> Buscar Vuelo </button>
+                            </div>
                         </div>
+
+        <!--> <!-->     <div id="item8" style="display:none" class="col-sm-11"> 
+                            <div class="form-group col">
+                                <br>
+                                <label for="Ida">Ida:</label>
+                                <input type="date" class="form-control" name="FechaIda" placeholder="Ciudad Origen">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <br>
+                                    <label for="Pasajeros">Cantidad de Pasajeros:</label>
+                                    <select class="form-control custom-select mr-sm-2" name="Pasajeros">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <br>
+                                    <label for="Asiento">Tipo de Asiento:</label>
+                                    <select class="form-control custom-select mr-sm-2" name="Asiento">
+                                        <option selected>Tipo De Asiento</option>
+                                        <option value="Economy">Economy</option>
+                                        <option value="Premium Economy">Premium Economy</option>
+                                        <option value="Premium Business">Premium Business</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <br>
+                                <button class="btn btn-primary" type="submit"> Buscar Vuelo </button>
+                            </div>
+                        </div>
+                    
                     </form>
                 </div>
 
@@ -513,6 +544,25 @@
             obj.value='Hide';
 
         }
+
+        if(obj.value == 'IV'){
+           
+           document.getElementById('item7').style.display='block';
+           obj.value='Hide';
+           document.getElementById('item8').style.display='none';
+           obj.value='Show';
+
+       }
+
+       if(obj.value == 'I'){
+           
+           document.getElementById('item7').style.display='none';
+           obj.value='Show';
+           document.getElementById('item8').style.display='block';
+           obj.value='Hide';
+
+       }
+
     }
 
 </script>
