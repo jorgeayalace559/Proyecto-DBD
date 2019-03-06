@@ -136,7 +136,7 @@ $factory->define(App\Seat::class, function (Faker $faker) {
 $factory->define(App\Airplane::class, function (Faker $faker) {
 
     $capacity = rand(144,379);
-    $remaining = $capacity - rand(144,379);
+    $remaining = $capacity - rand(100,144);
     
     return [
         'name'             => $faker->name,

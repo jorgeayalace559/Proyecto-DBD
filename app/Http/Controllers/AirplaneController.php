@@ -58,7 +58,6 @@ class AirplaneController extends Controller
 					
 					'name' => $name,
 					'capacity' => $capacity,
-					'remaining' => $remaining,
 					'flight_id' => $request->flight_id
 	
 				]);
@@ -90,7 +89,6 @@ class AirplaneController extends Controller
 				
 				[			
 					'name' => $name,
-					'remaining' => $remaining,
 					'capacity' => $capacity,
 					'flight_id' => $request->flight_id
 	
