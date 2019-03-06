@@ -49,23 +49,22 @@
                         <div class="col-sm-11">
                             <div class="row">
                                 <div class="form-group col">
-                                    <input type="radio" name="radioB" value="IV" checked="checked" onclick = "show(this);"> Ida y Vuelta <br>
+                                    <input type="radio" name="idaYVuelta" value="IV" checked="checked" onclick = "show(this);"> Ida y Vuelta <br>
                                 </div>
                                 <div class="form-group col">
-                                    <input type="radio" name="radioB" value="I" onclick = "show(this);"> Solo Ida <br>
+                                    <input type="radio" name="soloIda" value="I" onclick = "show(this);" value="1"> Solo Ida <br>
                                 </div>
                             </div>
                         </div>
-        <!--> <!-->     <div id="item7" style="display:block" class="col-sm-11">
                             <div class="row">
                                 <div class="form-group col">
                                     <br>
                                     <label for="Ida">Ida:</label>
                                     <input type="date" class="form-control" name="FechaIda" placeholder="Ciudad Origen">
                                 </div>
-                                <div class="form-group col">
+                                <div id="item7" style="display:block" class="form-group col" value="1">
                                     <br>
-                                    <label for="Ida">Vuelta:</label>
+                                    <label  for="Ida">Vuelta:</label>
                                     <input type="date" class="form-control" name="FechaVuelta" placeholder="Ciudad Destino">
                                 </div>
                             </div>
@@ -81,10 +80,9 @@
                                     </select>
                                 </div>
                                 <div class="form-group col">
-                                    <br>
+                                    
                                     <label for="Asiento">Tipo de Asiento:</label>
                                     <select class="form-control custom-select mr-sm-2" name="Asiento">
-                                        <option selected>Tipo De Asiento</option>
                                         <option value="Economy">Economy</option>
                                         <option value="Premium Economy">Premium Economy</option>
                                         <option value="Premium Business">Premium Business</option>
@@ -94,43 +92,7 @@
                             <div>
                                 <br>
                                 <button class="btn btn-primary" type="submit"> Buscar Vuelo </button>
-                            </div>
-                        </div>
-
-        <!--> <!-->     <div id="item8" style="display:none" class="col-sm-11"> 
-                            <div class="form-group col">
-                                <br>
-                                <label for="Ida">Ida:</label>
-                                <input type="date" class="form-control" name="FechaIda" placeholder="Ciudad Origen">
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <br>
-                                    <label for="Pasajeros">Cantidad de Pasajeros:</label>
-                                    <select class="form-control custom-select mr-sm-2" name="Pasajeros">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col">
-                                    <br>
-                                    <label for="Asiento">Tipo de Asiento:</label>
-                                    <select class="form-control custom-select mr-sm-2" name="Asiento">
-                                        <option selected>Tipo De Asiento</option>
-                                        <option value="Economy">Economy</option>
-                                        <option value="Premium Economy">Premium Economy</option>
-                                        <option value="Premium Business">Premium Business</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div>
-                                <br>
-                                <button class="btn btn-primary" type="submit"> Buscar Vuelo </button>
-                            </div>
-                        </div>
-                    
+                            </div>       
                     </form>
                 </div>
 
@@ -463,6 +425,8 @@
             obj.value='Show';
             document.getElementById('item6').style.display='none';
             obj.value='Show';
+            document.getElementById('item7').style.display='none';
+            obj.value='Show';
         }
         if(obj.value == 'P'){
 
@@ -477,6 +441,8 @@
             document.getElementById('item5').style.display='none';
             obj.value='Show';
             document.getElementById('item6').style.display='none';
+            obj.value='Show';
+            document.getElementById('item7').style.display='none';
             obj.value='Show';
 
         }
@@ -494,6 +460,8 @@
             obj.value='Show';
             document.getElementById('item6').style.display='none';
             obj.value='Show';
+            document.getElementById('item7').style.display='none';
+            obj.value='Show';
 
         }
         if(obj.value == 'S'){
@@ -509,6 +477,8 @@
             document.getElementById('item5').style.display='none';
             obj.value='Show';
             document.getElementById('item6').style.display='none';
+            obj.value='Show';
+            document.getElementById('item7').style.display='none';
             obj.value='Show';
 
         }
@@ -526,6 +496,8 @@
             obj.value='Hide';
             document.getElementById('item6').style.display='none';
             obj.value='Show';
+            document.getElementById('item7').style.display='none';
+            obj.value='Show';
 
         }
         if(obj.value == 'A'){
@@ -542,6 +514,8 @@
             obj.value='Show';
             document.getElementById('item6').style.display='block';
             obj.value='Hide';
+            document.getElementById('item7').style.display='none';
+            obj.value='Show';
 
         }
 
@@ -549,8 +523,6 @@
            
            document.getElementById('item7').style.display='block';
            obj.value='Hide';
-           document.getElementById('item8').style.display='none';
-           obj.value='Show';
 
        }
 
@@ -558,8 +530,6 @@
            
            document.getElementById('item7').style.display='none';
            obj.value='Show';
-           document.getElementById('item8').style.display='block';
-           obj.value='Hide';
 
        }
 
