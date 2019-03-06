@@ -141,7 +141,7 @@ class FlightController extends Controller
 
         $origin = Citie::where("name","=",$request->origin_id)->first();
         $destination = Citie::where("name","=",$request->destination_id)->first();
-        $flights = Flight::all()->where('origin_id','=',$origin->id)->where('destination_id','=',$destination->id)->where('begin_date', '>=', $request->FechaIda);
+        $flights = Flight::all()->where('origin_id','=',$origin->id)->where('destination_id','=',$destination->id)->where('begin_date', '>=', $request->FechaIda)->sortBy('cost');
         //Session::flash('message','Consulta realizada con exito');
         $cities = Citie::all();
         return view('flight.show',['flights'=> $flights,'cities'=>$cities,'origin'=>$origin,'destination'=>$destination]);

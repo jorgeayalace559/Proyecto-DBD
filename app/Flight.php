@@ -12,6 +12,7 @@ class Flight extends Model
     	'end_date',
     	'origin_id',
         'platform',
+        'cost'
     ];
 
     protected $hidden=['created_at','updated_at'];

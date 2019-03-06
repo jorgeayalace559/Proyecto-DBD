@@ -5,7 +5,7 @@
   <div class="container">
       <h3>{{$origin->name}} a {{$destination->name}}</h3>
       <button type="button" id="mybtn"class="btn btn-secondary" onclick="myFunction()">Cambiar Búsqueda</button>
-      <div id="text" style="display:none" class="container">
+      <div id="texto" style="display:none" class="container">
           <form action="{{ route('Flight.search') }}" method="POST">
               @method('GET')
 
@@ -65,23 +65,23 @@
       <table class="table">
           <thead class="thead-dark">
               <tr>
-                  <th>ID</th>
                   <th>Horario Salida</th>
                   <th>Horario llegada</th>
-                  <th>Plataforma</th>
                   <th></th>
+                  <th>Precio</th>
               </tr>
           </thead>
           <tbody>
               @if (count($flights)>0)
                   @foreach($flights->all() as $flight)
+                    <div class="container">
                       <tr>
-                          <th scope="row">{{ $flight->id}}</th>
                           <td>{{ $flight->begin_date }}</td>
                           <td>{{ $flight->end_date }}</td>
-                          <td>{{ $flight->platform }}</td>
-                          <td><button type="button" class="btn btn-primary">Seleccionar</button></td>
+                          <td>Directo</td>
+                          <td><button type="button" class="btn btn-primary" id="miboton" value="{{ $flight->id }}">${{ $flight->cost }}</button></td>
                       </tr>
+                    </div>
                   @endforeach        
               @endif
           </tbody>
@@ -97,11 +97,19 @@ Checkbox: <input type="checkbox" id="myCheck"  onclick="myFunction()">
 <script>
 function myFunction() {
   var mybtn = document.getElementById("mybtn");
-  var text = document.getElementById("text");
-  if (checkBox.checked == true){
-    text.style.display = "block";
+  var texto = document.getElementById("text");
+  if (button.checked == true){
+    texto.style.display = "block";
   } else {
-     text.style.display = "none";
+     texto.style.display = "none";
   }
 }
 </script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('miboton').click(function(){
+      alert("haz presionado este boton");
+    });
+  });
+</script>
+

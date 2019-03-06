@@ -17,11 +17,15 @@ class CreateFlightsTable extends Migration
             $table->increments('id');
 
             $table->integer('platform');
+            $table->integer('cost');
             $table->timestamp('begin_date')->nullable();
             $table->timestamp('end_date')->nullable();
 
             $table->unsignedInteger('origin_id');
             $table->foreign('origin_id')->references('id')->on('cities')->onDelete('cascade');
+
+            $table->unsignedInteger('airplane_id');
+            $table->foreign('airplane_id')->references('id')->on('airplanes')->onDelete('cascade');
 
             $table->unsignedInteger('destination_id');
             $table->foreign('destination_id')->references('id')->on('cities')->onDelete('cascade');

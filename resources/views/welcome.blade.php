@@ -48,6 +48,20 @@
                         <br><br>
                         <div class="col-sm-11">
                             <div class="row">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                  <label class="form-check-label" for="exampleRadios1">
+                                    Ida y Vuelta:
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                  <label class="form-check-label" for="exampleRadios2">
+                                    Solo Ida:
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="form-group col">
                                 <br><br>
                                     <label for="Ida">Ida:</label>
@@ -77,7 +91,6 @@
                                 <br><br>
                                     <label for="Asiento">Tipo de Asiento:</label>
                                     <select class="form-control custom-select mr-sm-2" name="Asiento">
-                                        <option selected>Tipo De Asiento</option>
                                         <option value="Economy">Economy</option>
                                         <option value="Premium Economy">Premium Economy</option>
                                         <option value="Premium Business">Premium Business</option>

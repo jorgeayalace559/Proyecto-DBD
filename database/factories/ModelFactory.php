@@ -30,8 +30,12 @@ $factory->define(App\Ticket::class, function (Faker $faker) {
 
 $factory->define(App\Flight::class, function (Faker $faker) {
 
-    $beginDate = $faker->dateTimeBetween('now', '+ 14 days');
-    $endDate = $faker->dateTimeBetween($beginDate,'+ 15 days');
+    $beginDate = $faker->dateTimeBetween('now', '+ 60 days');
+    
+    $date = $beginDate; // Por defecto la hora actual
+    $endDate = $date->modify('+3 hours');
+
+    //$endDate = $faker->dateTimeBetween($beginDate,'+ 15 days');
     $numeroCiudades= Citie::all()->count();
     $origen = rand(1,$numeroCiudades);
     $destino = rand(1,$numeroCiudades);
@@ -45,6 +49,9 @@ $factory->define(App\Flight::class, function (Faker $faker) {
             'origin_id'         => $origen,
             'destination_id'    => $destino, //Corregir que no se repitan
             'platform'          => rand(1,10),
+            'cost'              => rand(20000,30000),
+            'airplane_id'        => App\Airplane::all()->random()->id,
+
     
         ];
     
@@ -136,13 +143,10 @@ $factory->define(App\Seat::class, function (Faker $faker) {
 $factory->define(App\Airplane::class, function (Faker $faker) {
 
     $capacity = rand(144,379);
-    $remaining = $capacity - rand(100,144);
-    
+
     return [
         'name'             => $faker->name,
-        'capacity'         => $capacity,
-        'remaining'        => $remaining,
-        'flight_id'        => App\Flight::all()->random()->id,
+        'capacity'         => $capacity
     ];
 });
 
