@@ -4,75 +4,138 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\State;
+use App\Flight;
 use Validator;
 
 class StateController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'condition' => 'required|string',
-       		'flight_id' => 'required|numeric'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$states = State::all();
-    	return $states;
+        $states = State::all();
+        return view('state.show',['states'=> $states]);
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
-    public function store(Request $request)
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrUpdate(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
+        $verifyState = State::find($request->id);
+        $state = new State();
+    
+        if($verifyState == null){
+ 
+            $condition = $request->condition;
+            $flight_id = Flight::find($request->flight_id);
+
+            if(!(is_numeric($condition)) and $flight_id != null){
+
+                $state->updateOrCreate([
+                    'condition' => $condition,
+                    'flight_id' => $request->flight_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+            
         }
+        else{
+            $verifyState = State::find($request->id);
+            $state = new State();
         
-        $states = new \App\State;
-        $states->condition = $request->get('condition');
-        $states->flight_id = $request->get('flight_id');
-        $states->save();
-        return $states;
-    }
+            if($verifyState == null){
+    
+                $condition = $request->condition;
+                $flight_id = Flight::find($request->flight_id);
 
+                if(!(is_numeric($condition)) and $flight_id != null){
+
+                    $state->updateOrCreate([
+                        'id' => $request->id
+                    ],
+                    [
+                        'condition' => $condition,
+                        'flight_id' => $request->flight_id
+        
+                    ]);
+
+                }
+
+                else{
+                    return "Error en los parametros ingresados";
+                }
+            }
+        }
+ 
+         return State::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$states = State::findOrFail($id);
-    	return $states;
+        return State::find($id);
     }
-
-    public function edit(State $states)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, State $states)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $states = new \App\State;
-        $states->condition = $request->get('condition');
-        $states->flight_id = $request->get('flight_id');
-        $states->save();
-        return $states;
+        //
     }
-
-    public function destroy(State $states)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($states->es_valido){
-            $states->es_valido = false;
-            $states->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $state = State::find($id);
+        $state->delete();
+        return "Se ha eliminado un estado";
     }
 }

@@ -4,83 +4,155 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Room;
+use App\Hotel;
+use App\RoomReservation;
 use Validator;
 
 class RoomController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'number' => 'required|numeric',
-	    	'capacity' => 'required|numeric',
-	        'cost' => 'required|numeric',
-	        'type' => 'required|string',
-	    	'hotel_id' => 'required|numeric'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$roles = Role::all();
-    	return $roles;
+        $room = Room::all();
+        return $room;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
-    public function store(Request $request)
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrUpdate(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
+        $verifyRoom = Room::find($request->id);
+        $room = new Room();
+ 
+        if($verifyRoom == null){
+ 
+            $number = $request->number;
+            $capacity = $request->capacity;
+            $cost = $request->cost;
+            $type = $request->type;
+            $hotel_id = Hotel::find($request->hotel_id);
+            $room_reservation_id = RoomReservation::find($request->room_reservation_id);
+
+            if(is_numeric($number) and $number > 0
+               and is_numeric($capacity) and $capacity > 0 and $capacity < 8
+               and is_numeric($cost) and $cost > 0
+               and !(is_numeric($type))
+               and $hotel_id != null and $room_reservation_id != null){
+
+                $room->updateOrCreate([
+                    'number' => $number,
+                    'capacity' => $capacity,
+                    'cost' => $cost,
+                    'type' => $type,
+                    'hotel_id' => $request->hotel_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }            
         }
-        
-        $roles = new \App\Role;
-        $roles->number = $request->get('number');
-        $roles->capacity = $request->get('capacity');
-        $roles->cost = $request->get('cost');
-        $roles->type = $request->get('type');
-        $roles->hotel_id = $request->get('hotel_id');
-        $roles->save();
-        return $roles;
-    }
+        else{
+            
+            $number = $request->number;
+            $capacity = $request->capacity;
+            $cost = $request->cost;
+            $type = $request->type;
+            $hotel_id = Hotel::find($request->hotel_id);
+            $room_reservation_id = RoomReservation::find($request->room_reservation_id);
 
-    public function show(Role $roles)
-    {
-    	return $roles;
-    }
+            if(is_numeric($number) and $number > 0
+               and is_numeric($capacity) and $capacity > 0 and $capacity < 8
+               and is_numeric($cost) and $cost > 0
+               and !(is_numeric($type))
+               and $hotel_id != null and $room_reservation_id != null){
 
-    public function edit(Role $roles)
-    {
-    	//
-    }
+                $room->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'number' => $number,
+                    'capacity' => $capacity,
+                    'cost' => $cost,
+                    'type' => $type,
+                    'hotel_id' => $request->hotel_id
+     
+                ]);
 
-    public function update(Request $request, Role $roles)
-    {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            } 
         }
-        
-        $roles = new \App\Role;
-        $roles->number = $request->get('number');
-        $roles->capacity = $request->get('capacity');
-        $roles->cost = $request->get('cost');
-        $roles->type = $request->get('type');
-        $roles->hotel_id = $request->get('hotel_id');
-        $roles->save();
-        return $roles;
+ 
+        return Room::all();
     }
-
-    public function destroy(Role $roles)
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-    	if($roles->es_valido){
-            $roles->es_valido = false;
-            $roles->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        return Room::find($id);
+    }
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $room = Room::find($id);
+        $room->delete();
+        return "Se ha eliminado una habitacion";
     }
 }

@@ -11,14 +11,16 @@ class Ticket extends Model
     	'cost',
     	'quantity_passengers',
     	'flight_id',
+        'ticket_reservation_id'
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function passengers(){
         return $this->hasMany('App\Passenger');
     }
 
     public function ticket_reservation(){
-        return $this->belongsTo('App\Ticket_Reservation');
+        return $this->hasMany('App\TicketReservation');
     }
 
     public function seats(){

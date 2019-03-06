@@ -4,78 +4,138 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PurchaseOrder;
+use App\User;
 use Validator;
 
 class PurchaseOrderController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'cost' => 'required|numeric',
-    		'date' => 'required|string',
-    		'user_id' => 'required|numeric'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$purchaseorders = PurchaseOrder::all();
-    	return $purchaseorders;
+        $purchaseOrders = PurchaseOrder::all();
+        return $purchaseOrders;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
-    public function store(Request $request)
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrUpdate(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
+        $verifyPurchaseOrder = PurchaseOrder::find($request->id);
+        $purchaseOrder = new PurchaseOrder();
+ 
+        if($verifyPurchaseOrder == null){
+ 
+            $cost = $request->cost;
+            $date = $request->fecha;            //CON DATE NO FUNCIONA, DEBE ESTAR RESERVADO
+            $user_id = $request->user_id;
+ 
+            if(is_numeric($cost) and $cost > 0 
+                and $user_id != null){
+                
+                $purchaseOrder->updateOrCreate([
+                    
+                    'cost' => $cost,
+                    'date' => $date,
+                    'user_id' => $request->user_id
+         
+                ]);
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+
         }
-        
-        $purchaseorders = new \App\PurchaseOrder;
-        $purchaseorders->cost = $request->get('cost');
-        $purchaseorders->date = $request->get('date');
-        $purchaseorders->user_id = $request->get('user_id');
-        $purchaseorders->save();
-        return $purchaseorders;
-    }
+        else{
+            $cost = $request->cost;
+            $date = $request->fecha;
+            $user_id = $request->user_id;
+ 
+            if(is_numeric($cost) and $cost > 0 
+                and $user_id != null){
+                
+                $purchaseOrder->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    
+                    'cost' => $cost,
+                    'date' => $date,
+                    'user_id' => $request->user_id
+         
+                ]);
+            }
 
+            else{
+                return "Error en los parametros ingresados";
+            }
+        }
+ 
+        return PurchaseOrder::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$purchaseorders = PurchaseOrder::findOrFail($id);
-    	return $purchaseorders;
+        return PurchaseOrder::find($id);
     }
-
-    public function edit(PurchaseOrder $purchaseorders)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, PurchaseOrder $purchaseorders)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $purchaseorders = new \App\PurchaseOrder;
-        $purchaseorders->cost = $request->get('cost');
-        $purchaseorders->date = $request->get('date');
-        $purchaseorders->user_id = $request->get('user_id');
-        $purchaseorders->save();
-        return $purchaseorders;
+        //
     }
-
-    public function destroy(PurchaseOrder $purchaseorders)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($purchaseorders->es_valido){
-            $purchaseorders->es_valido = false;
-            $purchaseorders->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $purchaseOrder = PurchaseOrder::find($id);
+        $purchaseOrder->delete();
+        return "Se ha una orden de compra";
     }
 }

@@ -15,27 +15,37 @@ class CountriesTableSeeder extends Seeder
         //Paises
         DB::table('countries')->insert(
             [
-                'name' => 'Chile'
+                'name' => 'Chile',
+                'created_at' => 'now',
+                'updated_at' => 'now'
             ]
         );
         DB::table('countries')->insert(
             [
-                'name' => 'Peru'
+                'name' => 'Peru',
+                'created_at' => 'now',
+                'updated_at' => 'now'
             ]
         );
         DB::table('countries')->insert(
             [
-                'name' => 'Argentina'
+                'name' => 'Argentina',
+                'created_at' => 'now',
+                'updated_at' => 'now'
             ]
         );
         DB::table('countries')->insert(
             [
-                'name' => 'Brasil'
+                'name' => 'Brasil',
+                'created_at' => 'now',
+                'updated_at' => 'now'
             ]
         );
         DB::table('countries')->insert(
             [
-                'name' => 'Estados Unidos'
+                'name' => 'Estados Unidos',
+                'created_at' => 'now',
+                'updated_at' => 'now'
             ]
         );
     }

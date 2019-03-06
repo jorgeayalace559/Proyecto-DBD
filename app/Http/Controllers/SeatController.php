@@ -3,82 +3,149 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Seats;
+use App\Seat;
+use App\Airplane;
+use App\Ticket;
 use Validator;
 
 class SeatController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'number' => 'required|numeric',
-    		'type' => 'required|string',
-    		'remaining' => 'required|numeric',
-    		'ticket_id' => 'required|numeric'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$seats = Seat::all();
-    	return $seats;
+        $seat = Seat::all();
+        return $seat;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
-    public function store(Request $request)
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrUpdate(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
+        $verifySeat = Seat::find($request->id);
+        $seat = new Seat();
+ 
+        if($verifySeat == null){
+ 
+            $number = $request->number;
+            $type = $request->type;
+            $remaining = $request->remaining;
+            $ticket_id = $request->ticket_id;
+            $airplane_id = $request->airplane_id;
+
+            if(is_numeric($number) and $number > 0
+               and !(is_numeric($type))
+               and $ticket_id != null and $airplane_id != null){
+
+                $seat->updateOrCreate([
+
+                    'number' => $number,
+                    'type' => $type,
+                    'ticket_id' => $request->ticket_id,
+                    'airplane_id' => $request->airplane_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+            
         }
-        
-        $seats = new \App\Seat;
-        $seats->number = $request->get('number');
-        $seats->type = $request->get('type');
-        $seats->remaining = $request->get('remaining');
-        $seats->ticket_id = $request->get('ticket_id');
-        $seats->save();
-        return $seats;
-    }
+        else{
+            $number = $request->number;
+            $type = $request->type;
+            $remaining = $request->remaining;
+            $ticket_id = $request->ticket_id;
+            $airplane_id = $request->airplane_id;
 
+            if(is_numeric($number) and $number > 0
+               and !(is_numeric($type))
+               and $ticket_id != null and $airplane_id != null){
+
+                $seat->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'number' => $number,
+                    'type' => $type,
+                    'ticket_id' => $request->ticket_id,
+                    'airplane_id' => $request->airplane_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+        }
+ 
+        return Seat::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$seats = Seat::findOrFail($id);
-    	return $seats;
+        return Seat::find($id);
     }
-
-    public function edit(Seat $seats)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, Seat $seats)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $seats = new \App\Seat;
-        $seats->number = $request->get('number');
-        $seats->type = $request->get('type');
-        $seats->remaining = $request->get('remaining');
-        $seats->ticket_id = $request->get('ticket_id');
-        $seats->save();
-        return $seats;
+        //
     }
-
-    public function destroy(Seat $seats)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($seats->es_valido){
-            $seats->es_valido = false;
-            $seats->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $seat = Seat::find($id);
+        $seat->delete();
+        return "Se ha eliminado un asiento";
     }
 }

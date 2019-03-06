@@ -4,84 +4,146 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Flight;
+use App\Citie;
+use Session;
 use Validator;
 class FlightController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'destination_id' => 'required|numeric',
-    		'begin_date' => 'required|string',
-    		'end_date' => 'required|string',
-    		'origin_id' => 'required|numeric',
-    		'platform' => 'required|numeric'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$flights = Flight::all();
-    	return $flights;
+        $flights = Flight::all();
+        return view('flight.show',['flights'=> $flights]);
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
-    public function store(Request $request)
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrUpdate(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
+        $verifyFlight = Flight::find($request->id);
+        $flights = new Flight();
+
+        if($verifyFlight == null){
+
+            $destination_id = Citie::find($request->origin_id);
+            $begin_date = $request->begin_date;
+            $end_date = $request->end_date;
+            $origin_id = Citie::find($request->origin_id);
+            $platform = $request->platform;
+
+            if(is_numeric($platform) and $destination_id != null and $origin_id != null){
+
+                $flights->updateOrCreate([
+                    'destination_id' => $request->destination_id,
+                    'begin_date' => $request->begin_date,
+                    'end_date' => $request->end_date,
+                    'origin_id' => $request->origin_id,
+                    'platform' => $request->platform
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
         }
-        
-        $flights = new \App\Flight;
-        $flights->destination_id = $request->get('destination_id');
-        $flights->begin_date = $request->get('begin_date');
-        $flights->end_date = $request->get('end_date');
-        $flights->origin_id = $request->get('origin_id');
-        $flights->platform = $request->get('platform');
-        $flights->save();
-        return $flights;
-    }
+        else{
 
+            $destination_id = Citie::find($request->origin_id);
+            $begin_date = $request->begin_date;
+            $end_date = $request->end_date;
+            $origin_id = Citie::find($request->origin_id);
+            $platform = $request->platform;
+
+            if(is_numeric($platform) and $destination_id != null and $origin_id != null){
+
+                $flights->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'destination_id' => $request->destination_id,
+                    'begin_date' => $request->begin_date,
+                    'end_date' => $request->end_date,
+                    'origin_id' => $request->origin_id,
+                    'platform' => $request->platform
+
+                ]);
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+        }
+
+        return Flight::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$flights = Flight::findOrFail($id);
-        return $flights;
+        return Flight::find($id);
+    }
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $flights = Flight::find($id);
+        $flights->delete();
+        return "Se ha eliminado un vuelo";
     }
 
-    public function edit(Flight $Flight)
-    {
-    	//
-    }
+    public function buscarVuelo(Request $request){
+        $request->validate([
+            'origin_id' => 'required',
+            'destination_id' => 'required',
+            'FechaIda' => 'required',
+            'FechaVuelta' => 'required'
 
-    public function update(Request $request, Flight $flights)
-    {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $flights = new \App\Flight;
-        $flights->cost = $request->get('cost');
-        $flights->date = $request->get('date');
-        $flights->begin_date = $request->get('begin_date');
-        $flights->end_date = $request->get('end_date');
-        $flights->purchase_order_id = $request->get('purchase_order_id');
-        $flights->package_id = $request->get('package_id');
-        $flights->save();
-        return $flights;
-    }
+        ]);
 
-    public function destroy(Flight $flights)
-    {
-    	if($flights->es_valido){
-            $flights->es_valido = false;
-            $flights->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $origin = Citie::where("name","=",$request->origin_id)->first();
+        $destination = Citie::where("name","=",$request->destination_id)->first();
+        $flights = Flight::all()->where('origin_id','=',$origin->id)->where('destination_id','=',$destination->id)->where('begin_date', '>=', $request->FechaIda);
+        //Session::flash('message','Consulta realizada con exito');
+        $cities = Citie::all();
+        return view('flight.show',['flights'=> $flights,'cities'=>$cities,'origin'=>$origin,'destination'=>$destination]);
     }
 }

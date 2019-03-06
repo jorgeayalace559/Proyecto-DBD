@@ -4,79 +4,138 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Insurance;
+use App\Citie;
+use App\InsuranceReservation;
 use Validator;
 
 class InsuranceController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'age' => 'required|numeric',
-    		'type' => 'required|string',
-    		'city' => 'required|string'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$insurances = Insurance::all();
-    	return $insurances;
+        $insurances = Insurance::all();
+        $cities = Citie::all();
+        return view('insurance.show',['insurances'=> $insurances, 'cities' => $cities]);
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
-    public function store(Request $request)
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrUpdate(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
+        $verifyInsurance = Insurance::find($request->id);
+        $insurance = new Insurance();
+
+        if($verifyInsurance == null){
+
+            $age = $request->age;
+            $type = $request->type;
+            $city = Citie::find($request->city);
+            $insurance_reservation_id = InsuranceReservation::find($request->insurance_reservation_id);
+
+             if($age > 17 and $age < 100 and !(is_numeric($type)) and $city != null and $insurance_reservation_id != null){
+
+                $insurance->updateOrCreate([
+                    'age' => $request->age,
+                    'type' => $request->type,
+                    'city' => $request->city,
+                    'insurance_reservation_id' => $request->insurance_reservation_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
         }
-        
-        $insurances = new \App\Insurance;
-        $insurances->age = $request->get('age');
-        $insurances->type = $request->get('type');
-        $insurances->city = $request->get('city');
-        $insurances->save();
-        return $insurances;
-    }
+        else{
+            $age = $request->age;
+            $type = $request->type;
+            $city = $request->city;
+            $insurance_reservation_id = InsuranceReservation::find($request->insurance_reservation_id);
 
+             if($age > 17 and $age < 100 and !(is_numeric($type)) and $city != null and $insurance_reservation_id != null){
+
+                $insurance->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'age' => $request->age,
+                    'type' => $request->type,
+                    'city' => $request->city,
+                    'insurance_reservation_id' => $request->insurance_reservation_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
+        }
+
+        return Insurance::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$insurances = Insurance::findOrFail($id);
-        return $insurances;
+        return Insurance::find($id);
     }
-
-    public function edit(Insurance $Insurance)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, Insurance $insurances)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $insurances = new \App\Insurance;
-        $insurances->age = $request->get('age');
-        $insurances->type = $request->get('type');
-        $insurances->city = $request->get('city');
-        $insurances->save();
-        return $insurances;
+        //
     }
-
-    public function destroy(Insurance $insurances)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($insurances->es_valido){
-            $insurances->es_valido = false;
-            $insurances->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $insurances = Insurance::find($id);
+        $insurances->delete();
+        return "Se ha eliminado un seguro";
     }
 }
 

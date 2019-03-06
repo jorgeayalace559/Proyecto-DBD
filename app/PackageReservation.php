@@ -10,12 +10,12 @@ class PackageReservation extends Model
     	'cost',
     	'begin_date',
     	'end_date',
-    	'purchase_order_id',
-    	'package_id'
+    	'purchase_order_id'
     ];
+    protected $hidden=['updated_at'];
 
     public function package(){
-        return $this->belongsTo('App\Package');
+        return $this->hasMany('App\Package');
     }
 
     public function purchase_order(){

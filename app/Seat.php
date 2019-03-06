@@ -8,11 +8,11 @@ class Seat extends Model
 {
     protected $fillable = [
     	'number',
-    	'type',
-    	'remaining',
+
     	'ticket_id',
-        'airplane_id',
+        'airplane_id'
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function ticket(){
     	return $this->belongsTo('App\Ticket');

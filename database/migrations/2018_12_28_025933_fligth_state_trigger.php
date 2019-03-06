@@ -15,8 +15,8 @@ class FligthStateTrigger extends Migration
         RETURNS trigger AS
         $BODY$
         BEGIN
-            INSERT INTO states(id, condition, flight_id, created_at, updated_at)
-            VALUES (NEW.id, \'Pendiente\', NEW.id, now(), null);
+            INSERT INTO states(condition, flight_id, created_at, updated_at)
+            VALUES (\'Pendiente\', NEW.id, now(), null);
             RETURN NEW;
         END
         $BODY$

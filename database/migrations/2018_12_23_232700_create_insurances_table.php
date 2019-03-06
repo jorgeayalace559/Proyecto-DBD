@@ -16,9 +16,13 @@ class CreateInsurancesTable extends Migration
         Schema::create('insurances', function (Blueprint $table) {
             $table->increments('id');
             
-            $table->integer('edad');
+            $table->integer('age');
             $table->string('type');
-            $table->string('city');
+            $table->integer('city');
+
+            $table->unsignedInteger('insurance_reservation_id');
+            $table->foreign('insurance_reservation_id')->references('id')->on('insurance_reservations')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

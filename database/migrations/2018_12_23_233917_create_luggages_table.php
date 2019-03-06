@@ -21,7 +21,7 @@ class CreateLuggagesTable extends Migration
             $table->string('type');
 
             $table->unsignedInteger('passenger_id');
-            $table->foreign('passenger_id')->references('id')->on('passengers');
+            $table->foreign('passenger_id')->references('id')->on('passengers')->onDelete('cascade');
 
             $table->timestamps();
         });

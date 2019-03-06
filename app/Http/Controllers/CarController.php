@@ -4,74 +4,138 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Car;
+use App\Citie;
+use App\CarReservation;
 use Validator;
 
 class CarController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'name' => 'required|string',
-    		'airport_name' => 'required|string'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$cars = Car::all();
-    	return $cars;
+        $cars = Car::all();
+        $cities = Citie::all();
+        return view('car.show',['cars'=> $cars, 'cities' => $cities]);
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
-    public function store(Request $request)
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrUpdate(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
+        $verifyCar = Car::find($request->id);
+        $cars = new Car();
+
+        if($verifyCar == null){
+
+            $capacity = $request->capacity;
+            $city_id = Citie::find($request->city_id);
+            $patent = $request->patent;
+            $car_reservation_id = CarReservation::find($request->car_reservation_id);
+
+            if($city_id != null and $car_reservation_id != null and $patent != null and $capacity > 1 and $capacity < 9){
+
+                $cars->updateOrCreate([
+                    'capacity' => $request->capacity,
+                    'city_id' => $request->city_id,
+                    'patent' => $request->patent,
+                    'car_reservation_id' => $request->car_reservation_id
+
+                ]);
+            }
+            else{
+                return "Error en los parametros ingresados";
+            }
         }
-        
-        $cars = new \App\Car;
-        $cars->nombre = $request->get('nombre');
-        $cars->airport_name = $request->get('airport_name');
-        $cars->save();
-        return $cars;
-    }
+        else{
 
+            $capacity = $request->capacity;
+            $city_id = Citie::find($request->city_id);
+            $patent = $request->patent;
+            $car_reservation_id = CarReservation::find($request->car_reservation_id);
+
+            if($city_id != null and $car_reservation_id != null and $patent != null and $capacity > 1 and $capacity < 9){
+
+                $cars->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'capacity' => $request->capacity,
+                    'city_id' => $request->city_id,
+                    'patent' => $request->patent,
+                    'car_reservation_id' => $request->car_reservation_id
+
+                ]);
+            }
+            else{
+                return "Error en los parametros ingresados";
+            }
+        }
+
+        return Car::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-        $cars = Car::findOrFail($id);
-    	return $cars;
+        return Car::find($id);
     }
-
-    public function edit(Car $cars)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, Car $cars)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        $cars = new \App\Car;
-        $cars->nombre = $request->get('nombre');
-        $cars->airport_name = $request->get('airport_name');
-        $cars->save();
-        return $cars;
+        //
     }
-
-    public function destroy(Car $cars)
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($cars->es_valido){
-            $cars->es_valido = false;
-            $cars->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $cars = Car::find($id);
+        $cars->delete();
+        return "Se ha eliminado un auto";
     }
 }

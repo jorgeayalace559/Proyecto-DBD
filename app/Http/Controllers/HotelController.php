@@ -4,78 +4,132 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Hotel;
+use App\Citie;
 use Validator;
 
 class HotelController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'stars' => 'required|numeric',
-    		'capacity' => 'required|numeric',
-    		'type' => 'required|string'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$hotels = Hotel::all();
-    	return $hotels;
+        $hotels = Hotel::all();
+        $cities = Citie::all();
+        return view('hotel.show',['hotels'=> $hotels,'cities' => $cities]);
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
-    public function store(Request $request)
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrUpdate(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
+        $verifyHotel = Hotel::find($request->id);
+        $hotels = new Hotel();
+
+        if($verifyHotel == null){
+
+            $stars = $request->stars;
+            $capacity = $request->capacity;
+            $name = $request->name;
+
+            if(!(is_numeric($name)) and $capacity > 0 and $capacity <100 and $stars > -1 and $stars < 6){
+
+                $hotels->updateOrCreate([
+                    'stars' => $request->stars,
+                    'capacity' => $request->capacity,
+                    'name' => $request->name
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
         }
-        
-        $hotels = new \App\Hotel;
-        $hotels->stars = $request->get('stars');
-        $hotels->capacity = $request->get('capacity');
-        $hotels->type = $request->get('type');
-        $hotels->save();
-        return $hotels;
-    }
+        else{
+            $stars = $request->stars;
+            $capacity = $request->capacity;
+            $name = $request->name;
 
+            if(!(is_numeric($name)) and $capacity > 0 and $capacity <100 and $stars > -1 and $stars < 6){
+
+                $hotels->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'stars' => $request->stars,
+                    'capacity' => $request->capacity,
+                    'name' => $request->name
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
+        }
+
+        return Hotel::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$hotels = Hotel::findOrFail($id);
-        return $hotels;
+        return Hotel::find($id);
     }
-
-    public function edit(Hotel $Hotel)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, Hotel $hotels)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $hotels = new \App\Hotel;
-        $hotels->stars = $request->get('stars');
-        $hotels->capacity = $request->get('capacity');
-        $hotels->type = $request->get('type');
-        $hotels->save();
-        return $hotels;
+        //
     }
-
-    public function destroy(Hotel $hotels)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($hotels->es_valido){
-            $hotels->es_valido = false;
-            $hotels->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $hotels = Hotel::find($id);
+        $hotels->delete();
+        return "Se ha eliminado un hotel";
     }
 }

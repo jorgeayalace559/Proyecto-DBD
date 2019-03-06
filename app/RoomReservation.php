@@ -8,12 +8,13 @@ class RoomReservation extends Model
 {
     protected $fillable = [
     	'cost',
-    	'date',
     	'begin_date',
     	'end_date',
     	'purchase_order_id',
-    	'package_id'
+        'day',
+        'room_id'
     ];
+    protected $hidden=['updated_at'];
 
     public function package(){
         return $this->belongsTo('App\Package');
@@ -23,7 +24,7 @@ class RoomReservation extends Model
         return $this->belongsTo('App\PurchaseOrder');
     }
 
-    public function rooms(){
-        return $this->hasMany('App\Room');
+    public function room(){
+        return $this->belongsTo('App\Room');
     }
 }

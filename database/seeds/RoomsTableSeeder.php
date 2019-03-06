@@ -12,7 +12,7 @@ class RoomsTableSeeder extends Seeder
     public function run()
     {
         
-        factory(App\Room::class, 50)->create()->make();
+        factory(App\Room::class, 300)->create()->make();
 
     }
 }

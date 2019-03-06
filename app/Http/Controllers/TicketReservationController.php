@@ -4,81 +4,120 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TicketReservation;
+use App\PurchaseOrder;
+use App\Package;
 use Validator;
 
 class TicketReservationController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'cost' => 'required|numeric',
-    		'date' => 'required|string',
-    		'purchase_order_id' => 'required|numeric',
-    		'package_id' => 'required|numeric'
-    	];
-    }
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$ticketreservations = TicketReservation::all();
-    	return $ticketreservations;
+        $ticketReservation = TicketReservation::all();
+        return $ticketReservation;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $ticketreservations = new \App\TicketReservation;
-        $ticketreservations->cost = $request->get('cost');
-        $ticketreservations->date = $request->get('date');
-        $ticketreservations->purchase_order_id = $request->get('purchase_order_id');
-        $ticketreservations->package_id = $request->get('package_id');
-        $ticketreservations->save();
-        return $ticketreservations;
-    }
+        $verifyTicketReservation = TicketReservation::find($request->id);
+        $ticketReservation = new TicketReservation();
+ 
+        if($verifyTicketReservation == null){
+ 
+            $cost = $request->cost;
+            $date = $request->date;
+            $purchase_order_id = PurchaseOrder::find($request->purchase_order_id);
+            $package_id = Package::find($request->package_id);
 
+            if(is_numeric($cost) and $cost > 0
+               and $purchase_order_id != null and $package_id != null){
+
+                $ticketReservation->create([
+                    'cost' => $cost,
+                    'date' => $date,
+                    'purchase_order_id' => $request->purchase_order_id,
+                    'package_id' => $request->package_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+           
+        }
+        else{
+            return "La reserva del ticket ingresado ya existe";
+        }
+ 
+        return TicketReservation::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$ticketreservations = TicketReservation::findOrFail($id);
-    	return $ticketreservations;
+        return TicketReservation::find($id);
     }
-
-    public function edit(TicketReservation $ticketreservations)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, TicketReservation $ticketreservations)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $ticketreservations = new \App\TicketReservation;
-        $ticketreservations->cost = $request->get('cost');
-        $ticketreservations->date = $request->get('date');
-        $ticketreservations->purchase_order_id = $request->get('purchase_order_id');
-        $ticketreservations->package_id = $request->get('package_id');
-        $ticketreservations->save();
-        return $ticketreservations;
+        //
     }
-
-    public function destroy(TicketReservation $ticketreservations)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($ticketreservations->es_valido){
-            $ticketreservations->es_valido = false;
-            $ticketreservations->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $ticketReservation = TicketReservation::find($id);
+        $ticketReservation->delete();
+        return "Se ha eliminado una reserva de ticket";
     }
 }

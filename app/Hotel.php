@@ -9,10 +9,18 @@ class Hotel extends Model
     protected $fillable = [
     	'stars',
     	'capacity',
-    	'type'
+    	'name',
+    	'citie_id'
     ];
+
+    protected $hidden=['created_at','updated_at'];
+
 
     public function rooms(){
     	return $this->hasMany('App\Room');
+    }
+
+    public function citie(){
+    	return $this->belongsTo('App\Citie');
     }
 }

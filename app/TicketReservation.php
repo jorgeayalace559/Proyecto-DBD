@@ -9,9 +9,9 @@ class TicketReservation extends Model
     protected $fillable = [
     	'cost',
     	'date',
-    	'purchase_order_id',
-    	'package_id'
+    	'purchase_order_id'
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function package(){
         return $this->belongsTo('App\Package');

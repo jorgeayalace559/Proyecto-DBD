@@ -13,6 +13,7 @@ class Payment extends Model
     	'quotas',
     	'purchase_order_id'
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function purchase_orders(){
     	return $this->hasMany('App\PurchaseOrder');

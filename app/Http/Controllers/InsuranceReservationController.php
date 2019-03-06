@@ -4,85 +4,119 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\InsuranceReservation;
+use App\PurchaseOrder;
+use App\Package;
 use Validator;
 
 class InsuranceReservationController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'cost' => 'required|numeric',
-    		'date' => 'required|string',
-    		'begin_date' => 'required|string',
-    		'end_date' => 'required|string',
-    		'purchase_order_id' => 'required|numeric'
-    	];
-    }
-
+    /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
-    	$insurancereservations = InsuranceReservation::all();
-    	return $insurancereservations;
+        $insurance_reservations = InsuranceReservation::all();
+        return $insurance_reservations;
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $insurancereservations = new \App\InsuranceReservation;
-        $insurancereservations->cost = $request->get('cost');
-        $insurancereservations->date = $request->get('date');
-        $insurancereservations->begin_date = $request->get('begin_date');
-        $insurancereservations->end_date = $request->get('end_date');
-        $insurancereservations->purchase_order_id = $request->get('purchase_order_id');
-        $insurancereservations->save();
-        return $insurancereservations;
-    }
+        $verifyInsuranceReservation = InsuranceReservation::find($request->id);
+        $insurance_reservations = new InsuranceReservation();
 
+        if($verifyInsuranceReservation == null){
+
+            $cost = $request->cost;
+            $begin_date = $request->begin_date;
+            $end_date = $request->end_date;
+            $purchase_order_id = PurchaseOrder::find($request->purchase_order_id);
+            $package_id = Package::find($request->package_id);
+
+            if($cost > 0  and  $purchase_order_id != null and $package_id != null){
+
+                $insurance_reservations->create([
+                    'cost' => $request->cost,
+                    'begin_date' => $request->begin_date,
+                    'end_date' => $request->end_date,
+                    'purchase_order_id' => $request->purchase_order_id,
+                    'package_id' => $request->package_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros";
+            }
+        }
+        else{
+            return "La reserva de seguro ingresada ya existe";
+        }
+
+        return InsuranceReservation::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$insurancereservations = InsuranceReservation::findOrFail($id);
-    	return $insurancereservations;
+        return InsuranceReservation::find($id);
     }
-
-    public function edit(InsuranceReservation $insurancereservations)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, InsuranceReservation $insurancereservations)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $insurancereservations = new \App\InsuranceReservation;
-        $insurancereservations->cost = $request->get('cost');
-        $insurancereservations->date = $request->get('date');
-        $insurancereservations->begin_date = $request->get('begin_date');
-        $insurancereservations->end_date = $request->get('end_date');
-        $insurancereservations->purchase_order_id = $request->get('purchase_order_id');
-        $insurancereservations->save();
-        return $insurancereservations;
+        //
     }
-
-    public function destroy(InsuranceReservation $insurancereservations)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($insurancereservations->es_valido){
-            $insurancereservations->es_valido = false;
-            $insurancereservations->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $insurance_reservations = InsuranceReservation::find($id);
+        $insurance_reservations->delete();
+        return "Se ha eliminado una reserva de seguro";
     }
 }
 

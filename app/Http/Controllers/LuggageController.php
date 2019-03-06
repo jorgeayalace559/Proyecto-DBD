@@ -4,81 +4,136 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Luggage;
+use App\Passenger;
 use Validator;
 
 class LuggageController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'weight' => 'required|numeric',
-    		'cost' => 'required|numeric',
-    		'type' => 'required|string',
-    		'passenger_id' => 'required|numeric'
-    	];
-    }
-
+    /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
-    	$luggages = Luggage::all();
-    	return $luggages;
-    }
-
-    public function create(Request $request)
-    {
-    	//
-    }
-
-    public function store(Request $request)
-    {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
-        }
-        
-        $luggages = new \App\Luggage;
-        $luggages->weight = $request->get('weight');
-        $luggages->cost = $request->get('cost');
-        $luggages->type = $request->get('type');
-        $luggages->passenger_id = $request->get('passenger_id');
-        $luggages->save();
+        $luggages = Luggage::all();
         return $luggages;
     }
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrUpdate(Request $request)
+    {
+        $verifyLuggage = Luggage::find($request->id);
+        $luggages = new Luggage();
 
+        if($verifyLuggage == null){
+
+            $weight = $request->weight;
+            $cost = $request->cost;
+            $type = $request->type;
+            $passenger_id = Passenger::find($request->passenger_id);
+
+            if($weight > 0 and $weight < 50 and $cost > 0 and !(is_numeric($type)) and $passenger_id != null){
+
+                $luggages->updateOrCreate([
+                    'weight' => $request->weight,
+                    'cost' => $request->cost,
+                    'type' => $request->type,
+                    'passenger_id' => $request->passenger_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros"; 
+            }
+        }
+        else{
+
+            $weight = $request->weight;
+            $cost = $request->cost;
+            $type = $request->type;
+            $passenger_id = Passenger::find($request->passenger_id);
+
+            if($weight > 0 and $weight < 50 and $cost > 0 and !(is_numeric($type)) and $passenger_id != null){
+
+                $luggages->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'weight' => $request->weight,
+                    'cost' => $request->cost,
+                    'type' => $request->type,
+                    'passenger_id' => $request->passenger_id
+
+                ]);
+            }
+            else{
+                return "Error en el ingreso de parametros"; 
+            }
+        }
+
+        return Luggage::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$luggages = Luggage::findOrFail($id);
-    	return $luggages;
+        return Luggage::find($id);
     }
-
-    public function edit(Luggage $luggages)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, Luggage $luggages)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $luggages = new \App\Luggage;
-        $luggages->weight = $request->get('weight');
-        $luggages->cost = $request->get('cost');
-        $luggages->type = $request->get('type');
-        $luggages->passenger_id = $request->get('passenger_id');
-        $luggages->save();
-        return $luggages;
+        //
     }
-
-    public function destroy(Luggage $luggages)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($luggages->es_valido){
-            $luggages->es_valido = false;
-            $luggages->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $luggages = Luggage::find($id);
+        $luggages->delete();
+        return "Se ha eliminado un equipaje";
     }
 }

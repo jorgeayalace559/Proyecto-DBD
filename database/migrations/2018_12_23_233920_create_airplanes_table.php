@@ -18,9 +18,10 @@ class CreateAirplanesTable extends Migration
 
             $table->integer('capacity');
             $table->string('name');
+            $table->integer('remaining');
 
             $table->unsignedInteger('flight_id');
-            $table->foreign('flight_id')->references('id')->on('flights');
+            $table->foreign('flight_id')->references('id')->on('flights')->onDelete('cascade');
 
             $table->timestamps();
         });

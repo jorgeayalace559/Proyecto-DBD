@@ -11,11 +11,13 @@ class CarReservation extends Model
     	'begin_date',
     	'end_date',
     	'purchase_order_id',
-    	'package_id'
+        'car_id'
     ];
 
-    public function cars(){
-        return $this->hasMany('App\Car');
+    protected $hidden=['updated_at'];
+
+    public function car(){
+        return $this->belongsTo('App\Car');
     }
 
     public function purchase_order(){
@@ -23,7 +25,7 @@ class CarReservation extends Model
     }
 
     public function package(){
-    	return $this->belongsTo('App\Package');
+    	return $this->hasMany('App\Package');
     }
 
 }

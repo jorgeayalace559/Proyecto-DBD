@@ -19,10 +19,10 @@ class CreatePaymentsTable extends Migration
             $table->string('type')->nullable();
             $table->string('bank')->nullable();
             $table->string('count')->nullable();
-            $table->integer('quotas');
+            $table->integer('quotas')->nullable();
 
             $table->unsignedInteger('purchase_order_id');
-            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
+            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders')->onDelete('cascade');
 
             $table->timestamps();
         });

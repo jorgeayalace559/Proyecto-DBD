@@ -6,11 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Airplane extends Model
 {
+
+    protected $table = 'airplanes'; 
+
     protected $fillable = [
         'name',
-    	'capacity',
+        'capacity',
+        'remaining',
     	'flight_id'
     ];
+
+    protected $hidden=['created_at','updated_at'];
 
     public function flight(){
     	return $this->belongsTo('App\Flight');

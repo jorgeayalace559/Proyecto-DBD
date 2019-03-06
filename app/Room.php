@@ -13,12 +13,13 @@ class Room extends Model
         'type',
     	'hotel_id'
     ];
+    protected $hidden=['created_at','updated_at'];
 
     public function hotel(){
         return $this->belongsTo('App\Hotel');
     }
 
     public function room_reservation(){
-    	return $this->belongsTo('App\Room_Reservation');
+    	return $this->hasMany('App\RoomReservation');
     }
 }

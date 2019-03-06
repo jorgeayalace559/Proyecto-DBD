@@ -11,6 +11,7 @@ class PurchaseOrder extends Model
     	'date',
     	'user_id'
     ];
+    protected $hidden=['updated_at'];
 
     public function user(){
         return $this->belongsTo('App\User');

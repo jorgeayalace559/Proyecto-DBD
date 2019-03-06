@@ -12,8 +12,11 @@ class Car extends Model
     	'patent',
     ];
 
-    public function car_reservation(){
-    	return $this->belongsTo('App\Car_Reservation');
+    protected $hidden=['created_at','updated_at'];
+
+
+    public function car_reservations(){
+        return $this->hasMany('App\CarReservation');
     }
 
     public function citie(){

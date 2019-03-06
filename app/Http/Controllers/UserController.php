@@ -4,90 +4,160 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Role;
 use Validator;
 
 class UserController extends Controller
 {
-	 public function rules(){
-    	return
-    	[
-    		'name' => 'required|string', 
-	        'email' => 'required|string', 
-	        'password' => 'required|string',
-	        'email_verified_at' => 'required|string',
-	        'miles' => 'required|numeric',
-	        'rut' => 'required|string',
-	        'role_id' => 'required|numeric'
-    	];
-    }
-
+	 /**
+	* Display a listing of the resource.
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function index()
     {
-    	$users = User::all();
-    	return $users;
+        $users = User::all();
+        return view('user.show',['users'=> $users, 'users' => $users]);
     }
-
-    public function create(Request $request)
+ 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	//
+        //
     }
-
-    public function store(Request $request)
+ 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOrUpdate(Request $request)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return $validator->messages(); 
+        $verifyUser = User::find($request->id);
+        $user = new User();
+ 
+        if($verifyUser == null){
+ 
+            $name = $request->name;
+            $email = $request->email; 
+            $password = $request->password;
+            $email_verified_at = $request->email_verified_at;
+            $miles = $request->miles;
+            $rut = $request->rut;
+            return $rut;
+            $role_id = Role::find($request->role_id);
+
+            if(!(is_numeric($name)) and !(is_numeric($email))
+            and !(is_numeric($password)) and !(is_numeric($rut))
+            and is_numeric($miles) and $miles > 0
+            and $role_id != null){
+
+                $user->updateOrCreate([
+                    'name' => $name, 
+                    'email' => $email, 
+                    'password' => $password,
+                    'email_verified_at' => $email_verified_at,
+                    'miles' => $miles,
+                    'rut' => $rut,
+                    'role_id' => $request->role_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+            
         }
-        
-        $users = new \App\User;
-        $users->name = $request->get('name');
-        $users->email = $request->get('email');
-        $users->password = $request->get('password');
-        $users->email_verified_at = $request->get('email_verified_at');
-        $users->miles = $request->get('miles');
-        $users->rut = $request->get('rut');
-        $users->rol_id = $request->get('rol_id');
-        $users->save();
-        return $users;
-    }
+        else{
 
+            $name = $request->name;
+            $email = $request->email; 
+            $password = $request->password;
+            $email_verified_at = $request->email_verified_at;
+            $miles = $request->miles;
+            $rut = $request->rut;
+            $role_id = Role::find($request->role_id);
+
+            if(!(is_numeric($name)) and !(is_numeric($email))
+            and !(is_numeric($password)) and !(is_numeric($rut))
+            and is_numeric($miles) and $miles > 0
+            and $role_id != null){
+
+                $user->updateOrCreate([
+                    'id' => $request->id
+                ],
+                [
+                    'name' => $name, 
+                    'email' => $email, 
+                    'password' => $password,
+                    'email_verified_at' => $email_verified_at,
+                    'miles' => $miles,
+                    'rut' => $rut,
+                    'role_id' => $request->role_id
+     
+                ]);
+
+            }
+
+            else{
+                return "Error en los parametros ingresados";
+            }
+        }
+ 
+        return User::all();
+    }
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-    	$users = User::findOrFail($id);
-    	return $users;
+        return User::find($id);
     }
-
-    public function edit(User $users)
+ 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-    	//
+        //
     }
-
-    public function update(Request $request, User $users)
+ 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-    	$validator = Validator::make($request->all(),$this->rules());
-        if($validator->fails()){
-            return json_encode(['outcome' => 'error']); 
-        }
-        
-        $users = new \App\User;
-        $users->name = $request->get('name');
-        $users->email = $request->get('email');
-        $users->password = $request->get('password');
-        $users->email_verified_at = $request->get('email_verified_at');
-        $users->miles = $request->get('miles');
-        $users->rut = $request->get('rut');
-        $users->rol_id = $request->get('rol_id');
-        $users->save();
-        return $users;
+        //
     }
-
-    public function destroy(User $users)
+ 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-    	if($users->es_valido){
-            $users->es_valido = false;
-            $users->save();
-            return json_encode(['outcome' => 'Eliminado']);
-        }
-        return json_encode(['outcome' => 'Hubo un error']);
+        $user = User::find($id);
+        $user->delete();
+        return "Se ha eliminado un usuario";
     }
 }
