@@ -67,6 +67,7 @@
               <tr>
                   <th>Horario Salida</th>
                   <th>Horario llegada</th>
+                  <th>Duración</th>
                   <th></th>
                   <th>Precio</th>
               </tr>
@@ -78,6 +79,7 @@
                       <tr>
                           <td>{{ $flight->begin_date }}</td>
                           <td>{{ $flight->end_date }}</td>
+                          <td>3h</td>
                           <td>Directo</td>
                           <td><button type="button" class="btn btn-primary" id="miboton" value="{{ $flight->id }}">${{ $flight->cost }}</button></td>
                       </tr>
