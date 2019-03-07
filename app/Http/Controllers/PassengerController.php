@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Passenger;
 use App\Ticket;
+use App\Countrie;
 use Validator;
 
 class PassengerController extends Controller
@@ -17,7 +18,8 @@ class PassengerController extends Controller
     public function index()
     {
         $passengers = Passenger::all();
-        return $passengers;
+        $countries = Countrie::all();
+        return view('passenger.show',['passengers'=> $passengers,'countries' => $countries]);
     }
  
     /**

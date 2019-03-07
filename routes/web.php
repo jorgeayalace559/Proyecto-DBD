@@ -29,6 +29,7 @@ Route::get('/flight','FlightController@index');
 Route::get('/check-in','CheckInController@index');
 Route::get('/user','UserController@index');
 Route::get('/user-update','UpdateUserController@index');
+Route::get('/passengers','PassengerController@index');
 
 
 Route::resource('Airplane','AirplaneController');
